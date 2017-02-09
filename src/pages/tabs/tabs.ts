@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 
 import { LearnPage } from '../learn/learn';
 import { AboutPage } from '../about/about';
-import { ContactPage } from '../contact/contact';
 import {SettingsPage} from "../settings/settings";
 
 @Component({

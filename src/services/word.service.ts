@@ -1,20 +1,15 @@
 import { Injectable } from '@angular/core';
 import {RepoBrief} from "../classes/repo";
+import {Http} from "@angular/http";
+
+import 'rxjs/add/operator/toPromise'
 
 @Injectable()
 export class WordService {
-    getRepos():RepoBrief[] {
-        return [
-            {id: 11, name: 'Mr. Nice'},
-            {id: 12, name: 'Narco'},
-            {id: 13, name: 'Bombasto'},
-            {id: 14, name: 'Celeritas'},
-            {id: 15, name: 'Magneta'},
-            {id: 16, name: 'RubberMan'},
-            {id: 17, name: 'Dynama'},
-            {id: 18, name: 'Dr IQ'},
-            {id: 19, name: 'Magma'},
-            {id: 20, name: 'Tornado'}
-        ]
+    constructor(private http:Http){}
+    getRepos():Promise<RepoBrief[]> {
+        return this.http.get('/api/repo/list/')
+            .toPromise()
+            .then(response=>response.json() as RepoBrief[]);
     }
 }

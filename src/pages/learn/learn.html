@@ -10,15 +10,15 @@
             状态
         </ion-item-divider>
         <ion-item>
-            <ion-icon name="flash" item-left></ion-icon>
+            <!--<ion-icon name="flash" item-left></ion-icon>-->
             今日已新学单词
             <span item-right>13</span>
         </ion-item>
         <ion-item-divider>
-            单词本
+            词库
         </ion-item-divider>
-        <ion-item>
-            托福
+        <ion-item *ngFor="let repo of repos">
+            {{repo.name}}
         </ion-item>
         <ion-item>
             四级

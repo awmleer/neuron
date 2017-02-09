@@ -6,6 +6,8 @@ import { ContactPage } from '../pages/contact/contact';
 import { LearnPage } from '../pages/learn/learn';
 import { TabsPage } from '../pages/tabs/tabs';
 import {SettingsPage} from "../pages/settings/settings";
+import {HttpModule} from "@angular/http";
+import {WordService} from "../services/word.service";
 
 
 @NgModule({
@@ -18,7 +20,8 @@ import {SettingsPage} from "../pages/settings/settings";
         SettingsPage
     ],
     imports: [
-        IonicModule.forRoot(MyApp)
+        IonicModule.forRoot(MyApp),
+        HttpModule
     ],
     bootstrap: [IonicApp],
     entryComponents: [
@@ -29,6 +32,9 @@ import {SettingsPage} from "../pages/settings/settings";
         TabsPage,
         SettingsPage
     ],
-    providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
+    providers: [
+        {provide: ErrorHandler, useClass: IonicErrorHandler},
+        WordService
+    ]
 })
 export class AppModule {}

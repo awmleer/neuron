@@ -1,6 +1,12 @@
 {
-  "name": "ionic2-app-base",
-  "app_id": "",
-  "typescript": true,
-  "v2": true
+    "name": "ionic2-app-base",
+    "app_id": "",
+    "typescript": true,
+    "v2": true,
+    "proxies": [
+        {
+            "path": "/api",
+            "proxyUrl": "http://127.0.01:8000/"
+        }
+    ]
 }

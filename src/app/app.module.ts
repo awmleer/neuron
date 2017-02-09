@@ -9,6 +9,7 @@ import {SettingsPage} from "../pages/settings/settings";
 import {HttpModule} from "@angular/http";
 import {WordService} from "../services/word.service";
 import {ImpulsePage} from "../pages/impulse/impulse";
+import { Storage } from '@ionic/storage';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import {ImpulsePage} from "../pages/impulse/impulse";
     ],
     providers: [
         {provide: ErrorHandler, useClass: IonicErrorHandler},
+        Storage,
         WordService
     ]
 })

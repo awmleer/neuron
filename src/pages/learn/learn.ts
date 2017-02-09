@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { NavController } from 'ionic-angular';
+import {NavController, AlertController} from 'ionic-angular';
 import {WordService} from "../../services/word.service";
 import {RepoBrief} from "../../classes/repo";
 import {ImpulsePage} from "../impulse/impulse";
@@ -14,7 +14,10 @@ import {ImpulsePage} from "../impulse/impulse";
 export class LearnPage {
     repos: RepoBrief[];
 
-    constructor(public nav: NavController,private wordService:WordService) {
+    constructor(
+        public nav: NavController,
+        public alertCtrl: AlertController,
+        private wordService:WordService) {
 
     }
 
@@ -25,8 +28,34 @@ export class LearnPage {
     }
 
     startLearn(repo):void{
-        console.log(repo);
-        this.nav.push(ImpulsePage);
+        let prompt = this.alertCtrl.create({
+            title: '设置',
+            message: "请输入计划新学的单词个数",
+            inputs: [
+                {
+                    name: 'amount',
+                    placeholder: ''
+                },
+            ],
+            buttons: [
+                {
+                    text: '取消',
+                    handler: data => {
+                        console.log('Cancel clicked');
+                    }
+                },
+                {
+                    text: '确定',
+                    handler: data => {
+                        console.log(data.amount);
+                        this.nav.push(ImpulsePage,{
+                            amount:data.amount
+                        });
+                    }
+                }
+            ]
+        });
+        prompt.present();
     }
 
     ngOnInit(): void {

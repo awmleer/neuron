@@ -12,4 +12,5 @@ export class WordService {
             .toPromise()
             .then(response=>response.json() as RepoBrief[]);
     }
+    getWord
 }

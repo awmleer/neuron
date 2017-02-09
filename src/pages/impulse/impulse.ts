@@ -1,10 +1,8 @@
-import {Component, Input} from '@angular/core';
+import {Component} from '@angular/core';
 import { NavParams } from 'ionic-angular';
 import { NavController } from 'ionic-angular';
-
-// import _ from 'lodash';
-import * as _ from "lodash";
-// import _ from '@types/lodash'
+import {RepoDetail} from "../../classes/repo";
+import {WordService} from "../../services/word.service";
 
 
 @Component({
@@ -12,16 +10,26 @@ import * as _ from "lodash";
     templateUrl: 'impulse.html'
 })
 export class ImpulsePage {
-
-    queue:any[];
+    amount:number;
+    queue:any[]=[];
+    repo:RepoDetail;
+    unstudied:any[]=[];
     constructor(
         public navCtrl: NavController,
-        private navParams: NavParams
-    ) {
-        this.queue=[];
-    }
+        private navParams: NavParams,
+        private wordService:WordService
+    ) {}
     ngOnInit(): void {
-        console.log(this.navParams.get('amount'));
+        this.amount=this.navParams.get('amount');
+        this.wordService.getRepo(this.navParams.get('repo').id)
+            .then(repo=>{
+                this.repo=repo;
+                for (let i = 0; i < repo.words.length; i++) {
+                    if (this.wordService.isStudied(repo.words[i])==false) {
+                        this.unstudied.push(repo.words[i]);
+                    }
+                }
+            });
         // console.log(_);
     }
 

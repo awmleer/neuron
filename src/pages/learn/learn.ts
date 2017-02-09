@@ -17,7 +17,8 @@ export class LearnPage {
     constructor(
         public nav: NavController,
         public alertCtrl: AlertController,
-        private wordService:WordService) {
+        private wordService:WordService
+    ) {
 
     }
 
@@ -27,7 +28,7 @@ export class LearnPage {
         });
     }
 
-    startLearn(repo):void{
+    startLearn(repo:RepoBrief):void{
         let prompt = this.alertCtrl.create({
             title: '设置',
             message: "请输入计划新学的单词个数",
@@ -49,7 +50,8 @@ export class LearnPage {
                     handler: data => {
                         console.log(data.amount);
                         this.nav.push(ImpulsePage,{
-                            amount:data.amount
+                            amount:data.amount,
+                            repo:repo
                         });
                     }
                 }

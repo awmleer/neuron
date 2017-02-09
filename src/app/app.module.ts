@@ -8,6 +8,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import {SettingsPage} from "../pages/settings/settings";
 import {HttpModule} from "@angular/http";
 import {WordService} from "../services/word.service";
+import {ImpulsePage} from "../pages/impulse/impulse";
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import {WordService} from "../services/word.service";
         ContactPage,
         LearnPage,
         TabsPage,
-        SettingsPage
+        SettingsPage,
+        ImpulsePage
     ],
     imports: [
         IonicModule.forRoot(MyApp),
@@ -30,7 +32,8 @@ import {WordService} from "../services/word.service";
         ContactPage,
         LearnPage,
         TabsPage,
-        SettingsPage
+        SettingsPage,
+        ImpulsePage
     ],
     providers: [
         {provide: ErrorHandler, useClass: IonicErrorHandler},

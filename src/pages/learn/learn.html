@@ -17,9 +17,9 @@
         <ion-item-divider>
             词库
         </ion-item-divider>
-        <ion-item *ngFor="let repo of repos">
+        <button ion-item *ngFor="let repo of repos" (click)="startLearn(repo)">
             {{repo.name}}
-        </ion-item>
+        </button>
         <ion-item>
             四级
         </ion-item>

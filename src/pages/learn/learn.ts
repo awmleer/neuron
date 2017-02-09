@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import {WordService} from "../../services/word.service";
 import {RepoBrief} from "../../classes/repo";
+import {ImpulsePage} from "../impulse/impulse";
 
 @Component({
     selector: 'page-learn',
@@ -13,7 +14,7 @@ import {RepoBrief} from "../../classes/repo";
 export class LearnPage {
     repos: RepoBrief[];
 
-    constructor(public navCtrl: NavController,private wordService:WordService) {
+    constructor(public nav: NavController,private wordService:WordService) {
 
     }
 
@@ -21,6 +22,11 @@ export class LearnPage {
         this.wordService.getRepos().then(repos=>{
             this.repos=repos
         });
+    }
+
+    startLearn(repo):void{
+        console.log(repo);
+        this.nav.push(ImpulsePage);
     }
 
     ngOnInit(): void {

@@ -3,6 +3,7 @@ import { NavParams } from 'ionic-angular';
 import { NavController } from 'ionic-angular';
 
 // import _ from 'lodash';
+import * as _ from "lodash";
 // import _ from '@types/lodash'
 
 

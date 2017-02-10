@@ -10,6 +10,7 @@ import {HttpModule} from "@angular/http";
 import {WordService} from "../services/word.service";
 import {ImpulsePage} from "../pages/impulse/impulse";
 import { Storage } from '@ionic/storage';
+import {TodayLearnPipe} from "../pipes/today.pipe";
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { Storage } from '@ionic/storage';
         LearnPage,
         TabsPage,
         SettingsPage,
-        ImpulsePage
+        ImpulsePage,
+        TodayLearnPipe
     ],
     imports: [
         IonicModule.forRoot(MyApp),

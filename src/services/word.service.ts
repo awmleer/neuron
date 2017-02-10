@@ -5,24 +5,24 @@ import * as _ from "lodash";
 import 'rxjs/add/operator/toPromise'
 import {WordEntry, WordRecord} from "../classes/word";
 import { Storage } from '@ionic/storage';
+import {Subject} from "rxjs";
 
 @Injectable()
 export class WordService {
     constructor(private http:Http, private storage:Storage){
-        storage.get('wordRecords').then(wordRecords=>{
+        this.storage.get('wordRecords').then(wordRecords=>{
             if (wordRecords) {
                 this.wordRecords=wordRecords;
-                console.log('get success');
+                this.wordRecordsSubject.next(this.wordRecords);
+                console.log(this.wordRecordsSubject);
                 console.log(this.wordRecords);
-            }else {
-                console.log('get fail');
-                console.log(wordRecords);
             }
         });
-
     }
 
     wordRecords:WordRecord[]=[];
+    private wordRecordsSubject=new Subject<WordRecord[]>();
+    wordRecords$=this.wordRecordsSubject.asObservable();
     isStudied(word:string):boolean{
         for (let i = 0; i < this.wordRecords.length; i++) {
             if (this.wordRecords[i].word == word) {

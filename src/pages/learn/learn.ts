@@ -4,6 +4,7 @@ import {NavController, AlertController} from 'ionic-angular';
 import {WordService} from "../../services/word.service";
 import {RepoBrief} from "../../classes/repo";
 import {ImpulsePage} from "../impulse/impulse";
+import {WordRecord} from "../../classes/word";
 
 @Component({
     selector: 'page-learn',
@@ -13,13 +14,19 @@ import {ImpulsePage} from "../impulse/impulse";
 })
 export class LearnPage {
     repos: RepoBrief[];
+    wordRecords:WordRecord[]=[];
+    subscriptions:any[]=[];
 
     constructor(
         public nav: NavController,
         public alertCtrl: AlertController,
         private wordService:WordService
     ) {
-
+        // this.wordRecords=this.wordService.getWordRecords();
+        this.subscriptions[0]=wordService.wordRecords$.subscribe(wordRecords=>{
+            this.wordRecords=wordRecords;
+            console.log('get it!!!');
+        })
     }
 
     getRepos():void{
@@ -62,6 +69,13 @@ export class LearnPage {
 
     ngOnInit(): void {
         this.getRepos();
+    }
+
+    ngOnDestroy() {
+        // prevent memory leak when component destroyed
+        for (let i = 0; i < this.subscriptions.length; i++) {
+            this.subscriptions[i].unsubscribe();
+        }
     }
 
 }

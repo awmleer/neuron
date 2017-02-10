@@ -3,6 +3,7 @@ import {RepoBrief, RepoDetail} from "../classes/repo";
 import {Http} from "@angular/http";
 import * as _ from "lodash";
 import 'rxjs/add/operator/toPromise'
+import {WordEntry} from "../classes/word";
 
 @Injectable()
 export class WordService {
@@ -12,6 +13,12 @@ export class WordService {
     studiedWords:any[];
     isStudied(word:string):Boolean{
         return !(typeof _.find(this.studiedWords,{'word':word})==='undefined');
+    }
+
+    getEntry(word):Promise<WordEntry>{
+        return this.http.get(`/api/entry/${word}/`)
+            .toPromise()
+            .then(response=>response.json() as WordEntry);
     }
 
     getRepos():Promise<RepoBrief[]> {

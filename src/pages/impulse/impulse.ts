@@ -3,6 +3,7 @@ import { NavParams } from 'ionic-angular';
 import { NavController } from 'ionic-angular';
 import {RepoDetail} from "../../classes/repo";
 import {WordService} from "../../services/word.service";
+import {WordEntry} from "../../classes/word";
 
 
 @Component({
@@ -14,6 +15,7 @@ export class ImpulsePage {
     queue:any[]=[];
     repo:RepoDetail;
     unstudied:any[]=[];
+    entry:WordEntry;
     constructor(
         public navCtrl: NavController,
         private navParams: NavParams,
@@ -29,7 +31,16 @@ export class ImpulsePage {
                         this.unstudied.push(repo.words[i]);
                     }
                 }
+                this.queue[0]={
+                    word:this.unstudied.shift(),
+                    count:0
+                };
+                this.wordService.getEntry(this.queue[0].word)
+                    .then(entry=>{
+                        this.entry=entry;
+                    })
             });
+
         // console.log(_);
     }
 

@@ -4,16 +4,32 @@ import {Http} from "@angular/http";
 import * as _ from "lodash";
 import 'rxjs/add/operator/toPromise'
 import {WordEntry, WordRecord} from "../classes/word";
+import { Storage } from '@ionic/storage';
 
 @Injectable()
 export class WordService {
-    constructor(private http:Http){
+    constructor(private http:Http, private storage:Storage){
+        storage.get('wordRecords').then(wordRecords=>{
+            if (wordRecords) {
+                this.wordRecords=wordRecords;
+                console.log('get success');
+                console.log(this.wordRecords);
+            }else {
+                console.log('get fail');
+                console.log(wordRecords);
+            }
+        });
 
     }
-    studiedWords:string[];
+
     wordRecords:WordRecord[]=[];
-    isStudied(word:string):Boolean{
-        return !(typeof _.find(this.studiedWords,{'word':word})==='undefined');
+    isStudied(word:string):boolean{
+        for (let i = 0; i < this.wordRecords.length; i++) {
+            if (this.wordRecords[i].word == word) {
+                return true;
+            }
+        }
+        return false;
     }
 
     changeWait(wordRecord:WordRecord):void{
@@ -37,6 +53,7 @@ export class WordService {
         }
         this.changeWait(wordRecord);
         this.wordRecords.push(wordRecord);
+        this.storage.set('wordRecords',this.wordRecords);
         console.log(this.wordRecords);
     }
 

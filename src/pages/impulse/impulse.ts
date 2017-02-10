@@ -73,7 +73,12 @@ export class ImpulsePage {
     }
 
     clickKnow():void{
+        this.wordService.addRecord(this.words[this.currentIndex].word,'know');//just for debug
 
+        // if (this.words[this.currentIndex].dirty==0) {//First time today
+        //     //if in learn mode
+        //     //add word to records
+        // }
     }
 
     clickVague():void{

@@ -12,7 +12,8 @@ import {WordEntry} from "../../classes/word";
 })
 export class ImpulsePage {
     amount:number;
-    queue:any[]=[];
+    words:any[]=[];
+    currentIndex:number;
     repo:RepoDetail;
     unstudied:any[]=[];
     entry:WordEntry;
@@ -21,6 +22,7 @@ export class ImpulsePage {
         private navParams: NavParams,
         private wordService:WordService
     ) {}
+
     ngOnInit(): void {
         this.amount=this.navParams.get('amount');
         this.wordService.getRepo(this.navParams.get('repo').id)
@@ -31,17 +33,55 @@ export class ImpulsePage {
                         this.unstudied.push(repo.words[i]);
                     }
                 }
-                this.queue[0]={
-                    word:this.unstudied.shift(),
-                    count:0
-                };
-                this.wordService.getEntry(this.queue[0].word)
-                    .then(entry=>{
-                        this.entry=entry;
-                    })
+                for (let i = 0; i < this.amount; i++) {
+                    this.words.push({
+                        word:this.unstudied.shift(),
+                        count:0,
+                        wait:i,
+                        dirty:0
+                    });
+                }
+                this.nextLoop();
             });
 
         // console.log(_);
+    }
+
+    nextLoop():void{
+        let allDone=true;
+        for (let i = 0; i < this.words.length; i++) {
+            if (this.words[i].wait==0) {
+                this.currentIndex=i;
+                this.wordService.getEntry(this.words[i].word)
+                    .then(entry=>{
+                        this.entry=entry;
+                    });
+                return;
+            }else {
+                if(this.words[i].wait!=-1)allDone=false;
+            }
+        }
+        if (allDone) {
+            //todo do something
+            return;
+        }
+        for (let i = 0; i < this.words.length; i++) {
+            if (this.words[i].wait > 0) {
+                this.words[i].wait--;
+            }
+        }
+    }
+
+    clickKnow():void{
+
+    }
+
+    clickVague():void{
+
+    }
+
+    clickForget():void{
+
     }
 
 }

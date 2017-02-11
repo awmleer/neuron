@@ -12,7 +12,7 @@ import {WordEntry} from "../../classes/word";
 })
 export class ImpulsePage {
     amount:number;
-    words:any[]=[];
+    // wordService.wordsLearning:any[]=[];
     currentWord:any;
     // repo:RepoDetail;
     // unstudied:any[]=[];
@@ -26,10 +26,10 @@ export class ImpulsePage {
     ngOnInit(): void {
         //todo: check navParams->type==learn or review
         if (this.navParams.get('continued')) {
-            this.words=this.wordService.impulseData.words;
-            this.amount=this.words.length;
+            this.amount=this.wordService.wordsLearning.length;
         }else {
             this.amount=this.navParams.get('amount');
+            this.wordService.wordsLearning=[];
             let repo:RepoDetail=this.navParams.get('repo');
             let unstudied=[];
             for (let i = 0; i < repo.words.length; i++) {
@@ -40,7 +40,7 @@ export class ImpulsePage {
             for (let i = 0; i < this.amount; i++) {
                 let index=Math.floor((Math.random()*unstudied.length));
                 console.log(index);
-                this.words.push({
+                this.wordService.wordsLearning.push({
                     word:unstudied[index],
                     count:0,
                     wait:i,
@@ -54,35 +54,36 @@ export class ImpulsePage {
 
     nextWord():void{
         let allDone=true;
-        for (let i = 0; i < this.words.length; i++) {
-            if (this.words[i].wait==0) {
-                this.currentWord=this.words[i];
-                this.wordService.getEntry(this.words[i].word)
+        for (let i = 0; i < this.wordService.wordsLearning.length; i++) {
+            if (this.wordService.wordsLearning[i].wait==0) {
+                this.currentWord=this.wordService.wordsLearning[i];
+                this.wordService.getEntry(this.wordService.wordsLearning[i].word)
                     .then(entry=>{
                         this.entry=entry;
                     });
+                this.wordService.saveWordsLearning();
                 return;
             }else {
-                if(this.words[i].wait!=-1)allDone=false;
+                if(this.wordService.wordsLearning[i].wait!=-1)allDone=false;
             }
         }
         if (allDone) {
             //todo do something
-            console.log('all words are done');
+            console.log('all wordService.wordsLearning are done');
             this.finish();
             return;
         }
-        //if all words.wait > 0
-        for (let i = 0; i < this.words.length; i++) {
-            if (this.words[i].wait > 0) {
-                this.words[i].wait--;
+        //if all wordService.wordsLearning.wait > 0
+        for (let i = 0; i < this.wordService.wordsLearning.length; i++) {
+            if (this.wordService.wordsLearning[i].wait > 0) {
+                this.wordService.wordsLearning[i].wait--;
             }
         }
         this.nextWord();
     }
 
     finish():void{
-        this.wordService.removeImpulseData();
+        this.wordService.removeWordsLearning();
         this.nav.pop();
     }
 
@@ -133,15 +134,6 @@ export class ImpulsePage {
 
     ionViewWillLeave():void{
         console.log('will leave this page');
-        let allDone=true;
-        for (let i = 0; i < this.words.length; i++) {
-            if(this.words[i].wait!=-1)allDone=false;
-        }
-        if (allDone) {
-            return;
-        }else {
-            this.wordService.saveImpulseData({words:this.words});
-        }
     }
 
 }

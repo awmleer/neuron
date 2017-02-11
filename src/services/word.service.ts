@@ -37,21 +37,33 @@ export class WordService {
         wordRecord.wait=Math.pow(2,wordRecord.proficiency);
     }
 
-    impulseData:any=null;
-    freshImpulseData():void{
-        this.storage.get('impulseData').then(data=>{
-            this.impulseData=data;
-            console.log(data);
-        });
+    // impulseData:any=null;
+    wordsLearning:any[]=null;
+    saveWordsLearning():void{
+        this.storage.set('wordsLearning',this.wordsLearning);
     }
-    saveImpulseData(impulseData):void{
-        this.impulseData=impulseData;
-        this.storage.set('impulseData',impulseData);
+    freshWordsLearning():void{
+        this.storage.get('wordsLearning')
+            .then(data=>this.wordsLearning=data);
     }
-    removeImpulseData():void{
-        this.impulseData=null;
-        this.storage.remove('impulseData');
+    removeWordsLearning():void{
+        this.wordsLearning=null;
+        this.storage.remove('wordsLearning');
     }
+    // freshImpulseData():void{
+    //     this.storage.get('impulseData').then(data=>{
+    //         this.impulseData=data;
+    //         console.log(data);
+    //     });
+    // }
+    // saveImpulseData(impulseData):void{
+    //     this.impulseData=impulseData;
+    //     this.storage.set('impulseData',impulseData);
+    // }
+    // removeImpulseData():void{
+    //     this.impulseData=null;
+    //     this.storage.remove('impulseData');
+    // }
 
 
     getEntry(word:string):Promise<WordEntry>{

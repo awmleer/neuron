@@ -79,7 +79,7 @@ export class LearnPage {
 
 
     ngOnInit(): void {
-        this.wordService.freshImpulseData();
+        this.wordService.freshWordsLearning();
         this.getRepos();
     }
 

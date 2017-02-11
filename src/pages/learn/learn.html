@@ -18,7 +18,7 @@
             词库
         </ion-item-divider>
         <button ion-item *ngFor="let repo of repos" (click)="startLearn(repo)">
-            {{repo.name}} {{wordService.wordRecords | howManyIn:repo.hash}}/{{repo.amount}}
+            {{repo.name}} <span style="color:gray">{{wordService.wordRecords | howManyIn:repo.hash}}/{{repo.amount}}</span>
         </button>
         <button ion-item (click)="test()">
             TEST

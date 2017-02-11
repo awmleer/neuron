@@ -25,26 +25,24 @@ export class ImpulsePage {
 
     ngOnInit(): void {
         this.amount=this.navParams.get('amount');
-        this.wordService.getRepo(this.navParams.get('repo').id)
-            .then(repo=>{
-                this.repo=repo;
-                for (let i = 0; i < repo.words.length; i++) {
-                    if (this.wordService.isStudied(repo.words[i])==false) {
-                        this.unstudied.push(repo.words[i]);
-                    }
-                }
-                for (let i = 0; i < this.amount; i++) {
-                    this.words.push({
-                        word:this.unstudied.shift(),
-                        count:0,
-                        wait:i,
-                        dirty:0
-                    });
-                }
-                this.nextWord();
+        this.repo=this.navParams.get('repo');
+        for (let i = 0; i < this.repo.words.length; i++) {
+            if (this.wordService.isStudied(this.repo.words[i])==false) {
+                this.unstudied.push(this.repo.words[i]);
+            }
+        }
+        for (let i = 0; i < this.amount; i++) {
+            let index=Math.floor((Math.random()*this.unstudied.length));
+            console.log(index);
+            this.words.push({
+                word:this.unstudied[index],
+                count:0,
+                wait:i,
+                dirty:0
             });
-
-        // console.log(_);
+            this.unstudied.splice(index,1);
+        }
+        this.nextWord();
     }
 
     nextWord():void{

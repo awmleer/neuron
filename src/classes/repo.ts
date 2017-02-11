@@ -14,7 +14,7 @@ export class RepoDetail extends RepoBrief{
     }
     constructor (repo:any,needHash:boolean){
         super();
-        this.id=repo.words;
+        this.id=repo.id;
         this.name=repo.name;
         this.amount=repo.amount;
         this.words=repo.words;

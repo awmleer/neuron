@@ -26,7 +26,7 @@ export class LearnPage {
         this.wordService.getRepos().then(repos=>{
             // this.repos=repos;
             for (let i = 0; i < repos.length; i++) {
-                this.wordService.getRepo(repos[i].id).then(repo=>{
+                this.wordService.getRepo(repos[i].id,true).then(repo=>{
                     // repo.doHash();
                     console.log(repo);
                     this.repos.push(repo);
@@ -35,7 +35,7 @@ export class LearnPage {
         });
     }
 
-    startLearn(repo:RepoBrief):void{
+    startLearn(repo:RepoDetail):void{
         let prompt = this.alertCtrl.create({
             title: '设置',
             message: "请输入计划新学的单词个数",

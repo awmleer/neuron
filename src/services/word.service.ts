@@ -13,16 +13,17 @@ export class WordService {
         this.storage.get('wordRecords').then(wordRecords=>{
             if (wordRecords) {
                 this.wordRecords=wordRecords;
-                this.wordRecordsSubject.next(this.wordRecords);
-                console.log(this.wordRecordsSubject);
+                // this.wordRecordsSubject.next(this.wordRecords);
+                // console.log(this.wordRecordsSubject);
                 console.log(this.wordRecords);
             }
         });
     }
 
     wordRecords:WordRecord[]=[];
-    private wordRecordsSubject=new Subject<WordRecord[]>();
-    wordRecords$=this.wordRecordsSubject.asObservable();
+    // wordRecordsSubject=new Subject<WordRecord[]>();
+    // wordRecords$=this.wordRecordsSubject.asObservable();
+
     isStudied(word:string):boolean{
         for (let i = 0; i < this.wordRecords.length; i++) {
             if (this.wordRecords[i].word == word) {
@@ -53,6 +54,7 @@ export class WordService {
         }
         this.changeWait(wordRecord);
         this.wordRecords.push(wordRecord);
+        // this.wordRecordsSubject.next(this.wordRecords);
         this.storage.set('wordRecords',this.wordRecords);
         console.log(this.wordRecords);
     }

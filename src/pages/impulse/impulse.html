@@ -10,13 +10,14 @@
     <ion-grid>
         <ion-row>
             <ion-col><button (click)="clickKnow()" ion-button color="default" block>认识</button></ion-col>
-            <ion-col><button ion-button color="light" block>模糊</button></ion-col>
-            <ion-col><button ion-button color="danger" block>忘记</button></ion-col>
+            <ion-col><button (click)="clickVague()" ion-button color="light" block>模糊</button></ion-col>
+            <ion-col><button (click)="clickForget()" ion-button color="danger" block>忘记</button></ion-col>
         </ion-row>
     </ion-grid>
     <p>
+        {{words[0]?.word}}<br>
         {{amount}}
         {{entry?.level}}
-        {{entry?.word}}
+        {{entry?.word}}<br>
     </p>
 </ion-content>

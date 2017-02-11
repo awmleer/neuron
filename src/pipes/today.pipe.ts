@@ -1,7 +1,10 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import {WordRecord} from "../classes/word";
 
-@Pipe({name: 'todayLearn'})
+@Pipe({
+    name: 'todayLearn',
+    pure:false
+})
 export class TodayLearnPipe implements PipeTransform {
     transform(wordRecords: WordRecord[]): number {
         let count:number=0;

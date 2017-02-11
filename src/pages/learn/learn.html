@@ -12,13 +12,16 @@
         <ion-item>
             <!--<ion-icon name="flash" item-left></ion-icon>-->
             今日已新学单词
-            <span item-right>{{wordRecords | todayLearn}}</span>
+            <span item-right>{{this.wordService.wordRecords | todayLearn}}</span>
         </ion-item>
         <ion-item-divider>
             词库
         </ion-item-divider>
         <button ion-item *ngFor="let repo of repos" (click)="startLearn(repo)">
             {{repo.name}}
+        </button>
+        <button ion-item (click)="test()">
+            TEST
         </button>
         <ion-item>
             四级

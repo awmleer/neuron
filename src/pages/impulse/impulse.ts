@@ -13,14 +13,14 @@ import {WordEntry} from "../../classes/word";
 export class ImpulsePage {
     amount:number;
     words:any[]=[];
-    currentIndex:number;
+    currentWord:any;
     repo:RepoDetail;
     unstudied:any[]=[];
     entry:WordEntry;
     constructor(
-        public navCtrl: NavController,
+        public nav: NavController,
         private navParams: NavParams,
-        private wordService:WordService
+        public wordService:WordService
     ) {}
 
     ngOnInit(): void {
@@ -41,17 +41,17 @@ export class ImpulsePage {
                         dirty:0
                     });
                 }
-                this.nextLoop();
+                this.nextWord();
             });
 
         // console.log(_);
     }
 
-    nextLoop():void{
+    nextWord():void{
         let allDone=true;
         for (let i = 0; i < this.words.length; i++) {
             if (this.words[i].wait==0) {
-                this.currentIndex=i;
+                this.currentWord=this.words[i];
                 this.wordService.getEntry(this.words[i].word)
                     .then(entry=>{
                         this.entry=entry;
@@ -63,30 +63,62 @@ export class ImpulsePage {
         }
         if (allDone) {
             //todo do something
+            console.log('all words are done');
+            this.nav.pop();
             return;
         }
+        //if all words.wait > 0
         for (let i = 0; i < this.words.length; i++) {
             if (this.words[i].wait > 0) {
                 this.words[i].wait--;
             }
         }
+        this.nextWord();
     }
 
     clickKnow():void{
-        this.wordService.addRecord(this.words[this.currentIndex].word,'know');//just for debug
-
-        // if (this.words[this.currentIndex].dirty==0) {//First time today
-        //     //if in learn mode
-        //     //add word to records
-        // }
+        if (this.currentWord.dirty==0) {//First time today
+            //if in learn mode
+            //add word to records
+            this.wordService.addRecord(this.currentWord.word,'know');
+            this.currentWord.wait=-1;//never show this word today
+        }else {
+            this.currentWord.count+=1;
+            if (this.currentWord.count == 6) {//if count reaches 6
+                this.currentWord.wait=-1;//this word is done for today
+                if (this.currentWord.dirty == 2) {
+                    this.wordService.addRecord(this.currentWord.word,'vague');
+                }else if (this.currentWord.dirty == 3) {
+                    this.wordService.addRecord(this.currentWord.word,'forget');
+                }
+            }else {
+                this.currentWord.wait=this.currentWord.count*2;
+            }
+        }
+        this.nextWord();
     }
 
     clickVague():void{
-
+        if (this.currentWord.dirty==0) {//First time today
+            this.currentWord.count=3;
+            this.currentWord.wait=2;
+        }else {
+            this.currentWord.wait=this.currentWord.count*2;
+        }
+        this.currentWord.dirty=2;
+        this.nextWord();
     }
 
     clickForget():void{
-
+        if (this.currentWord.dirty==0) {//First time today
+            this.currentWord.count=1;
+            this.currentWord.wait=2;
+        }else {
+            this.currentWord.count--;
+            this.currentWord.wait=this.currentWord.count*2;
+        }
+        this.currentWord.dirty=3;
+        this.nextWord();
     }
 
 }

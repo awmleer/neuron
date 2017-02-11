@@ -8,9 +8,8 @@ import {WordRecord} from "../../classes/word";
 
 @Component({
     selector: 'page-learn',
-    templateUrl: 'learn.html',
-    providers:[WordService]
-
+    templateUrl: 'learn.html'
+    // providers:[WordService]
 })
 export class LearnPage {
     repos: RepoBrief[];
@@ -20,19 +19,23 @@ export class LearnPage {
     constructor(
         public nav: NavController,
         public alertCtrl: AlertController,
-        private wordService:WordService
+        public wordService:WordService
     ) {
         // this.wordRecords=this.wordService.getWordRecords();
-        this.subscriptions[0]=wordService.wordRecords$.subscribe(wordRecords=>{
-            this.wordRecords=wordRecords;
-            console.log('get it!!!');
-        })
+        // this.subscriptions[0]=wordService.wordRecords$.subscribe(wordRecords=>{
+        //     this.wordRecords=wordRecords;
+        //     console.log('get it!!!');
+        // });
     }
 
     getRepos():void{
         this.wordService.getRepos().then(repos=>{
             this.repos=repos
         });
+    }
+
+    test():void{
+        console.log(this.wordService);
     }
 
     startLearn(repo:RepoBrief):void{
@@ -69,6 +72,13 @@ export class LearnPage {
 
     ngOnInit(): void {
         this.getRepos();
+    }
+
+
+    ionViewWillEnter() {
+        console.log('view enter');
+        this.wordRecords=this.wordService.wordRecords;
+        console.log(this.wordRecords);
     }
 
     ngOnDestroy() {

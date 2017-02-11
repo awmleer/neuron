@@ -14,8 +14,8 @@ export class ImpulsePage {
     amount:number;
     words:any[]=[];
     currentWord:any;
-    repo:RepoDetail;
-    unstudied:any[]=[];
+    // repo:RepoDetail;
+    // unstudied:any[]=[];
     entry:WordEntry;
     constructor(
         public nav: NavController,
@@ -24,23 +24,30 @@ export class ImpulsePage {
     ) {}
 
     ngOnInit(): void {
-        this.amount=this.navParams.get('amount');
-        this.repo=this.navParams.get('repo');
-        for (let i = 0; i < this.repo.words.length; i++) {
-            if (this.wordService.isStudied(this.repo.words[i])==false) {
-                this.unstudied.push(this.repo.words[i]);
+        //todo: check navParams->type==learn or review
+        if (this.navParams.get('continued')) {
+            this.words=this.wordService.impulseData.words;
+            this.amount=this.words.length;
+        }else {
+            this.amount=this.navParams.get('amount');
+            let repo:RepoDetail=this.navParams.get('repo');
+            let unstudied=[];
+            for (let i = 0; i < repo.words.length; i++) {
+                if (this.wordService.isStudied(repo.words[i])==false) {
+                    unstudied.push(repo.words[i]);
+                }
             }
-        }
-        for (let i = 0; i < this.amount; i++) {
-            let index=Math.floor((Math.random()*this.unstudied.length));
-            console.log(index);
-            this.words.push({
-                word:this.unstudied[index],
-                count:0,
-                wait:i,
-                dirty:0
-            });
-            this.unstudied.splice(index,1);
+            for (let i = 0; i < this.amount; i++) {
+                let index=Math.floor((Math.random()*unstudied.length));
+                console.log(index);
+                this.words.push({
+                    word:unstudied[index],
+                    count:0,
+                    wait:i,
+                    dirty:0
+                });
+                unstudied.splice(index,1);
+            }
         }
         this.nextWord();
     }

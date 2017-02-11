@@ -17,7 +17,7 @@
         <ion-item-divider>
             词库
         </ion-item-divider>
-        <button ion-item (click)="startLearn(repo)" [hidden]="wordService.impulseData==null">
+        <button ion-item (click)="continueLearn()" [hidden]="wordService.impulseData==null">
             <b>进入未完成的学习</b> <span style="color:gray">{{wordService.impulseData?.words | wordsDoneCount}}/{{wordService.impulseData?.words.length}}</span>
         </button>
         <button ion-item *ngFor="let repo of repos" (click)="startLearn(repo)">

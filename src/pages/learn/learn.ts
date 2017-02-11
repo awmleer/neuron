@@ -58,7 +58,9 @@ export class LearnPage {
                         console.log(data.amount);
                         this.nav.push(ImpulsePage,{
                             amount:data.amount,
-                            repo:repo
+                            repo:repo,
+                            type:'learn',
+                            continued:false
                         });
                     }
                 }
@@ -66,6 +68,15 @@ export class LearnPage {
         });
         prompt.present();
     }
+
+
+    continueLearn():void{
+        this.nav.push(ImpulsePage,{
+            type:'learn',
+            continued:true
+        });
+    }
+
 
     ngOnInit(): void {
         this.wordService.freshImpulseData();

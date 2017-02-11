@@ -62,7 +62,7 @@ export class ImpulsePage {
         if (allDone) {
             //todo do something
             console.log('all words are done');
-            this.nav.pop();
+            this.finish();
             return;
         }
         //if all words.wait > 0
@@ -72,6 +72,11 @@ export class ImpulsePage {
             }
         }
         this.nextWord();
+    }
+
+    finish():void{
+        this.wordService.removeImpulseData();
+        this.nav.pop();
     }
 
     clickKnow():void{
@@ -117,6 +122,19 @@ export class ImpulsePage {
         }
         this.currentWord.dirty=3;
         this.nextWord();
+    }
+
+    ionViewWillLeave():void{
+        console.log('will leave this page');
+        let allDone=true;
+        for (let i = 0; i < this.words.length; i++) {
+            if(this.words[i].wait!=-1)allDone=false;
+        }
+        if (allDone) {
+            return;
+        }else {
+            this.wordService.saveImpulseData({words:this.words});
+        }
     }
 
 }

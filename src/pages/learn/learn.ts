@@ -68,13 +68,14 @@ export class LearnPage {
     }
 
     ngOnInit(): void {
+        this.wordService.freshImpulseData();
         this.getRepos();
     }
 
 
-    // ionViewWillEnter() {
-    //
-    // }
+    ionViewWillEnter() {
+
+    }
 
     ngOnDestroy() {
         // prevent memory leak when component destroyed

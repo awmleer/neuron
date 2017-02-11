@@ -37,6 +37,23 @@ export class WordService {
         wordRecord.wait=Math.pow(2,wordRecord.proficiency);
     }
 
+    impulseData:any=null;
+    freshImpulseData():void{
+        this.storage.get('impulseData').then(data=>{
+            this.impulseData=data;
+            console.log(data);
+        });
+    }
+    saveImpulseData(impulseData):void{
+        this.impulseData=impulseData;
+        this.storage.set('impulseData',impulseData);
+    }
+    removeImpulseData():void{
+        this.impulseData=null;
+        this.storage.remove('impulseData');
+    }
+
+
     getEntry(word:string):Promise<WordEntry>{
         return this.http.get(`/api/entry/${word}/`)
             .toPromise()

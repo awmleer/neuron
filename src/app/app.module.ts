@@ -11,6 +11,7 @@ import {WordService} from "../services/word.service";
 import {ImpulsePage} from "../pages/impulse/impulse";
 import { Storage } from '@ionic/storage';
 import {TodayLearnPipe} from "../pipes/today.pipe";
+import {HowManyIn} from "../pipes/how-many-in.pipe";
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import {TodayLearnPipe} from "../pipes/today.pipe";
         TabsPage,
         SettingsPage,
         ImpulsePage,
-        TodayLearnPipe
+        TodayLearnPipe,
+        HowManyIn
     ],
     imports: [
         IonicModule.forRoot(MyApp),

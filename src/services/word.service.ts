@@ -67,6 +67,6 @@ export class WordService {
     getRepo(id:number):Promise<RepoDetail> {
         return this.http.get(`/api/repo/${id}/`)
             .toPromise()
-            .then(response=>response.json() as RepoDetail);
+            .then(response=>new RepoDetail(response.json(),true) as RepoDetail);
     }
 }

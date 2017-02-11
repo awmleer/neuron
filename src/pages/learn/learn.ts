@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 import {NavController, AlertController} from 'ionic-angular';
 import {WordService} from "../../services/word.service";
-import {RepoBrief} from "../../classes/repo";
+import {RepoBrief, RepoDetail} from "../../classes/repo";
 import {ImpulsePage} from "../impulse/impulse";
 import {WordRecord} from "../../classes/word";
 
@@ -12,30 +12,27 @@ import {WordRecord} from "../../classes/word";
     // providers:[WordService]
 })
 export class LearnPage {
-    repos: RepoBrief[];
+    repos: RepoDetail[]=[];
     wordRecords:WordRecord[]=[];
     subscriptions:any[]=[];
 
     constructor(
         public nav: NavController,
         public alertCtrl: AlertController,
-        public wordService:WordService
-    ) {
-        // this.wordRecords=this.wordService.getWordRecords();
-        // this.subscriptions[0]=wordService.wordRecords$.subscribe(wordRecords=>{
-        //     this.wordRecords=wordRecords;
-        //     console.log('get it!!!');
-        // });
-    }
+        private wordService:WordService
+    ) {}
 
     getRepos():void{
         this.wordService.getRepos().then(repos=>{
-            this.repos=repos
+            // this.repos=repos;
+            for (let i = 0; i < repos.length; i++) {
+                this.wordService.getRepo(repos[i].id).then(repo=>{
+                    // repo.doHash();
+                    console.log(repo);
+                    this.repos.push(repo);
+                });
+            }
         });
-    }
-
-    test():void{
-        console.log(this.wordService);
     }
 
     startLearn(repo:RepoBrief):void{
@@ -75,11 +72,9 @@ export class LearnPage {
     }
 
 
-    ionViewWillEnter() {
-        console.log('view enter');
-        this.wordRecords=this.wordService.wordRecords;
-        console.log(this.wordRecords);
-    }
+    // ionViewWillEnter() {
+    //
+    // }
 
     ngOnDestroy() {
         // prevent memory leak when component destroyed

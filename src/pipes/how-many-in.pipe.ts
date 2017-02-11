@@ -3,14 +3,14 @@ import {WordRecord} from "../classes/word";
 import * as moment from "moment";
 
 @Pipe({
-    name: 'todayLearn',
+    name: 'howManyIn',
     pure:false
 })
-export class TodayLearnPipe implements PipeTransform {
-    transform(wordRecords: WordRecord[]): number {
+export class HowManyIn implements PipeTransform {
+    transform(wordRecords: WordRecord[], hash:any): number {
         let count:number=0;
         for (let i = 0; i < wordRecords.length; i++) {
-            if (moment(wordRecords[i].addTime).isSame(moment(),'day')) {
+            if (typeof hash[wordRecords[i].word] != 'undefined') {
                 count++;
             }
         }

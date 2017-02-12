@@ -1,7 +1,7 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
-import { AboutPage } from '../pages/about/about';
+import { ReviewPage } from '../pages/review/review';
 import { ContactPage } from '../pages/contact/contact';
 import { LearnPage } from '../pages/learn/learn';
 import { TabsPage } from '../pages/tabs/tabs';
@@ -18,7 +18,7 @@ import {WordsDoneCountPipe} from "../pipes/words-done-count.pipe";
 @NgModule({
     declarations: [
         MyApp,
-        AboutPage,
+        ReviewPage,
         ContactPage,
         LearnPage,
         TabsPage,
@@ -35,7 +35,7 @@ import {WordsDoneCountPipe} from "../pipes/words-done-count.pipe";
     bootstrap: [IonicApp],
     entryComponents: [
         MyApp,
-        AboutPage,
+        ReviewPage,
         ContactPage,
         LearnPage,
         TabsPage,

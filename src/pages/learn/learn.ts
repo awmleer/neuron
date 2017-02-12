@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-
-import {NavController, AlertController} from 'ionic-angular';
+import {NavController, AlertController, ToastController} from 'ionic-angular';
 import {WordService} from "../../services/word.service";
 import {RepoBrief, RepoDetail} from "../../classes/repo";
 import {ImpulsePage} from "../impulse/impulse";
 import {WordRecord} from "../../classes/word";
+import * as _ from "lodash"
 
 @Component({
     selector: 'page-learn',
@@ -18,7 +18,8 @@ export class LearnPage {
     constructor(
         public nav: NavController,
         public alertCtrl: AlertController,
-        private wordService:WordService
+        private wordService:WordService,
+        public toastCtrl: ToastController
     ) {}
 
     getRepos():void{
@@ -36,7 +37,7 @@ export class LearnPage {
 
     startLearn(repo:RepoDetail):void{
         if (this.wordService.wordsLearning!=null) {
-            this.alertCtrl.create({
+            let alert=this.alertCtrl.create({
                 title:'提醒',
                 subTitle:'您有正在进行的学习队列，是否放弃该队列并新建一个学习队列？',
                 buttons:[
@@ -47,42 +48,59 @@ export class LearnPage {
                         text:'确定',
                         handler:data=>{
                             //if click yes
-                            //let user input the amount
-                            this.alertCtrl.create({
-                                title: '设置',
-                                message: "请输入计划新学的单词个数",
-                                inputs: [
-                                    {
-                                        name: 'amount',
-                                        placeholder: ''
-                                    },
-                                ],
-                                buttons: [
-                                    {
-                                        text: '取消',
-                                        handler: data => {
-                                            console.log('Cancel clicked');
-                                        }
-                                    },
-                                    {
-                                        text: '确定',
-                                        handler: data => {
-                                            console.log(data.amount);
-                                            this.nav.push(ImpulsePage,{
-                                                amount:data.amount,
-                                                repo:repo,
-                                                type:'learn',
-                                                continued:false
-                                            });
-                                        }
-                                    }
-                                ]
-                            }).present();
+                            alert.dismiss().then(() => {
+                                this.newLearn(repo);
+                            });
+                            return false;
                         }
                     }
                 ]
-            }).present();
+            });
+            alert.present();
+        }else {
+            this.newLearn(repo);
         }
+    }
+
+    newLearn(repo:RepoDetail):void{
+        let alert=this.alertCtrl.create({
+            title: '设置',
+            message: "请输入计划新学的单词个数",
+            inputs: [
+                {
+                    name: 'amount',
+                    placeholder: ''
+                },
+            ],
+            buttons: [
+                {
+                    text: '取消'
+                },
+                {
+                    text: '确定',
+                    handler: data => {
+                        let amount=_.toSafeInteger(data.amount);
+                        if (amount>0) {
+                            alert.dismiss().then(() => {
+                                this.nav.push(ImpulsePage,{
+                                    amount:amount,
+                                    repo:repo,
+                                    type:'learn',
+                                    continued:false
+                                });
+                            });
+                        }else {
+                            this.toastCtrl.create({
+                                message:'请输入一个正整数',
+                                duration:2000
+                            }).present();
+                        }
+                        return false;
+                    }
+                }
+            ]
+        });
+        alert.present();
     }
 
     continueLearn():void{

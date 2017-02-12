@@ -7,10 +7,10 @@ import * as moment from "moment";
     pure:false
 })
 export class TodayLearnPipe implements PipeTransform {
-    transform(wordRecords: WordRecord[]): number {
+    transform(wordRecords): number {
         let count:number=0;
-        for (let i = 0; i < wordRecords.length; i++) {
-            if (moment(wordRecords[i].addTime).isSame(moment(),'day')) {
+        for (let word in wordRecords) {
+            if (moment(wordRecords[word].addTime).isSame(moment(),'day')) {
                 count++;
             }
         }

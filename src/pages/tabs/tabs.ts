@@ -15,7 +15,10 @@ export class TabsPage {
     tab2Root: any = ReviewPage;
     tab3Root: any = SettingsPage;
 
-    constructor(public wordService:WordService) {
+    constructor(public wordService:WordService) {}
 
+    ngOnInit():void{
+        console.log('tabs init');
     }
+
 }

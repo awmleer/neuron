@@ -1,12 +1,22 @@
 import * as moment from "moment";
 
+// export class WordRecord {
+//     word:string;
+//     proficiency:number;//range from 0 to 8
+//     addTime:number;
+//     wait:number=0;
+//     constructor (word:string, proficiency:number){
+//         this.word=word;
+//         this.proficiency=proficiency;
+//         this.addTime=moment().valueOf();
+//     }
+// }
+
 export class WordRecord {
-    word:string;
     proficiency:number;//range from 0 to 8
     addTime:number;
     wait:number=0;
-    constructor (word:string, proficiency:number){
-        this.word=word;
+    constructor (proficiency:number){
         this.proficiency=proficiency;
         this.addTime=moment().valueOf();
     }

@@ -6,10 +6,10 @@ import {WordRecord} from "../classes/word";
     pure:false
 })
 export class HowManyInPipe implements PipeTransform {
-    transform(wordRecords: WordRecord[], hash:any): number {
+    transform(words:string[], wordRecords:any): number {
         let count:number=0;
-        for (let i = 0; i < wordRecords.length; i++) {
-            if (typeof hash[wordRecords[i].word] != 'undefined') {
+        for (let i = 0; i < words.length; i++) {
+            if (typeof wordRecords[words[i]] != 'undefined') {
                 count++;
             }
         }

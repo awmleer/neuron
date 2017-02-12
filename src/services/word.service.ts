@@ -8,28 +8,20 @@ import { Storage } from '@ionic/storage';
 
 @Injectable()
 export class WordService {
+    wordRecords={};
+
     constructor(private http:Http, private storage:Storage){
-        this.storage.get('wordRecords').then((wordRecords:WordRecord[])=>{
+        this.storage.get('wordRecords').then((wordRecords)=>{
             if (wordRecords) {
                 this.wordRecords=wordRecords;
-                // this.wordRecordsSubject.next(this.wordRecords);
-                // console.log(this.wordRecordsSubject);
                 console.log(this.wordRecords);
             }
         });
     }
 
-    wordRecords:WordRecord[]=[];
-    // wordRecordsSubject=new Subject<WordRecord[]>();
-    // wordRecords$=this.wordRecordsSubject.asObservable();
 
     isStudied(word:string):boolean{
-        for (let i = 0; i < this.wordRecords.length; i++) {
-            if (this.wordRecords[i].word == word) {
-                return true;
-            }
-        }
-        return false;
+        return typeof this.wordRecords[word]!="undefined";
     }
 
     generateWait(wordRecord:WordRecord):void{
@@ -74,17 +66,16 @@ export class WordService {
     addRecord(word:string,mark:string):void{
         let wordRecord;
         if (mark == 'know') {
-            wordRecord=new WordRecord(word,6);
+            wordRecord=new WordRecord(6);
         }else if (mark == 'vague') {
-            wordRecord=new WordRecord(word,3);
+            wordRecord=new WordRecord(3);
         }else if (mark == 'forget') {
-            wordRecord=new WordRecord(word,0);
+            wordRecord=new WordRecord(0);
         }else if (mark == 'master') {
-            wordRecord=new WordRecord(word,8);
+            wordRecord=new WordRecord(8);
         }
         this.generateWait(wordRecord);
-        this.wordRecords.push(wordRecord);
-        // this.wordRecordsSubject.next(this.wordRecords);
+        this.wordRecords[word]=wordRecord;
         this.storage.set('wordRecords',this.wordRecords);
         console.log(this.wordRecords);
     }

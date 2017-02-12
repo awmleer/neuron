@@ -21,7 +21,7 @@
             <b>进入未完成的学习</b> <span style="color:gray">{{wordService.wordsLearning | wordsDoneCount}}/{{wordService.wordsLearning?.length}}</span>
         </button>
         <button ion-item *ngFor="let repo of repos" (click)="startLearn(repo)">
-            {{repo.name}} <span style="color:gray">{{wordService.wordRecords | howManyIn:repo.hash}}/{{repo.amount}}</span>
+            {{repo.name}} <span style="color:gray">{{repo.words | howManyIn:wordService.wordRecords}}/{{repo.amount}}</span>
         </button>
         <ion-item>
             四级

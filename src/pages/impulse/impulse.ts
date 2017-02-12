@@ -44,6 +44,7 @@ export class ImpulsePage {
                     .then(entry=>{
                         this.entry=entry;
                     });
+                //saveWordsImpulsing every time we get a new currentWord
                 this.wordService.saveWordsImpulsing(this.type);
                 return;
             }else {
@@ -51,7 +52,6 @@ export class ImpulsePage {
             }
         }
         if (allDone) {
-            //todo do something
             console.log('all words are done');
             this.finish();
             return;
@@ -68,25 +68,28 @@ export class ImpulsePage {
     finish():void{
         if (this.type == 'learn') {
             this.wordService.removeWordsLearning();
+        }else if (this.type == 'review') {
+            this.wordService.saveWordsImpulsing(this.type);
         }
         this.nav.pop();
     }
 
     clickKnow():void{
         if (this.currentWord.dirty==0) {//First time today
-            //if in learn mode
-            //add word to records
-            this.wordService.addRecord(this.currentWord.word,'know');
             this.currentWord.dirty=1;
             this.currentWord.wait=-1;//never show this word today
+            if(this.type=='learn')this.wordService.addRecord(this.currentWord.word,'know');
+            if(this.type=='review')this.wordService.moltRecord(this.currentWord.word,'know');
         }else {
             this.currentWord.count+=1;
             if (this.currentWord.count == 6) {//if count reaches 6
                 this.currentWord.wait=-1;//this word is done for today
                 if (this.currentWord.dirty == 2) {
-                    this.wordService.addRecord(this.currentWord.word,'vague');
+                    if(this.type=='learn')this.wordService.addRecord(this.currentWord.word,'vague');
+                    if(this.type=='review')this.wordService.moltRecord(this.currentWord.word,'vague');
                 }else if (this.currentWord.dirty == 3) {
-                    this.wordService.addRecord(this.currentWord.word,'forget');
+                    if(this.type=='learn')this.wordService.addRecord(this.currentWord.word,'forget');
+                    if(this.type=='review')this.wordService.moltRecord(this.currentWord.word,'forget');
                 }
             }else {
                 this.currentWord.wait=this.currentWord.count*2;
@@ -121,7 +124,7 @@ export class ImpulsePage {
 
     markAsMaster():void{
         if(this.type=='learn')this.wordService.addRecord(this.currentWord.word,'master');
-        if(this.type=='review'){}//do something
+        if(this.type=='review')this.wordService.moltRecord(this.currentWord.word,'master');
         this.currentWord.wait=-1;//never show it today
         this.currentWord.dirty=4;
         this.nextWord();

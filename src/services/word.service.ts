@@ -29,29 +29,31 @@ export class WordService {
     }
 
 
-    saveRecordUpdateTime():void{
-        this.storage.set('wordRecordUpdateTime',moment().valueOf());
+    saveWaitsFreshTime():void{
+        this.storage.set('wordWaitsFreshTime',moment().valueOf());
     }
     saveWordRecords():void{
         this.storage.set('wordRecords',this.wordRecords);
     }
 
-    freshWait():void{
-        this.storage.get('wordRecordUpdateTime').then(updateTime=>{
+    freshWaits():void{
+        this.storage.get('wordWaitsFreshTime').then(updateTime=>{
             if (updateTime == null) {
-                this.saveRecordUpdateTime();
+                this.saveWaitsFreshTime();
+                this.saveWordRecords();
+                this.saveWordsImpulsing('review');
                 return;
             }
             let diff=moment().diff(moment(updateTime),'days');
-            for (let i = 0; i < diff; i++) {
-                for (let word in this.wordRecords) {
-                    let record=this.wordRecords[word];
-                    if (record.wait > 0) record.wait--;
-                }
-            }
 
             if (diff > 0) {//this makes sure these codes will only run one time every day
                 this.wordsReviewing=[];
+                for (let i = 0; i < diff; i++) {
+                    for (let word in this.wordRecords) {
+                        let record=this.wordRecords[word];
+                        if (record.wait > 0) record.wait--;
+                    }
+                }
                 let i=0;
                 for (let word in this.wordRecords) {
                     let record=this.wordRecords[word];
@@ -78,15 +80,29 @@ export class WordService {
                         i++;
                     }
                 }
-                this.saveRecordUpdateTime();
+                this.saveWaitsFreshTime();
                 this.saveWordRecords();
                 this.saveWordsImpulsing('review');//this will override yesterday's record, if yesterday the user didn't finish reviewing
+                console.log('wordsReviewing saved!!!!');
             }
         });
     }
 
     generateWait(wordRecord:WordRecord):void{
-        wordRecord.wait=Math.pow(2,wordRecord.proficiency);
+        let wait:number;
+        switch(wordRecord.proficiency) {
+            case 0:wait=1;break;
+            case 1:wait=2;break;
+            case 2: wait = 3; break;
+            case 3: wait = 7; break;
+            case 4: wait = 15; break;
+            case 5: wait = 30; break;
+            case 6: wait = 60; break;
+            case 7: wait = 120; break;
+            case 8: wait = -1; break;
+            default: wait=1;
+        }
+        wordRecord.wait=wait;
     }
 
 
@@ -95,6 +111,7 @@ export class WordService {
             this.storage.set('wordsLearning',this.wordsLearning);
         }else if (type == 'review') {
             this.storage.set('wordsReviewing',this.wordsReviewing);
+            console.log('review saved');
         }
     }
     freshWordsImpulsing():void{
@@ -103,7 +120,8 @@ export class WordService {
         this.storage.get('wordsReviewing')
             .then(data=>{
                 this.wordsReviewing=data;
-                this.freshWait();
+                console.log(this.wordsReviewing);
+                this.freshWaits();
             });
     }
 
@@ -148,6 +166,25 @@ export class WordService {
         }
         this.generateWait(wordRecord);
         this.wordRecords[word]=wordRecord;
+        this.saveWordRecords();
+        console.log(this.wordRecords);
+    }
+    moltRecord(word:string,mark:string):void{
+        let wordRecord=this.wordRecords[word];
+        if (mark == 'know') {
+            wordRecord.proficiency++;
+        }else if (mark == 'vague') {
+            if(wordRecord.proficiency>0)wordRecord.proficiency--;
+        }else if (mark == 'forget') {
+            if (wordRecord.proficiency > 2) {
+                wordRecord.proficiency-=2;
+            }else {
+                wordRecord.proficiency=0;
+            }
+        }else if (mark == 'master') {
+            wordRecord.proficiency=8;
+        }
+        this.generateWait(wordRecord);
         this.saveWordRecords();
         console.log(this.wordRecords);
     }

@@ -12,7 +12,7 @@ import {ImpulsePage} from "../pages/impulse/impulse";
 import { Storage } from '@ionic/storage';
 import {TodayLearnPipe} from "../pipes/today.pipe";
 import {HowManyInPipe} from "../pipes/how-many-in.pipe";
-import {WordsDoneCountPipe} from "../pipes/words-done-count.pipe";
+import {WordsDoneCountPipe, WordsAllDonePipe} from "../pipes/words-done.pipe";
 
 
 @NgModule({
@@ -26,7 +26,8 @@ import {WordsDoneCountPipe} from "../pipes/words-done-count.pipe";
         ImpulsePage,
         TodayLearnPipe,
         HowManyInPipe,
-        WordsDoneCountPipe
+        WordsDoneCountPipe,
+        WordsAllDonePipe
     ],
     imports: [
         IonicModule.forRoot(MyApp),

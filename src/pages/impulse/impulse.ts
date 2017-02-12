@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import { NavParams } from 'ionic-angular';
+import {NavParams, ActionSheetController} from 'ionic-angular';
 import { NavController } from 'ionic-angular';
 import {RepoDetail} from "../../classes/repo";
 import {WordService} from "../../services/word.service";
@@ -16,14 +16,17 @@ export class ImpulsePage {
     currentWord:any;
     // repo:RepoDetail;
     // unstudied:any[]=[];
+    type:string;
     entry:WordEntry;
     constructor(
         public nav: NavController,
         private navParams: NavParams,
-        public wordService:WordService
+        public wordService:WordService,
+        public actionSheetCtrl:ActionSheetController
     ) {}
 
     ngOnInit(): void {
+        this.type=this.navParams.get('type');
         //todo: check navParams->type==learn or review
         if (this.navParams.get('continued')) {
             this.amount=this.wordService.wordsLearning.length;
@@ -92,6 +95,7 @@ export class ImpulsePage {
             //if in learn mode
             //add word to records
             this.wordService.addRecord(this.currentWord.word,'know');
+            this.currentWord.dirty=1;
             this.currentWord.wait=-1;//never show this word today
         }else {
             this.currentWord.count+=1;
@@ -113,10 +117,10 @@ export class ImpulsePage {
         if (this.currentWord.dirty==0) {//First time today
             this.currentWord.count=3;
             this.currentWord.wait=2;
+            this.currentWord.dirty=2;
         }else {
             this.currentWord.wait=this.currentWord.count*2;
         }
-        this.currentWord.dirty=2;
         this.nextWord();
     }
 
@@ -124,12 +128,40 @@ export class ImpulsePage {
         if (this.currentWord.dirty==0) {//First time today
             this.currentWord.count=1;
             this.currentWord.wait=2;
+            this.currentWord.dirty=3;
         }else {
             this.currentWord.count--;
             this.currentWord.wait=this.currentWord.count*2;
         }
-        this.currentWord.dirty=3;
         this.nextWord();
+    }
+
+    markAsMaster():void{
+        if(this.type=='learn')this.wordService.addRecord(this.currentWord.word,'master');
+        if(this.type=='review'){}//do something
+        this.currentWord.wait=-1;//never show it today
+        this.currentWord.dirty=4;
+        this.nextWord();
+    }
+
+
+    showActionSheet():void{
+        let actionSheet=this.actionSheetCtrl.create({
+            title:'更多操作',
+            buttons:[
+                {
+                    text:'标记为熟知词',
+                    handler:()=>{
+                        this.markAsMaster();
+                    }
+                },
+                {
+                    text:'取消',
+                    role:'cancel'
+                }
+            ]
+        });
+        actionSheet.present();
     }
 
     ionViewWillLeave():void{

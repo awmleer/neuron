@@ -9,7 +9,7 @@ import { Storage } from '@ionic/storage';
 @Injectable()
 export class WordService {
     constructor(private http:Http, private storage:Storage){
-        this.storage.get('wordRecords').then(wordRecords=>{
+        this.storage.get('wordRecords').then((wordRecords:WordRecord[])=>{
             if (wordRecords) {
                 this.wordRecords=wordRecords;
                 // this.wordRecordsSubject.next(this.wordRecords);
@@ -32,7 +32,7 @@ export class WordService {
         return false;
     }
 
-    changeWait(wordRecord:WordRecord):void{
+    generateWait(wordRecord:WordRecord):void{
         wordRecord.wait=Math.pow(2,wordRecord.proficiency);
     }
 
@@ -79,8 +79,10 @@ export class WordService {
             wordRecord=new WordRecord(word,3);
         }else if (mark == 'forget') {
             wordRecord=new WordRecord(word,0);
+        }else if (mark == 'master') {
+            wordRecord=new WordRecord(word,8);
         }
-        this.changeWait(wordRecord);
+        this.generateWait(wordRecord);
         this.wordRecords.push(wordRecord);
         // this.wordRecordsSubject.next(this.wordRecords);
         this.storage.set('wordRecords',this.wordRecords);

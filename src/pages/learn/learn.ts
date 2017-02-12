@@ -13,7 +13,6 @@ import {WordRecord} from "../../classes/word";
 })
 export class LearnPage {
     repos: RepoDetail[]=[];
-    wordRecords:WordRecord[]=[];
     subscriptions:any[]=[];
 
     constructor(

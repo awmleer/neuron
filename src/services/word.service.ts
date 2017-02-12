@@ -85,9 +85,9 @@ export class WordService {
             .toPromise()
             .then(response=>response.json() as RepoBrief[]);
     }
-    getRepo(id:number,needHash:boolean):Promise<RepoDetail> {
+    getRepo(id:number):Promise<RepoDetail> {
         return this.http.get(`/api/repo/${id}/`)
             .toPromise()
-            .then(response=>new RepoDetail(response.json(),needHash) as RepoDetail);
+            .then(response=>new RepoDetail(response.json()) as RepoDetail);
     }
 }

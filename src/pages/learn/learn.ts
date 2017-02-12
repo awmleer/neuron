@@ -36,39 +36,55 @@ export class LearnPage {
     }
 
     startLearn(repo:RepoDetail):void{
-        let prompt = this.alertCtrl.create({
-            title: '设置',
-            message: "请输入计划新学的单词个数",
-            inputs: [
-                {
-                    name: 'amount',
-                    placeholder: ''
-                },
-            ],
-            buttons: [
-                {
-                    text: '取消',
-                    handler: data => {
-                        console.log('Cancel clicked');
+        if (this.wordService.wordsLearning!=null) {
+            this.alertCtrl.create({
+                title:'提醒',
+                subTitle:'您有正在进行的学习队列，是否放弃该队列并新建一个学习队列？',
+                buttons:[
+                    {
+                        text:'取消'
+                    },
+                    {
+                        text:'确定',
+                        handler:data=>{
+                            //if click yes
+                            //let user input the amount
+                            this.alertCtrl.create({
+                                title: '设置',
+                                message: "请输入计划新学的单词个数",
+                                inputs: [
+                                    {
+                                        name: 'amount',
+                                        placeholder: ''
+                                    },
+                                ],
+                                buttons: [
+                                    {
+                                        text: '取消',
+                                        handler: data => {
+                                            console.log('Cancel clicked');
+                                        }
+                                    },
+                                    {
+                                        text: '确定',
+                                        handler: data => {
+                                            console.log(data.amount);
+                                            this.nav.push(ImpulsePage,{
+                                                amount:data.amount,
+                                                repo:repo,
+                                                type:'learn',
+                                                continued:false
+                                            });
+                                        }
+                                    }
+                                ]
+                            }).present();
+                        }
                     }
-                },
-                {
-                    text: '确定',
-                    handler: data => {
-                        console.log(data.amount);
-                        this.nav.push(ImpulsePage,{
-                            amount:data.amount,
-                            repo:repo,
-                            type:'learn',
-                            continued:false
-                        });
-                    }
-                }
-            ]
-        });
-        prompt.present();
+                ]
+            }).present();
+        }
     }
-
 
     continueLearn():void{
         this.nav.push(ImpulsePage,{

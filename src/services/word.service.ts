@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import {RepoBrief, RepoDetail} from "../classes/repo";
 import {Http} from "@angular/http";
-import * as _ from "lodash";
 import 'rxjs/add/operator/toPromise'
 import {WordEntry, WordRecord} from "../classes/word";
 import { Storage } from '@ionic/storage';
-import {Subject} from "rxjs";
+
 
 @Injectable()
 export class WordService {

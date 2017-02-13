@@ -11,11 +11,11 @@
         <ion-card-header>
             复习进度
         </ion-card-header>
-        <ion-card-content *ngIf="wordService.wordsReviewing!=[]">
+        <ion-card-content *ngIf="wordService.wordsReviewing?.length>0">
             <p>今日已复习<span style="float: right;">{{wordService.wordsReviewing | wordsDoneCount}}</span></p>
             <p>今日需复习<span style="float: right;">{{wordService.wordsReviewing?.length}}</span></p>
         </ion-card-content>
-        <ion-card-content *ngIf="wordService.wordsReviewing==[]">
+        <ion-card-content *ngIf="wordService.wordsReviewing?.length==0">
             <p>今日无需复习</p>
         </ion-card-content>
         <ion-item>

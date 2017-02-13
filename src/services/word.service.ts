@@ -14,12 +14,22 @@ export class WordService {
     wordsLearning:WordImpulsing[]=null;
     wordsReviewing:WordImpulsing[];
 
-    constructor(private http:Http, private storage:Storage){
+    constructor(
+        private http:Http,
+        private storage:Storage
+    ){}
+
+
+
+    initialize():void{
         this.storage.get('wordRecords').then((wordRecords)=>{
             if (wordRecords) {
                 this.wordRecords=wordRecords;
-                console.log(this.wordRecords);
+            }else {
+                this.wordRecords={};
             }
+            console.log(this.wordRecords);
+            this.freshWordsImpulsing()
         });
     }
 
@@ -40,52 +50,55 @@ export class WordService {
         this.storage.get('wordWaitsFreshTime').then(updateTime=>{
             if (updateTime == null) {
                 this.saveWaitsFreshTime();
-                this.saveWordRecords();
-                this.saveWordsImpulsing('review');
+                this.generateWordsReviewing();
                 return;
             }
             let diff=moment().diff(moment(updateTime),'days');
 
             if (diff > 0) {//this makes sure these codes will only run one time every day
-                this.wordsReviewing=[];
                 for (let i = 0; i < diff; i++) {
                     for (let word in this.wordRecords) {
                         let record=this.wordRecords[word];
                         if (record.wait > 0) record.wait--;
                     }
                 }
-                let i=0;
-                for (let word in this.wordRecords) {
-                    let record=this.wordRecords[word];
-                    if (record.wait == 0) {
-                        let count;
-                        switch(record.proficiency) {
-                            case 0:count=1;break;
-                            case 1:count=1;break;
-                            case 2: count = 2; break;
-                            case 3: count = 2; break;
-                            case 4: count = 2; break;
-                            case 5: count = 3; break;
-                            case 6: count = 3; break;
-                            case 7: count = 3; break;
-                            case 8: count = 3; break;
-                            default: count=0;
-                        }
-                        this.wordsReviewing.push({
-                            word:word,
-                            count:count,
-                            wait:i,
-                            dirty:0
-                        });
-                        i++;
-                    }
-                }
                 this.saveWaitsFreshTime();
                 this.saveWordRecords();
-                this.saveWordsImpulsing('review');//this will override yesterday's record, if yesterday the user didn't finish reviewing
-                console.log('wordsReviewing saved!!!!');
+                this.generateWordsReviewing();
             }
         });
+    }
+
+    generateWordsReviewing():void{
+        this.wordsReviewing=[];
+        let i=0;
+        for (let word in this.wordRecords) {
+            let record=this.wordRecords[word];
+            if (record.wait == 0) {
+                let count;
+                switch(record.proficiency) {
+                    case 0:count=1;break;
+                    case 1:count=1;break;
+                    case 2: count = 2; break;
+                    case 3: count = 2; break;
+                    case 4: count = 2; break;
+                    case 5: count = 3; break;
+                    case 6: count = 3; break;
+                    case 7: count = 3; break;
+                    case 8: count = 3; break;
+                    default: count=0;
+                }
+                this.wordsReviewing.push({
+                    word:word,
+                    count:count,
+                    wait:i,
+                    dirty:0
+                });
+                i++;
+            }
+        }
+        this.saveWordsImpulsing('review');//this will override yesterday's record, if yesterday the user didn't finish reviewing
+        console.log('wordsReviewing saved!!!!');
     }
 
     generateWait(wordRecord:WordRecord):void{

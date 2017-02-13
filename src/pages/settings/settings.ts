@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 
-import { NavController } from 'ionic-angular';
+import {NavController, ModalController} from 'ionic-angular';
 import {AccountService} from "../../services/account.service";
+import {LoginPage} from "../login/login";
 
 @Component({
     selector: 'page-settings',
@@ -11,7 +12,8 @@ export class SettingsPage {
 
     constructor(
         public navCtrl: NavController,
-        public accountService:AccountService
+        public accountService:AccountService,
+        public modalCtrl: ModalController
     ) {
 
     }
@@ -19,6 +21,10 @@ export class SettingsPage {
     setting={
         scale:3
     };
+
+    showLoginModal():void{
+        this.modalCtrl.create(LoginPage).present();
+    }
 
     scaleChange():void{
         let s:number;

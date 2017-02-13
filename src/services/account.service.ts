@@ -24,8 +24,15 @@ export class AccountService {
 
     }
 
-    login():void{
-
+    login(username:string,password:string):void{
+        this.http.post('/api/account/login/', {
+            username:username,
+            password:password
+        }.toString())
+            .toPromise()
+            .then(data=>{
+                console.log(data);
+            });
     }
 
     logout():void{

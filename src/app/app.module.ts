@@ -15,6 +15,7 @@ import {HowManyInPipe} from "../pipes/how-many-in.pipe";
 import {WordsDoneCountPipe, WordsAllDonePipe} from "../pipes/words-done.pipe";
 import {TomorrowReviewPipe} from "../pipes/tomorrow-review.pipe";
 import {AccountService} from "../services/account.service";
+import {LoginPage} from "../pages/login/login";
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import {AccountService} from "../services/account.service";
         TabsPage,
         SettingsPage,
         ImpulsePage,
+        LoginPage,
         TodayLearnPipe,
         HowManyInPipe,
         WordsDoneCountPipe,
@@ -44,7 +46,8 @@ import {AccountService} from "../services/account.service";
         LearnPage,
         TabsPage,
         SettingsPage,
-        ImpulsePage
+        ImpulsePage,
+        LoginPage
     ],
     providers: [
         {provide: ErrorHandler, useClass: IonicErrorHandler},

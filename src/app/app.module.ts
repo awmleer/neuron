@@ -14,6 +14,7 @@ import {TodayLearnPipe} from "../pipes/today.pipe";
 import {HowManyInPipe} from "../pipes/how-many-in.pipe";
 import {WordsDoneCountPipe, WordsAllDonePipe} from "../pipes/words-done.pipe";
 import {TomorrowReviewPipe} from "../pipes/tomorrow-review.pipe";
+import {AccountService} from "../services/account.service";
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import {TomorrowReviewPipe} from "../pipes/tomorrow-review.pipe";
     providers: [
         {provide: ErrorHandler, useClass: IonicErrorHandler},
         Storage,
-        WordService
+        WordService,
+        AccountService
     ]
 })
 export class AppModule {}

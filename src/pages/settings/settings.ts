@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
+import {AccountService} from "../../services/account.service";
 
 @Component({
     selector: 'page-settings',
@@ -8,7 +9,10 @@ import { NavController } from 'ionic-angular';
 })
 export class SettingsPage {
 
-    constructor(public navCtrl: NavController) {
+    constructor(
+        public navCtrl: NavController,
+        public accountService:AccountService
+    ) {
 
     }
 
@@ -17,7 +21,6 @@ export class SettingsPage {
     };
 
     scaleChange():void{
-        console.log(this.setting.scale);
         let s:number;
         switch(this.setting.scale){
             case 1: s=0.9;break;

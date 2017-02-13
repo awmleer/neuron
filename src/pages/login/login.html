@@ -11,7 +11,18 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content>
-    登录
-
+<ion-content padding>
+    <ion-list>
+        <ion-item>
+            <ion-label floating>手机号</ion-label>
+            <ion-input type="text" [(ngModel)]="loginData.phone"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>密码</ion-label>
+            <ion-input type="password" [(ngModel)]="loginData.password"></ion-input>
+        </ion-item>
+    </ion-list>
+    <button ion-button block (click)="doLogin()">
+        登录
+    </button>
 </ion-content>

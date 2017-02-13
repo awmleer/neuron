@@ -7,12 +7,13 @@ import { Storage } from '@ionic/storage';
 import * as moment from "moment";
 import * as _ from "lodash"
 import {ToastController} from "ionic-angular";
+import {User, LoginData} from "../classes/user";
 
 
 @Injectable()
 export class AccountService {
 
-    user:any;
+    user:User;
 
     constructor(
         private http: Http,
@@ -21,17 +22,28 @@ export class AccountService {
     ) {}
 
     initialize():void{
-
+        //first, check whether the user is logged in
+        this.http.get('/api/account/is_logged_in/')
+            .toPromise()
+            .then(response=>{
+                if (response.text() == 'true') {
+                    this.getUserInfo();
+                }
+            });
     }
 
-    login(username:string,password:string):void{
-        this.http.post('/api/account/login/', {
-            username:username,
-            password:password
-        }.toString())
+    login(loginData:LoginData):Promise<any>{
+        return this.http.post('/api/account/login/', JSON.stringify({
+            phone:loginData.phone,
+            password:loginData.password
+        }))
             .toPromise()
-            .then(data=>{
-                console.log(data);
+            .then(response=>{
+                let data=response.text();
+                if (data == 'success') {
+                    this.getUserInfo();
+                }
+                return data;
             });
     }
 
@@ -39,13 +51,21 @@ export class AccountService {
         this.http.get('/api/account/logout/')
             .toPromise()
             .then(response=>{
-                if (response.toString() == 'success') {
+                if (response.text() == 'success') {
                     this.user=null;
                     this.toastCtrl.create({
                         message:'已退出登录',
                         duration:2000
                     }).present();
                 }
+            });
+    }
+
+    getUserInfo():void{
+        this.http.get('/api/account/userinfo/')
+            .toPromise()
+            .then(response=>{
+                this.user=response.json();
             });
     }
 

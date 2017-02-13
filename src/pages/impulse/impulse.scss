@@ -1,3 +1,47 @@
-page-about {
-
+page-impulse {
+    h1{
+        margin-bottom: 0;
+    }
+    #phonetic{
+        margin-top: -5px;
+    }
+    #baffle{
+        background: #ffffff;
+        display: block;
+        position: absolute;
+        z-index: 999;
+        width: 100%;
+        height: calc(100% - 46px);
+        top: 46px;
+        left: 0;
+    }
+    .scroll-content{
+        overflow-y: hidden;
+    }
+    .swiper-wrapper{
+        padding-bottom: 30px;
+        box-sizing: border-box;
+    }
+    ion-slides{
+        height: calc(100% - 110px)!important;
+    }
+    ion-slide{
+        margin-top: 5px;
+        justify-content:flex-start!important;
+        text-align: left!important;
+        font-size: 1.4rem!important;
+        .slide-zoom{
+            text-align: left;
+            height: 100%;
+            overflow-y: scroll;
+        }
+        h5{
+            line-height:1.6em;
+            margin-bottom: 2px;
+        }
+        p{
+            margin-top: 2px;
+            margin-bottom: 2px;
+        }
+    }
 }

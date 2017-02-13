@@ -12,17 +12,52 @@
 </ion-header>
 
 <ion-content padding>
-    <ion-grid>
-        <ion-row>
-            <ion-col><button (click)="clickKnow()" ion-button color="default" block>认识</button></ion-col>
-            <ion-col><button (click)="clickVague()" ion-button color="light" block>模糊</button></ion-col>
-            <ion-col><button (click)="clickForget()" ion-button color="danger" block>忘记</button></ion-col>
-        </ion-row>
-    </ion-grid>
+    <h1 (click)="playSound()">{{currentWord.word}}</h1>
+    <span style="position: absolute;top: 20px;right: 10px;">
+        <ion-icon *ngIf="entry?.level>0" name="star" style="color: #f3ea15;"></ion-icon>
+        <ion-icon *ngIf="entry?.level>1" name="star" style="color: #f3ea15;"></ion-icon>
+        <ion-icon *ngIf="entry?.level>2" name="star" style="color: #f3ea15;"></ion-icon>
+        <ion-icon *ngIf="entry?.level>3" name="star" style="color: #f3ea15;"></ion-icon>
+        <ion-icon *ngIf="entry?.level>4" name="star" style="color: #f3ea15;"></ion-icon>
+    </span>
+    <div (click)="hideBaffle()" id="baffle" [hidden]="!baffleShowing">
+        <p style="text-align: center;margin-top: 50%">点击屏幕查看释义</p>
+    </div>
+
+    <div id="phonetic">
+        <span (click)="playSound()" style="vertical-align: middle;">{{entry?.phonetic.US.symbol}}</span>
+        <button (click)="playSound()" ion-button icon-only clear small style="vertical-align: middle;">
+            <ion-icon name="md-volume-up"></ion-icon>
+        </button>
+        <audio id="word-sound" [src]="'http://audio.dict.cn/'+entry?.phonetic.US.sound.male" style="display: none;"></audio>
+    </div>
+
+    <ion-slides pager>
+
+        <ion-slide>
+            <h5><ion-icon name="md-text"></ion-icon> 释义</h5>
+            <p>
+                <span *ngFor="let definition of entry?.definitions">
+                    <span style="color: gray;">{{definition.type}}</span> {{definition.text}}<br>
+                </span>
+            </p>
+            <h5><ion-icon name="md-chatbubbles"></ion-icon> 例句</h5>
+            <p>
+                <span *ngFor="let sentence of entry?.sentences" [innerHTML]="sentence" style="display: block;margin-bottom: 5px"></span>
+            </p>
+        </ion-slide>
+
+        <ion-slide>
+            <h3 style="width: 100%;text-align: center;margin-top: 50px">更多内容</h3>
+        </ion-slide>
+
+    </ion-slides>
+
+    <ion-row>
+        <ion-col><button (click)="clickKnow()" ion-button color="default" block>认识</button></ion-col>
+        <ion-col><button (click)="clickVague()" ion-button color="light" block>模糊</button></ion-col>
+        <ion-col><button (click)="clickForget()" ion-button color="danger" block>忘记</button></ion-col>
+    </ion-row>
     <p>
-        <!--{{words[0]?.word}}<br>-->
-        {{amount}}
-        {{entry?.level}}
-        {{entry?.word}}<br>
     </p>
 </ion-content>

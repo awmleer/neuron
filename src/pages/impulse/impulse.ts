@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, NgZone} from '@angular/core';
 import {NavParams, ActionSheetController} from 'ionic-angular';
 import { NavController } from 'ionic-angular';
 import {RepoDetail} from "../../classes/repo";
@@ -14,14 +14,18 @@ export class ImpulsePage {
     amount:number;
     wordsImpulsing:WordImpulsing[];
     currentWord:any;
+    baffleShowing:boolean=true;
     type:string;
     entry:WordEntry;
     constructor(
         public nav: NavController,
         private navParams: NavParams,
         public wordService:WordService,
-        public actionSheetCtrl:ActionSheetController
-    ) {}
+        public actionSheetCtrl:ActionSheetController,
+        zone: NgZone
+    ) {
+        zone.run(()=>this.baffleShowing=true);
+    }
 
     ngOnInit(): void {
         this.type=this.navParams.get('type');
@@ -30,7 +34,6 @@ export class ImpulsePage {
         }else if (this.type == 'review') {
             this.wordsImpulsing=this.wordService.wordsReviewing;
         }
-        //todo: check navParams->type==learn or review
         this.amount=this.wordsImpulsing.length;
         this.nextWord();
     }
@@ -40,6 +43,7 @@ export class ImpulsePage {
         for (let i = 0; i < this.wordsImpulsing.length; i++) {
             if (this.wordsImpulsing[i].wait==0) {
                 this.currentWord=this.wordsImpulsing[i];
+                this.baffleShowing=true;
                 this.wordService.getEntry(this.wordsImpulsing[i].word)
                     .then(entry=>{
                         this.entry=entry;
@@ -130,11 +134,22 @@ export class ImpulsePage {
         this.nextWord();
     }
 
+    hideBaffle():void{
+        this.baffleShowing=false;
+        this.playSound();//todo: `if`
+    }
+
+    playSound():void{
+        (<HTMLAudioElement>document.getElementById("word-sound")).play();
+    }
 
     showActionSheet():void{
         let actionSheet=this.actionSheetCtrl.create({
             title:'更多操作',
             buttons:[
+                {
+                    text:`当前队列：共${this.amount}个单词`
+                },
                 {
                     text:'标记为熟知词',
                     handler:()=>{

@@ -27,4 +27,11 @@
             <button *ngIf="(words | wordsAllDone) == false" (click)="startReview()" ion-button item-right outline>开始复习</button>
         </ion-item>
     </ion-card>
+
+    <ion-card *ngIf="wordService.wordsReviewing | wordsAllDone">
+        <ion-card-header>明日预计</ion-card-header>
+        <ion-card-content>
+            <p>预计明天需要复习<span style="float: right;">{{wordService.wordRecords | tomorrowReviewPipe}}</span></p>
+        </ion-card-content>
+    </ion-card>
 </ion-content>

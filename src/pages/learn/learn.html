@@ -23,8 +23,5 @@
         <button ion-item *ngFor="let repo of repos" (click)="startLearn(repo)">
             {{repo.name}} <span style="color:gray">{{repo.words | howManyIn:wordService.wordRecords}}/{{repo.amount}}</span>
         </button>
-        <ion-item>
-            四级
-        </ion-item>
     </ion-list>
 </ion-content>

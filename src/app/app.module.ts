@@ -13,6 +13,7 @@ import { Storage } from '@ionic/storage';
 import {TodayLearnPipe} from "../pipes/today.pipe";
 import {HowManyInPipe} from "../pipes/how-many-in.pipe";
 import {WordsDoneCountPipe, WordsAllDonePipe} from "../pipes/words-done.pipe";
+import {TomorrowReviewPipe} from "../pipes/tomorrow-review.pipe";
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import {WordsDoneCountPipe, WordsAllDonePipe} from "../pipes/words-done.pipe";
         TodayLearnPipe,
         HowManyInPipe,
         WordsDoneCountPipe,
-        WordsAllDonePipe
+        WordsAllDonePipe,
+        TomorrowReviewPipe
     ],
     imports: [
         IonicModule.forRoot(MyApp),

@@ -11,13 +11,20 @@
         <ion-card-header>
             复习进度
         </ion-card-header>
-        <ion-card-content>
-            <p>今日需复习<span style="float: right;">12</span></p>
-            <p>今日已复习<span style="float: right;">55</span></p>
+        <ion-card-content [hidden]="wordService.wordsReviewing==null">
+            <p>今日已复习<span style="float: right;">1</span></p>
+            <p>今日需复习<span style="float: right;">{{wordService.wordsReviewing?.length}}</span></p>
+        </ion-card-content>
+        <ion-card-content [hidden]="!(wordService.wordsReviewing==null || wordService.wordsReviewing==[])">
+            <p>今日无需复习</p>
         </ion-card-content>
         <ion-item>
             <!--<button ion-button clear item-left>Like</button>-->
-            <button (click)="startReview()" ion-button item-right outline>开始复习</button>
+            <p item-right [hidden]="wordService.wordsReviewing">
+                <ion-icon name="checkmark-circle"></ion-icon>
+                已全部完成
+            </p>
+            <button [hidden]="wordService.wordsReviewing==null" (click)="startReview()" ion-button item-right outline>开始复习</button>
         </ion-item>
     </ion-card>
 </ion-content>

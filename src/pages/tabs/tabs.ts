@@ -18,6 +18,7 @@ export class TabsPage {
     constructor(public wordService:WordService) {}
 
     ngOnInit():void{
+        this.wordService.freshWordsImpulsing();
         console.log('tabs init');
     }
 

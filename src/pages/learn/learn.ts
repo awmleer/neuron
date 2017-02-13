@@ -82,11 +82,9 @@ export class LearnPage {
                         let amount=_.toSafeInteger(data.amount);
                         if (amount>0) {
                             alert.dismiss().then(() => {
+                                this.generateWordsLearning(repo,amount);
                                 this.nav.push(ImpulsePage,{
-                                    amount:amount,
-                                    repo:repo,
-                                    type:'learn',
-                                    continued:false
+                                    type:'learn'
                                 });
                             });
                         }else {
@@ -105,14 +103,33 @@ export class LearnPage {
 
     continueLearn():void{
         this.nav.push(ImpulsePage,{
-            type:'learn',
-            continued:true
+            type:'learn'
         });
+    }
+
+    generateWordsLearning(repo:RepoDetail,amount:number):void{
+        this.wordService.wordsLearning=[];
+        let unstudied=[];
+        for (let i = 0; i < repo.words.length; i++) {
+            if (this.wordService.isStudied(repo.words[i])==false) {
+                unstudied.push(repo.words[i]);
+            }
+        }
+        for (let i = 0; i < amount; i++) {
+            let index=Math.floor((Math.random()*unstudied.length));
+            console.log(index);
+            this.wordService.wordsLearning.push({
+                word:unstudied[index],
+                count:0,
+                wait:i,
+                dirty:0
+            });
+            unstudied.splice(index,1);
+        }
     }
 
 
     ngOnInit(): void {
-        this.wordService.freshWordsLearning();
         this.getRepos();
     }
 

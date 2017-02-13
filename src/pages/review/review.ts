@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
 import {ImpulsePage} from "../impulse/impulse";
+import {WordService} from "../../services/word.service";
 
 @Component({
   selector: 'page-review',
@@ -10,7 +11,8 @@ import {ImpulsePage} from "../impulse/impulse";
 export class ReviewPage {
 
   constructor(
-      public nav: NavController
+      public nav: NavController,
+      private wordService:WordService
   ) {}
 
   startReview():void{

@@ -22,6 +22,13 @@ export class WordRecord {
     }
 }
 
+export class WordImpulsing{
+    word:string;
+    count:number;//ranges from 0 to 5(6), when reaches 6, it will be removed from the impulse list
+    wait:number;
+    dirty:number=0;
+}
+
 
 export class WordEntry{
     word:string;

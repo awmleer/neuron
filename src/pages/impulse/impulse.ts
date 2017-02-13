@@ -3,7 +3,7 @@ import {NavParams, ActionSheetController} from 'ionic-angular';
 import { NavController } from 'ionic-angular';
 import {RepoDetail} from "../../classes/repo";
 import {WordService} from "../../services/word.service";
-import {WordEntry} from "../../classes/word";
+import {WordEntry, WordImpulsing} from "../../classes/word";
 
 
 @Component({
@@ -12,10 +12,8 @@ import {WordEntry} from "../../classes/word";
 })
 export class ImpulsePage {
     amount:number;
-    // wordService.wordsLearning:any[]=[];
+    wordsImpulsing:WordImpulsing[];
     currentWord:any;
-    // repo:RepoDetail;
-    // unstudied:any[]=[];
     type:string;
     entry:WordEntry;
     constructor(
@@ -27,66 +25,50 @@ export class ImpulsePage {
 
     ngOnInit(): void {
         this.type=this.navParams.get('type');
-        //todo: check navParams->type==learn or review
-        if (this.navParams.get('continued')) {
-            this.amount=this.wordService.wordsLearning.length;
-        }else {
-            this.amount=this.navParams.get('amount');
-            this.wordService.wordsLearning=[];
-            let repo:RepoDetail=this.navParams.get('repo');
-            let unstudied=[];
-            for (let i = 0; i < repo.words.length; i++) {
-                if (this.wordService.isStudied(repo.words[i])==false) {
-                    unstudied.push(repo.words[i]);
-                }
-            }
-            for (let i = 0; i < this.amount; i++) {
-                let index=Math.floor((Math.random()*unstudied.length));
-                console.log(index);
-                this.wordService.wordsLearning.push({
-                    word:unstudied[index],
-                    count:0,
-                    wait:i,
-                    dirty:0
-                });
-                unstudied.splice(index,1);
-            }
+        if (this.type == 'learn') {
+            this.wordsImpulsing=this.wordService.wordsLearning;
+        }else if (this.type == 'review') {
+            this.wordsImpulsing=this.wordService.wordsReviewing;
         }
+        //todo: check navParams->type==learn or review
+        this.amount=this.wordsImpulsing.length;
         this.nextWord();
     }
 
     nextWord():void{
         let allDone=true;
-        for (let i = 0; i < this.wordService.wordsLearning.length; i++) {
-            if (this.wordService.wordsLearning[i].wait==0) {
-                this.currentWord=this.wordService.wordsLearning[i];
-                this.wordService.getEntry(this.wordService.wordsLearning[i].word)
+        for (let i = 0; i < this.wordsImpulsing.length; i++) {
+            if (this.wordsImpulsing[i].wait==0) {
+                this.currentWord=this.wordsImpulsing[i];
+                this.wordService.getEntry(this.wordsImpulsing[i].word)
                     .then(entry=>{
                         this.entry=entry;
                     });
-                this.wordService.saveWordsLearning();
+                this.wordService.saveWordsImpulsing(this.type);
                 return;
             }else {
-                if(this.wordService.wordsLearning[i].wait!=-1)allDone=false;
+                if(this.wordsImpulsing[i].wait!=-1)allDone=false;
             }
         }
         if (allDone) {
             //todo do something
-            console.log('all wordService.wordsLearning are done');
+            console.log('all words are done');
             this.finish();
             return;
         }
-        //if all wordService.wordsLearning.wait > 0
-        for (let i = 0; i < this.wordService.wordsLearning.length; i++) {
-            if (this.wordService.wordsLearning[i].wait > 0) {
-                this.wordService.wordsLearning[i].wait--;
+        //if all wordImpulsing.wait > 0
+        for (let i = 0; i < this.wordsImpulsing.length; i++) {
+            if (this.wordsImpulsing[i].wait > 0) {
+                this.wordsImpulsing[i].wait--;
             }
         }
         this.nextWord();
     }
 
     finish():void{
-        this.wordService.removeWordsLearning();
+        if (this.type == 'learn') {
+            this.wordService.removeWordsLearning();
+        }
         this.nav.pop();
     }
 
@@ -119,6 +101,7 @@ export class ImpulsePage {
             this.currentWord.wait=2;
             this.currentWord.dirty=2;
         }else {
+            //currentWord.count do not change
             this.currentWord.wait=this.currentWord.count*2;
         }
         this.nextWord();
@@ -130,7 +113,7 @@ export class ImpulsePage {
             this.currentWord.wait=2;
             this.currentWord.dirty=3;
         }else {
-            this.currentWord.count--;
+            if(this.currentWord.count>0)this.currentWord.count--;
             this.currentWord.wait=this.currentWord.count*2;
         }
         this.nextWord();

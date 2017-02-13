@@ -6,6 +6,23 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-
+<ion-content>
+    <ion-list>
+        <ion-list-header>用户</ion-list-header>
+        <ion-item>
+            <ion-icon name="email"></ion-icon> 剩余短信<span style="float: right;">100</span>
+        </ion-item>
+        <!--<ion-item class="item-icon-left">-->
+            <!--<i class="icon ion-paper-airplane"></i> 累计发送<span style="float: right;">{{user_info.message_sent}}条通知/{{user_info.text_sent}}条短信</span>-->
+        <!--</ion-item>-->
+    </ion-list>
+    <ion-list>
+        <ion-list-header>设置</ion-list-header>
+        <ion-item>
+            <ion-range [(ngModel)]="setting.scale" (ionChange)="scaleChange()" min="1" max="5" step="1" snaps="true" color="primary">
+                <ion-label range-left>缩放：&nbsp;&nbsp;&nbsp;小</ion-label>
+                <ion-label range-right>大</ion-label>
+            </ion-range>
+        </ion-item>
+    </ion-list>
 </ion-content>

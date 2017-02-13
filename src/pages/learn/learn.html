@@ -5,18 +5,20 @@
 </ion-header>
 
 <ion-content>
-    <ion-list style="min-height: 100%;">
-        <ion-item-divider>
+    <ion-list>
+        <ion-list-header>
             状态
-        </ion-item-divider>
+        </ion-list-header>
         <ion-item>
             <!--<ion-icon name="flash" item-left></ion-icon>-->
             今日已新学单词
             <span item-right>{{wordService.wordRecords | todayLearn}}</span>
         </ion-item>
-        <ion-item-divider>
+    </ion-list>
+    <ion-list>
+        <ion-list-header>
             词库
-        </ion-item-divider>
+        </ion-list-header>
         <button ion-item (click)="continueLearn()" [hidden]="wordService.wordsLearning==null">
             <b>进入未完成的学习</b> <span style="color:gray">{{wordService.wordsLearning | wordsDoneCount}}/{{wordService.wordsLearning?.length}}</span>
         </button>

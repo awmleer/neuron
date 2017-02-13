@@ -18,7 +18,7 @@
         <ion-card-content *ngIf="wordService.wordsReviewing?.length==0">
             <p>今日无需复习</p>
         </ion-card-content>
-        <ion-item>
+        <ion-item *ngIf="wordService.wordsReviewing?.length>0">
             <!--<button ion-button clear item-left>Like</button>-->
             <p item-right *ngIf="wordService.wordsReviewing | wordsAllDone">
                 <ion-icon name="checkmark-circle"></ion-icon>

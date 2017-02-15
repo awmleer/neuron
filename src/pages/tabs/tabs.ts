@@ -3,8 +3,8 @@ import { Component } from '@angular/core';
 import { LearnPage } from '../learn/learn';
 import { ReviewPage } from '../review/review';
 import {SettingsPage} from "../settings/settings";
-import {WordService} from "../../services/word.service";
 import {AccountService} from "../../services/account.service";
+import {WordService} from "../../services/word.service";
 
 @Component({
     templateUrl: 'tabs.html'
@@ -20,11 +20,5 @@ export class TabsPage {
         private wordService:WordService,
         private accountService:AccountService
     ) {}
-
-    ngOnInit():void{
-        this.wordService.initialize();
-        this.accountService.initialize();
-        console.log('tabs init');
-    }
 
 }

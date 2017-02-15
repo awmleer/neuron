@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import {NavController, ModalController} from 'ionic-angular';
 import {AccountService} from "../../services/account.service";
 import {LoginPage} from "../login/login";
+import {SettingService} from "../../services/setting.service";
 
 @Component({
     selector: 'page-settings',
@@ -13,14 +14,11 @@ export class SettingsPage {
     constructor(
         public navCtrl: NavController,
         public accountService:AccountService,
+        public settingService: SettingService,
         public modalCtrl: ModalController
     ) {
-
+        this.scaleChange();
     }
-
-    setting={
-        scale:3
-    };
 
     showLoginModal():void{
         this.modalCtrl.create(LoginPage).present();
@@ -28,7 +26,8 @@ export class SettingsPage {
 
     scaleChange():void{
         let s:number;
-        switch(this.setting.scale){
+        this.settingService.saveSettings();
+        switch(this.settingService.settings.scale){
             case 1: s=0.9;break;
             case 2: s=0.95;break;
             case 3: s=1.0;break;

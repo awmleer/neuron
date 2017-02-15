@@ -30,13 +30,15 @@
     <ion-list>
         <ion-list-header>数据</ion-list-header>
         <button ion-item>
-            同步学习数据
+            <ion-icon name="ios-cloud-outline" item-left></ion-icon>
+            <h2>同步学习数据</h2>
+            <p>上次同步：12月23日 21:45</p>
         </button>
     </ion-list>
     <ion-list>
         <ion-list-header>设置</ion-list-header>
         <ion-item>
-            <ion-range [(ngModel)]="setting.scale" (ionChange)="scaleChange()" min="1" max="5" step="1" snaps="true" color="primary">
+            <ion-range [(ngModel)]="settingService.settings.scale" (ionChange)="scaleChange()" min="1" max="5" step="1" snaps="true" color="primary">
                 <ion-label range-left>缩放：&nbsp;&nbsp;&nbsp;小</ion-label>
                 <ion-label range-right>大</ion-label>
             </ion-range>

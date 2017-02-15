@@ -16,6 +16,7 @@ import {WordsDoneCountPipe, WordsAllDonePipe} from "../pipes/words-done.pipe";
 import {TomorrowReviewPipe} from "../pipes/tomorrow-review.pipe";
 import {AccountService} from "../services/account.service";
 import {LoginPage} from "../pages/login/login";
+import {SettingService} from "../services/setting.service";
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import {LoginPage} from "../pages/login/login";
         {provide: ErrorHandler, useClass: IonicErrorHandler},
         Storage,
         WordService,
-        AccountService
+        AccountService,
+        SettingService
     ]
 })
 export class AppModule {}

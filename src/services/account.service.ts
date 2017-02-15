@@ -6,7 +6,7 @@ import {WordEntry, WordRecord, WordImpulsing} from "../classes/word";
 import { Storage } from '@ionic/storage';
 import * as moment from "moment";
 import * as _ from "lodash"
-import {ToastController} from "ionic-angular";
+import {ToastController, AlertController} from "ionic-angular";
 import {User, LoginData} from "../classes/user";
 
 
@@ -14,11 +14,13 @@ import {User, LoginData} from "../classes/user";
 export class AccountService {
 
     user:User;
+    syncTime:number=0;
 
     constructor(
         private http: Http,
         private storage: Storage,
-        private toastCtrl: ToastController
+        private toastCtrl: ToastController,
+        public alertCtrl: AlertController
     ) {}
 
     initialize():void{
@@ -30,14 +32,18 @@ export class AccountService {
                     this.getUserInfo();
                 }
             });
+        this.storage.get('syncTime').then(time=>{
+            if (time) {
+                this.syncTime=time;
+            }
+        })
     }
 
     login(loginData:LoginData):Promise<any>{
         return this.http.post('/api/account/login/', JSON.stringify({
             phone:loginData.phone,
             password:loginData.password
-        }))
-            .toPromise()
+        })).toPromise()
             .then(response=>{
                 let data=response.text();
                 if (data == 'success') {
@@ -48,8 +54,7 @@ export class AccountService {
     }
 
     logout():void{
-        this.http.get('/api/account/logout/')
-            .toPromise()
+        this.http.get('/api/account/logout/').toPromise()
             .then(response=>{
                 if (response.text() == 'success') {
                     this.user=null;
@@ -62,11 +67,39 @@ export class AccountService {
     }
 
     getUserInfo():void{
-        this.http.get('/api/account/userinfo/')
-            .toPromise()
+        this.http.get('/api/account/userinfo/').toPromise()
             .then(response=>{
                 this.user=response.json();
             });
+    }
+
+
+    syncData():void{
+        if (this.user == null) {
+            this.alertCtrl.create({
+                title:'未登录',
+                subTitle:'请先登录账号再进行同步数据',
+                buttons:[{text:'确定'}]
+            }).present();
+            return;
+        }
+        this.http.get('/api/sync/check/').toPromise()
+            .then(response=>{
+                let t=Number(response.text());
+                if(t>this.syncTime){
+                    this.downloadData();
+                }else {
+                    this.uploadData();
+                }
+            });
+    }
+
+    downloadData():void{
+
+    }
+
+    uploadData():void{
+
     }
 
 }

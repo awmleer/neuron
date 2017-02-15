@@ -32,7 +32,7 @@
         <button ion-item (click)="accountService.syncData()">
             <ion-icon name="ios-cloud-outline" item-left></ion-icon>
             <h2>同步学习数据</h2>
-            <p>上次同步：{{syncTime?(syncTime|date:'y/M/d H:mm'):'从未同步'}}</p>
+            <p>上次同步：{{accountService.syncTime?(accountService.syncTime|date:'y/M/d H:mm'):'从未同步'}}</p>
         </button>
     </ion-list>
     <ion-list>

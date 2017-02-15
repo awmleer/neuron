@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {RepoBrief, RepoDetail} from "../classes/repo";
 import {Http} from "@angular/http";
 import 'rxjs/add/operator/toPromise'
@@ -6,8 +6,10 @@ import {WordEntry, WordRecord, WordImpulsing} from "../classes/word";
 import { Storage } from '@ionic/storage';
 import * as moment from "moment";
 import * as _ from "lodash"
-import {ToastController, AlertController} from "ionic-angular";
+import {ToastController, AlertController, LoadingController} from "ionic-angular";
 import {User, LoginData} from "../classes/user";
+import {WordService} from "./word.service";
+import {SettingService} from "./setting.service";
 
 
 @Injectable()
@@ -16,12 +18,21 @@ export class AccountService {
     user:User;
     syncTime:number=0;
 
+    loading:any;
+
     constructor(
         private http: Http,
         private storage: Storage,
         private toastCtrl: ToastController,
-        public alertCtrl: AlertController
-    ) {}
+        public alertCtrl: AlertController,
+        private wordService: WordService,
+        private settingService: SettingService,
+        private loadingCtrl: LoadingController
+    ) {
+        this.loading = this.loadingCtrl.create({
+            content: '同步中…'
+        });
+    }
 
     initialize():void{
         //first, check whether the user is logged in
@@ -83,23 +94,57 @@ export class AccountService {
             }).present();
             return;
         }
+        this.loading.present();
         this.http.get('/api/sync/check/').toPromise()
             .then(response=>{
                 let t=Number(response.text());
                 if(t>this.syncTime){
-                    this.downloadData();
+                    this.downloadData(t);
                 }else {
                     this.uploadData();
                 }
             });
     }
 
-    downloadData():void{
-
+    downloadData(timestamp:number):void{
+        this.http.get('/api/sync/download/').toPromise()
+            .then(response=>{
+                this.syncTime=timestamp;
+                this.storage.set('syncTime',timestamp);
+                let data=response.json();
+                for (let key in data) {
+                    this.storage.set(key,data[key]);
+                }
+                setTimeout(()=>{
+                    this.wordService.initialize();
+                    this.settingService.initialize();
+                    this.loading.dismiss();
+                },1000);
+            });
     }
 
     uploadData():void{
-
+        let length:number;
+        let data={};
+        this.storage.length().then(l=>{
+            length=l;
+            this.storage.forEach((value,key,iterationNumber)=>{
+                if (key == 'syncTime') return;
+                data[key]=value;
+                if (iterationNumber == length) {
+                    this.http.post('/api/sync/upload/', JSON.stringify(data)).toPromise()
+                        .then(response=>{
+                            let timestamp=_.toSafeInteger(response.text());
+                            console.log(timestamp);
+                            console.log(this.syncTime);
+                            this.storage.set('syncTime',timestamp).then(()=>{
+                                this.initialize();
+                                this.loading.dismiss();
+                            });
+                        });
+                }
+            });
+        });
     }
 
 }

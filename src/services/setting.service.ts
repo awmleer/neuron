@@ -17,7 +17,11 @@ export class SettingService {
     ) {}
 
     settings={
-        scale:3
+        scale:3,
+        sound:{
+            gender:'male',
+            accent:'US'
+        }
     };
 
     initialize():void{

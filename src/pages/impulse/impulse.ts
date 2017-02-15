@@ -4,6 +4,7 @@ import { NavController } from 'ionic-angular';
 import {RepoDetail} from "../../classes/repo";
 import {WordService} from "../../services/word.service";
 import {WordEntry, WordImpulsing} from "../../classes/word";
+import {SettingService} from "../../services/setting.service";
 
 
 @Component({
@@ -21,6 +22,7 @@ export class ImpulsePage {
         public nav: NavController,
         private navParams: NavParams,
         public wordService:WordService,
+        public settingService: SettingService,
         public actionSheetCtrl:ActionSheetController,
         zone: NgZone
     ) {

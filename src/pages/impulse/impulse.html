@@ -29,7 +29,7 @@
         <button (click)="playSound()" ion-button icon-only clear small style="vertical-align: middle;">
             <ion-icon name="md-volume-up"></ion-icon>
         </button>
-        <audio id="word-sound" [src]="'http://audio.dict.cn/'+entry?.phonetic.US.sound.male" style="display: none;"></audio>
+        <audio id="word-sound" [src]="'http://audio.dict.cn/'+(settingService.settings.sound.accent=='US'?(settingService.settings.sound.gender=='male'?entry?.phonetic.US.sound.male:entry?.phonetic.US.sound.female):(settingService.settings.sound.gender=='male'?entry?.phonetic.UK.sound.male:entry?.phonetic.UK.sound.female))" style="display: none;"></audio>
     </div>
 
     <ion-slides pager>

@@ -38,6 +38,20 @@
     <ion-list>
         <ion-list-header>设置</ion-list-header>
         <ion-item>
+            <ion-label>口音类别</ion-label>
+            <ion-select [(ngModel)]="settingService.settings.sound.accent" (ionChange)="settingService.saveSettings()" cancelText="取消" okText="确定">
+                <ion-option value="US">美式</ion-option>
+                <ion-option value="UK">英式</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item>
+            <ion-label>发音性别</ion-label>
+            <ion-select [(ngModel)]="settingService.settings.sound.gender" (ionChange)="settingService.saveSettings()" cancelText="取消" okText="确定">
+                <ion-option value="male">男声</ion-option>
+                <ion-option value="female">女声</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item>
             <ion-range [(ngModel)]="settingService.settings.scale" (ionChange)="scaleChange()" min="1" max="5" step="1" snaps="true" color="primary">
                 <ion-label range-left>缩放：&nbsp;&nbsp;&nbsp;小</ion-label>
                 <ion-label range-right>大</ion-label>

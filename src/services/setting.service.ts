@@ -20,8 +20,9 @@ export class SettingService {
         scale:3,
         sound:{
             gender:'male',
-            accent:'US'
-        }
+            accent:'US',
+        },
+        autoRead:true
     };
 
     initialize():void{

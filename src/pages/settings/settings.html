@@ -38,6 +38,10 @@
     <ion-list>
         <ion-list-header>设置</ion-list-header>
         <ion-item>
+            <ion-label>点击屏幕自动发音</ion-label>
+            <ion-toggle [(ngModel)]="settingService.settings.autoRead" (ionChange)="settingService.saveSettings()"></ion-toggle>
+        </ion-item>
+        <ion-item>
             <ion-label>口音类别</ion-label>
             <ion-select [(ngModel)]="settingService.settings.sound.accent" (ionChange)="settingService.saveSettings()" cancelText="取消" okText="确定">
                 <ion-option value="US">美式</ion-option>

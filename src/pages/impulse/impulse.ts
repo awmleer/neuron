@@ -138,7 +138,9 @@ export class ImpulsePage {
 
     hideBaffle():void{
         this.baffleShowing=false;
-        this.playSound();//todo: `if`
+        if (this.settingService.settings.autoRead) {
+            this.playSound();
+        }
     }
 
     playSound():void{

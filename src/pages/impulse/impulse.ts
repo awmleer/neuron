@@ -24,7 +24,7 @@ export class ImpulsePage {
         public wordService:WordService,
         public settingService: SettingService,
         public actionSheetCtrl:ActionSheetController,
-        zone: NgZone
+        private zone: NgZone
     ) {
         zone.run(()=>this.baffleShowing=true);
     }
@@ -98,7 +98,7 @@ export class ImpulsePage {
                     if(this.type=='review')this.wordService.moltRecord(this.currentWord.word,'forget');
                 }
             }else {
-                this.currentWord.wait=this.currentWord.count*2;
+                this.currentWord.wait=this.currentWord.count*2+1;
             }
         }
         this.nextWord();
@@ -111,7 +111,7 @@ export class ImpulsePage {
             this.currentWord.dirty=2;
         }else {
             //currentWord.count do not change
-            this.currentWord.wait=this.currentWord.count*2;
+            this.currentWord.wait=this.currentWord.count*2+1;
         }
         this.nextWord();
     }
@@ -123,7 +123,7 @@ export class ImpulsePage {
             this.currentWord.dirty=3;
         }else {
             if(this.currentWord.count>0)this.currentWord.count--;
-            this.currentWord.wait=this.currentWord.count*2;
+            this.currentWord.wait=this.currentWord.count*2+1;
         }
         this.nextWord();
     }
@@ -137,6 +137,7 @@ export class ImpulsePage {
     }
 
     hideBaffle():void{
+        // this.zone.run(()=>this.baffleShowing=false);
         this.baffleShowing=false;
         if (this.settingService.settings.autoRead) {
             this.playSound();

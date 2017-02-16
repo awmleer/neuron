@@ -5,19 +5,24 @@ page-impulse {
     }
     h1{
         margin-bottom: 0;
+        a{
+            color: #000;
+        }
     }
     #phonetic{
         margin-top: -5px;
+        //cursor:pointer;
     }
     #baffle{
         background: #ffffff;
         display: block;
         position: absolute;
-        z-index: 999;
+        z-index: 10;
         width: 100%;
         height: calc(100% - 46px);
         top: 46px;
         left: 0;
+        //cursor:pointer;
     }
     .scroll-content{
         overflow-y: hidden;

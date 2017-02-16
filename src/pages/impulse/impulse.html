@@ -12,7 +12,7 @@
 </ion-header>
 
 <ion-content padding>
-    <h1 (click)="playSound()">{{currentWord.word}}</h1>
+    <h1><a (click)="playSound()">{{currentWord.word}}</a></h1>
     <span style="position: absolute;top: 20px;right: 10px;">
         <ion-icon *ngIf="entry?.level>0" name="star" style="color: #f3ea15;"></ion-icon>
         <ion-icon *ngIf="entry?.level>1" name="star" style="color: #f3ea15;"></ion-icon>
@@ -20,12 +20,12 @@
         <ion-icon *ngIf="entry?.level>3" name="star" style="color: #f3ea15;"></ion-icon>
         <ion-icon *ngIf="entry?.level>4" name="star" style="color: #f3ea15;"></ion-icon>
     </span>
-    <div (click)="hideBaffle()" id="baffle" [hidden]="!baffleShowing">
+    <a (click)="hideBaffle()" id="baffle" *ngIf="baffleShowing">
         <p style="text-align: center;margin-top: 50%">点击屏幕查看释义</p>
-    </div>
+    </a>
 
     <div id="phonetic">
-        <span (click)="playSound()" style="vertical-align: middle;">{{entry?.phonetic.US.symbol}}</span>
+        <span style="vertical-align: middle;"><a (click)="playSound()" style="color: #000000;">{{entry?.phonetic.US.symbol}}</a></span>
         <button (click)="playSound()" ion-button icon-only clear small style="vertical-align: middle;">
             <ion-icon name="md-volume-up"></ion-icon>
         </button>

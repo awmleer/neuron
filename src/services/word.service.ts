@@ -6,6 +6,7 @@ import {WordEntry, WordRecord, WordImpulsing} from "../classes/word";
 import { Storage } from '@ionic/storage';
 import * as moment from "moment";
 import * as _ from "lodash"
+import {CONFIG} from "../app/config";
 
 
 @Injectable()
@@ -28,7 +29,6 @@ export class WordService {
             }else {
                 this.wordRecords={};
             }
-            console.log(this.wordRecords);
             this.freshWordsImpulsing()
         });
     }
@@ -58,8 +58,8 @@ export class WordService {
             if (diff > 0) {//this makes sure these codes will only run one time every day
                 for (let i = 0; i < diff; i++) {
                     for (let word in this.wordRecords) {
-                        let record=this.wordRecords[word];
-                        if (record.wait > 0) record.wait--;
+                        // let record=this.wordRecords[word];
+                        if (this.wordRecords[word].wait > 0) this.wordRecords[word].wait--;
                     }
                 }
                 this.saveWaitsFreshTime();
@@ -98,7 +98,6 @@ export class WordService {
             }
         }
         this.saveWordsImpulsing('review');//this will override yesterday's record, if yesterday the user didn't finish reviewing
-        console.log('wordsReviewing saved!!!!');
     }
 
     generateWait(wordRecord:WordRecord):void{
@@ -124,7 +123,6 @@ export class WordService {
             this.storage.set('wordsLearning',this.wordsLearning);
         }else if (type == 'review') {
             this.storage.set('wordsReviewing',this.wordsReviewing);
-            console.log('review saved');
         }
     }
     freshWordsImpulsing():void{
@@ -133,7 +131,6 @@ export class WordService {
         this.storage.get('wordsReviewing')
             .then(data=>{
                 this.wordsReviewing=data;
-                console.log(this.wordsReviewing);
                 this.freshWaits();
             });
     }
@@ -161,7 +158,7 @@ export class WordService {
 
 
     getEntry(word:string):Promise<WordEntry>{
-        return this.http.get(`/api/entry/${word}/`)
+        return this.http.get(CONFIG.apiUrl+`/entry/${word}/`)
             .toPromise()
             .then(response=>response.json() as WordEntry);
     }
@@ -180,7 +177,6 @@ export class WordService {
         this.generateWait(wordRecord);
         this.wordRecords[word]=wordRecord;
         this.saveWordRecords();
-        console.log(this.wordRecords);
     }
     moltRecord(word:string,mark:string):void{
         let wordRecord=this.wordRecords[word];
@@ -199,16 +195,15 @@ export class WordService {
         }
         this.generateWait(wordRecord);
         this.saveWordRecords();
-        console.log(this.wordRecords);
     }
 
     getRepos():Promise<RepoBrief[]> {
-        return this.http.get('/api/repo/list/')
+        return this.http.get(CONFIG.apiUrl+'/repo/list/')
             .toPromise()
             .then(response=>response.json() as RepoBrief[]);
     }
     getRepo(id:number):Promise<RepoDetail> {
-        return this.http.get(`/api/repo/${id}/`)
+        return this.http.get(CONFIG.apiUrl+`/repo/${id}/`)
             .toPromise()
             .then(response=>new RepoDetail(response.json()) as RepoDetail);
     }

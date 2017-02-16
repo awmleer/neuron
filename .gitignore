@@ -12,6 +12,8 @@ log.txt
 .vscode/
 npm-debug.log*
 
+/apk/
+neuron.keystore
 .idea/
 .sass-cache/
 .tmp/

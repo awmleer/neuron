@@ -6,7 +6,7 @@
     "proxies": [
         {
             "path": "/api",
-            "proxyUrl": "http://127.0.01:8000/"
+            "proxyUrl": "http://neuron.sparker.top/"
         }
     ]
 }

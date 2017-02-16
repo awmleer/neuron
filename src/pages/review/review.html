@@ -24,7 +24,7 @@
                 <ion-icon name="checkmark-circle"></ion-icon>
                 已全部完成
             </p>
-            <button *ngIf="(words | wordsAllDone) == false" (click)="startReview()" ion-button item-right outline>开始复习</button>
+            <button *ngIf="(wordService.wordsReviewing | wordsAllDone) == false" (click)="startReview()" ion-button item-right outline>开始复习</button>
         </ion-item>
     </ion-card>
 

@@ -15,6 +15,7 @@ export class WordService {
     wordsLearning:WordImpulsing[]=null;
     wordsReviewing:WordImpulsing[];
     starredSentences={};
+    history={};
 
     constructor(
         private http:Http,
@@ -39,6 +40,11 @@ export class WordService {
                 this.starredSentences={};
             }
         });
+        this.storage.get('history').then((history)=>{
+            if (history) {
+                this.history=history;
+            }
+        });
     }
 
 
@@ -56,7 +62,10 @@ export class WordService {
 
 
     saveStarredSentences():void{
-            this.storage.set('starredSentences',this.starredSentences);
+        this.storage.set('starredSentences',this.starredSentences);
+    }
+    saveHistory():void{
+        this.storage.set('history',this.history);
     }
 
     freshWaits():void{
@@ -190,6 +199,17 @@ export class WordService {
         this.generateWait(wordRecord);
         this.wordRecords[word]=wordRecord;
         this.saveWordRecords();
+        //generate history
+        let today=moment().format('YYYY-M-D');
+        console.log(today);
+        if (this.history[today]==null) {
+            this.history[today]={
+                learn:0,
+                review:0
+            }
+        }
+        this.history[today].learn++;
+        this.saveHistory();
     }
     moltRecord(word:string,mark:string):void{
         let wordRecord=this.wordRecords[word];
@@ -208,6 +228,17 @@ export class WordService {
         }
         this.generateWait(wordRecord);
         this.saveWordRecords();
+        //generate history
+        let today=moment().format('YYYY-M-D');
+        console.log(today);
+        if (this.history[today]==null) {
+            this.history[today]={
+                learn:0,
+                review:0
+            }
+        }
+        this.history[today].review++;
+        this.saveHistory();
     }
 
     getRepos():Promise<RepoBrief[]> {

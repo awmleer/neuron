@@ -148,6 +148,22 @@ export class ImpulsePage {
         (<HTMLAudioElement>document.getElementById("word-sound")).play();
     }
 
+
+    starSentence(i):void{
+        if (this.wordService.starredSentences[this.currentWord.word]==null) {
+            this.wordService.starredSentences[this.currentWord.word]=[i];
+        }else {
+            this.wordService.starredSentences[this.currentWord.word].push(i);
+        }
+        this.wordService.saveStarredSentences();
+    }
+    unstarSentence(i):void{
+        let index=this.wordService.starredSentences[this.currentWord.word].indexOf(i);
+        this.wordService.starredSentences[this.currentWord.word].splice(index,1);
+        this.wordService.saveStarredSentences();
+    }
+
+
     showActionSheet():void{
         let actionSheet=this.actionSheetCtrl.create({
             title:'更多操作',

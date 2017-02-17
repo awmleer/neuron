@@ -14,13 +14,13 @@
 <ion-content padding>
     <h1><a (click)="playSound()">{{currentWord.word}}</a></h1>
     <span style="position: absolute;top: 20px;right: 10px;">
-        <ion-icon *ngIf="entry?.level>0" name="star" style="color: #f3ea15;"></ion-icon>
-        <ion-icon *ngIf="entry?.level>1" name="star" style="color: #f3ea15;"></ion-icon>
-        <ion-icon *ngIf="entry?.level>2" name="star" style="color: #f3ea15;"></ion-icon>
-        <ion-icon *ngIf="entry?.level>3" name="star" style="color: #f3ea15;"></ion-icon>
-        <ion-icon *ngIf="entry?.level>4" name="star" style="color: #f3ea15;"></ion-icon>
+        <ion-icon *ngIf="entry?.level>0" name="star" style="color: #f3c715;"></ion-icon>
+        <ion-icon *ngIf="entry?.level>1" name="star" style="color: #f3c715;"></ion-icon>
+        <ion-icon *ngIf="entry?.level>2" name="star" style="color: #f3c715;"></ion-icon>
+        <ion-icon *ngIf="entry?.level>3" name="star" style="color: #f3c715;"></ion-icon>
+        <ion-icon *ngIf="entry?.level>4" name="star" style="color: #f3c715;"></ion-icon>
     </span>
-    <a (click)="hideBaffle()" id="baffle" *ngIf="baffleShowing">
+    <a (click)="hideBaffle()" id="baffle" [hidden]="!baffleShowing">
         <p style="text-align: center;margin-top: 50%">点击屏幕查看释义</p>
     </a>
 
@@ -37,14 +37,22 @@
         <ion-slide>
             <h5><ion-icon name="md-text"></ion-icon> 释义</h5>
             <p>
-                <span *ngFor="let definition of entry?.definitions">
+                <span *ngFor="let definition of entry?.definitions; ">
                     <span style="color: gray;">{{definition.type}}</span> {{definition.text}}<br>
                 </span>
             </p>
             <h5><ion-icon name="md-chatbubbles"></ion-icon> 例句</h5>
-            <p>
-                <span *ngFor="let sentence of entry?.sentences" [innerHTML]="sentence" style="display: block;margin-bottom: 5px"></span>
+            <p style="border-left: 5px solid #adadad;padding-left: 5px">
+                <span *ngFor="let sentence of entry?.sentences; let i=index;" style="display: block;margin-bottom: 5px;">
+                    <a (click)="unstarSentence(i)" *ngIf="wordService.starredSentences[currentWord.word]!=null && wordService.starredSentences[currentWord.word]?.indexOf(i)>=0" [innerHTML]="sentence" style="color: #000;display: block;"></a>
+                </span>
             </p>
+            <p>
+                <span *ngFor="let sentence of entry?.sentences; let i=index;" style="display: block;margin-bottom: 5px;">
+                    <a (click)="starSentence(i)" *ngIf="wordService.starredSentences[currentWord.word]==null || wordService.starredSentences[currentWord.word]?.indexOf(i)<0" [innerHTML]="sentence" style="color: #000;display: block;"></a>
+                </span>
+            </p>
+
         </ion-slide>
 
         <ion-slide>

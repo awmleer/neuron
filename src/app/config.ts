@@ -1,4 +1,4 @@
 export const CONFIG={
-    apiUrl:'/api'
-    // apiUrl:'http://neuron.sparker.top'
+    // apiUrl:'/api'
+    apiUrl:'http://neuron.sparker.top'
 };

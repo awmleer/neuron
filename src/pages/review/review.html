@@ -28,7 +28,7 @@
         </ion-item>
     </ion-card>
 
-    <ion-card *ngIf="wordService.wordsReviewing | wordsAllDone">
+    <ion-card>
         <ion-card-header>明日预计</ion-card-header>
         <ion-card-content>
             <p>预计明天需要复习<span style="float: right;">{{wordService.wordRecords | tomorrowReviewPipe}}</span></p>

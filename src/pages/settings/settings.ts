@@ -17,25 +17,25 @@ export class SettingsPage {
         public settingService: SettingService,
         public modalCtrl: ModalController
     ) {
-        this.scaleChange();
+        // this.scaleChange();
     }
 
     showLoginModal():void{
         this.modalCtrl.create(LoginPage).present();
     }
 
-    scaleChange():void{
-        let s:number;
-        this.settingService.saveSettings();
-        switch(this.settingService.settings.scale){
-            case 1: s=0.9;break;
-            case 2: s=0.95;break;
-            case 3: s=1.0;break;
-            case 4: s=1.05;break;
-            case 5: s=1.1;break;
-            default: s=1.0;break;
-        }
-        (<HTMLMetaElement>document.getElementsByTagName('meta')['viewport']).content=`width=device-width, initial-scale=${s}, minimum-scale=${s}, maximum-scale=${s}, user-scalable=no`;
-    }
+    // scaleChange():void{
+    //     let s:number;
+    //     this.settingService.saveSettings();
+    //     switch(this.settingService.settings.scale){
+    //         case 1: s=0.9;break;
+    //         case 2: s=0.95;break;
+    //         case 3: s=1.0;break;
+    //         case 4: s=1.05;break;
+    //         case 5: s=1.1;break;
+    //         default: s=1.0;break;
+    //     }
+    //     (<HTMLMetaElement>document.getElementsByTagName('meta')['viewport']).content=`width=device-width, initial-scale=${s}, minimum-scale=${s}, maximum-scale=${s}, user-scalable=no`;
+    // }
 
 }

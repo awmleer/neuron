@@ -17,7 +17,6 @@ export class SettingService {
     ) {}
 
     settings={
-        scale:3,
         sound:{
             gender:'male',
             accent:'US',
@@ -37,7 +36,7 @@ export class SettingService {
 
     loadSettings(data):void{
         for (let key in data) {
-            this.settings[key]=data[key];
+            if(this.settings.hasOwnProperty(key))this.settings[key]=data[key];
         }
     }
 

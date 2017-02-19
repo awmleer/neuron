@@ -29,7 +29,14 @@
         <button (click)="playSound()" ion-button icon-only clear small style="vertical-align: middle;">
             <ion-icon name="md-volume-up"></ion-icon>
         </button>
-        <audio id="word-sound" [src]="'http://audio.dict.cn/'+(settingService.settings.sound.accent=='US'?(settingService.settings.sound.gender=='male'?entry?.phonetic.US.sound.male:entry?.phonetic.US.sound.female):(settingService.settings.sound.gender=='male'?entry?.phonetic.UK.sound.male:entry?.phonetic.UK.sound.female))" style="display: none;"></audio>
+        <div *ngIf="settingService.settings.soundSource=='youdao'">
+            <audio id="word-sound" [src]="'http://dict.youdao.com/dictvoice?audio='+currentWord?.word+'&type='+(settingService.settings.sound.accent=='US'?'2':'1')" style="display: none;"></audio>
+        </div>
+        <div *ngIf="settingService.settings.soundSource=='haici'">
+            <audio id="word-sound" [src]="'http://audio.dict.cn/'+(settingService.settings.sound.accent=='US'?(settingService.settings.sound.gender=='male'?entry?.phonetic.US.sound.male:entry?.phonetic.US.sound.female):(settingService.settings.sound.gender=='male'?entry?.phonetic.UK.sound.male:entry?.phonetic.UK.sound.female))" style="display: none;"></audio>
+        </div>
+
+
     </div>
 
     <ion-slides pager>

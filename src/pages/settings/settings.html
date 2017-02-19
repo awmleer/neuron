@@ -42,6 +42,13 @@
             <ion-toggle [(ngModel)]="settingService.settings.autoRead" (ionChange)="settingService.saveSettings()"></ion-toggle>
         </ion-item>
         <ion-item>
+            <ion-label>音频来源</ion-label>
+            <ion-select [(ngModel)]="settingService.settings.soundSource" (ionChange)="settingService.saveSettings()" cancelText="取消" okText="确定">
+                <ion-option value="haici">海词</ion-option>
+                <ion-option value="youdao">有道(仅支持女声)</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item>
             <ion-label>口音类别</ion-label>
             <ion-select [(ngModel)]="settingService.settings.sound.accent" (ionChange)="settingService.saveSettings()" cancelText="取消" okText="确定">
                 <ion-option value="US">美式</ion-option>

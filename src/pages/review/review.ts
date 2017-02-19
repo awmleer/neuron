@@ -57,7 +57,7 @@ export class ReviewPage {
                         label: "新学",
                         fill: true,
                         beginAtZero:true,
-                        lineTension: 1,
+                        cubicInterpolationMode:'default',
                         backgroundColor:'rgba(105, 189, 16, 0.2)',
                         borderColor:'rgba(105, 189, 16, 1)',
                         // backgroundColor: "rgba(75,192,192,0.4)",

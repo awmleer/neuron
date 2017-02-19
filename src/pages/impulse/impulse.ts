@@ -5,6 +5,8 @@ import {RepoDetail} from "../../classes/repo";
 import {WordService} from "../../services/word.service";
 import {WordEntry, WordImpulsing} from "../../classes/word";
 import {SettingService} from "../../services/setting.service";
+import {InAppBrowser} from 'ionic-native';
+
 
 
 @Component({
@@ -184,6 +186,25 @@ export class ImpulsePage {
             ]
         });
         actionSheet.present();
+    }
+
+
+    openDictionary(dictName:string):void{
+        let href:string;
+        switch(dictName){
+            case 'youdao':
+                href=`https://m.youdao.com/dict?le=eng&q=${this.currentWord.word}`;
+                break;
+            case 'bing':
+                href=`http://cn.bing.com/dict/search?q=${this.currentWord.word}`;
+                break;
+            case 'ciba':
+                href = `http://m.iciba.com/${this.currentWord.word}`
+                break;
+            default:
+                return;
+        }
+        new InAppBrowser(href,'_blank');
     }
 
     ionViewWillLeave():void{

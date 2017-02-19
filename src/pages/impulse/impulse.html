@@ -71,9 +71,9 @@
             </div>
             <h5><ion-icon name="md-bookmarks"></ion-icon> 更多词典</h5>
             <ion-row>
-                <ion-col><button ion-button outline block color="dark">有道</button></ion-col>
-                <ion-col><button ion-button outline block color="dark">金山</button></ion-col>
-                <ion-col><button ion-button outline block color="dark">更多</button></ion-col>
+                <ion-col><button (click)="openDictionary('youdao')" ion-button outline block color="dark">有道</button></ion-col>
+                <ion-col><button (click)="openDictionary('ciba')" ion-button outline block color="dark">词霸</button></ion-col>
+                <ion-col><button (click)="openDictionary('bing')" ion-button outline block color="dark">必应</button></ion-col>
             </ion-row>
         </ion-slide>
 

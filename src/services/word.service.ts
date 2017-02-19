@@ -75,7 +75,7 @@ export class WordService {
                 this.generateWordsReviewing();
                 return;
             }
-            let diff=moment().diff(moment(updateTime),'days');
+            let diff=moment().startOf('day').diff(moment(updateTime).startOf('day'),'days');
 
             if (diff > 0) {//this makes sure these codes will only run one time every day
                 for (let i = 0; i < diff; i++) {

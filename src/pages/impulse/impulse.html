@@ -30,10 +30,10 @@
             <ion-icon name="md-volume-up"></ion-icon>
         </button>
         <div *ngIf="settingService.settings.soundSource=='youdao'">
-            <audio id="word-sound" [src]="'http://dict.youdao.com/dictvoice?audio='+currentWord?.word+'&type='+(settingService.settings.sound.accent=='US'?'2':'1')" style="display: none;"></audio>
+            <audio [id]="'sound-'+currentWord?.word" [src]="'http://dict.youdao.com/dictvoice?audio='+currentWord?.word+'&type='+(settingService.settings.sound.accent=='US'?'2':'1')" style="display: none;"></audio>
         </div>
         <div *ngIf="settingService.settings.soundSource=='haici'">
-            <audio id="word-sound" [src]="'http://audio.dict.cn/'+(settingService.settings.sound.accent=='US'?(settingService.settings.sound.gender=='male'?entry?.phonetic.US.sound.male:entry?.phonetic.US.sound.female):(settingService.settings.sound.gender=='male'?entry?.phonetic.UK.sound.male:entry?.phonetic.UK.sound.female))" style="display: none;"></audio>
+            <audio [id]="'sound-'+currentWord?.word" [src]="'http://audio.dict.cn/'+(settingService.settings.sound.accent=='US'?(settingService.settings.sound.gender=='male'?entry?.phonetic.US.sound.male:entry?.phonetic.US.sound.female):(settingService.settings.sound.gender=='male'?entry?.phonetic.UK.sound.male:entry?.phonetic.UK.sound.female))" style="display: none;"></audio>
         </div>
 
 
@@ -71,7 +71,7 @@
     <ion-row>
         <ion-col><button (click)="clickKnow()" ion-button color="default" block>认识</button></ion-col>
         <ion-col><button (click)="clickVague()" ion-button color="light" block>模糊</button></ion-col>
-        <ion-col><button (click)="clickForget()" ion-button color="danger" block>忘记</button></ion-col>
+        <ion-col><button (click)="clickForget()" ion-button color="danger" block>{{(type=='learn'&&currentWord.dirty==0)?'不认识':'忘记'}}</button></ion-col>
     </ion-row>
     <p>
     </p>

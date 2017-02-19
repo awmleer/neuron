@@ -145,7 +145,7 @@ export class ImpulsePage {
     }
 
     playSound():void{
-        (<HTMLAudioElement>document.getElementById("word-sound")).play();
+        (<HTMLAudioElement>document.getElementById("sound-"+this.currentWord.word)).play();
     }
 
 

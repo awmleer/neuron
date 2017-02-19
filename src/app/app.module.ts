@@ -17,6 +17,7 @@ import {TomorrowReviewPipe} from "../pipes/tomorrow-review.pipe";
 import {AccountService} from "../services/account.service";
 import {LoginPage} from "../pages/login/login";
 import {SettingService} from "../services/setting.service";
+import {DefinitionRatePipe} from "../pipes/definition-rate.pipe";
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import {SettingService} from "../services/setting.service";
         HowManyInPipe,
         WordsDoneCountPipe,
         WordsAllDonePipe,
-        TomorrowReviewPipe
+        TomorrowReviewPipe,
+        DefinitionRatePipe
     ],
     imports: [
         IonicModule.forRoot(MyApp),

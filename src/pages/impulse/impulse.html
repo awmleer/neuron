@@ -63,7 +63,18 @@
         </ion-slide>
 
         <ion-slide>
-            <h3 style="width: 100%;text-align: center;margin-top: 50px">更多内容</h3>
+            <h5><ion-icon name="ios-pulse"></ion-icon> 意频</h5>
+            <div>
+                <span *ngFor="let rate of entry?.definition_rates | definitionRate" style="display: block;margin-bottom: 5px;">
+                    {{rate.sense}} : {{rate.percent}}%
+                </span>
+            </div>
+            <h5><ion-icon name="md-bookmarks"></ion-icon> 更多词典</h5>
+            <ion-row>
+                <ion-col><button ion-button outline block color="dark">有道</button></ion-col>
+                <ion-col><button ion-button outline block color="dark">金山</button></ion-col>
+                <ion-col><button ion-button outline block color="dark">更多</button></ion-col>
+            </ion-row>
         </ion-slide>
 
     </ion-slides>

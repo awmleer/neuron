@@ -37,6 +37,7 @@ export class WordEntry{
         type:string;
         text:string;
     }[];
+    definition_rates:any;
     phonetic:{
         UK:{
             sound:{

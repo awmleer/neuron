@@ -8,7 +8,7 @@ export class TomorrowReviewPipe implements PipeTransform {
     transform(wordRecords): number {
         let count:number=0;
         for (let word in wordRecords) {
-            if (wordRecords[word].wait==0 || wordRecords[word].wait==1) {
+            if (wordRecords[word].wait==1) {
                 count++;
             }
         }

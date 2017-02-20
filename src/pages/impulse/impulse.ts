@@ -204,7 +204,7 @@ export class ImpulsePage {
             default:
                 return;
         }
-        new InAppBrowser(href,'_blank');
+        new InAppBrowser(href,'_blank','location=no');
     }
 
     ionViewWillLeave():void{

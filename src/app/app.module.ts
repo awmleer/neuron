@@ -18,6 +18,7 @@ import {AccountService} from "../services/account.service";
 import {LoginPage} from "../pages/login/login";
 import {SettingService} from "../services/setting.service";
 import {DefinitionRatePipe} from "../pipes/definition-rate.pipe";
+import {ImpulsePercentPipe} from "../pipes/impulse-percent";
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import {DefinitionRatePipe} from "../pipes/definition-rate.pipe";
         WordsDoneCountPipe,
         WordsAllDonePipe,
         TomorrowReviewPipe,
-        DefinitionRatePipe
+        DefinitionRatePipe,
+        ImpulsePercentPipe
     ],
     imports: [
         IonicModule.forRoot(MyApp),

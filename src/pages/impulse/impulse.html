@@ -1,7 +1,7 @@
 <ion-header>
     <ion-navbar>
         <ion-title>
-            记忆
+            记忆<span *ngIf="type=='learn'"> - {{wordsImpulsing | impulsePercent}}</span>
         </ion-title>
         <ion-buttons end>
             <button ion-button icon-only (click)="showActionSheet()">

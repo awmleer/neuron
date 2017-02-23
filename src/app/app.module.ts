@@ -19,6 +19,7 @@ import {LoginPage} from "../pages/login/login";
 import {SettingService} from "../services/setting.service";
 import {DefinitionRatePipe} from "../pipes/definition-rate.pipe";
 import {ImpulsePercentPipe} from "../pipes/impulse-percent";
+import {WarehousePage} from "../pages/warehouse/warehouse";
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import {ImpulsePercentPipe} from "../pipes/impulse-percent";
         SettingsPage,
         ImpulsePage,
         LoginPage,
+        WarehousePage,
         TodayLearnPipe,
         HowManyInPipe,
         WordsDoneCountPipe,
@@ -52,7 +54,8 @@ import {ImpulsePercentPipe} from "../pipes/impulse-percent";
         TabsPage,
         SettingsPage,
         ImpulsePage,
-        LoginPage
+        LoginPage,
+        WarehousePage
     ],
     providers: [
         {provide: ErrorHandler, useClass: IonicErrorHandler},

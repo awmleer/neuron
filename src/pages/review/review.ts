@@ -5,6 +5,7 @@ import {WordService} from "../../services/word.service";
 
 import Chart from 'chart.js';
 import * as moment from 'moment';
+import {WarehousePage} from "../warehouse/warehouse";
 
 @Component({
     selector: 'page-review',
@@ -21,7 +22,11 @@ export class ReviewPage {
     startReview():void{
         this.nav.push(ImpulsePage,{
             type:'review'
-        })
+        });
+    }
+
+    goWarehouse():void{
+        this.nav.push(WarehousePage);
     }
 
     ionViewDidEnter() {

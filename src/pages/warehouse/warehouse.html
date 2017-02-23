@@ -1,0 +1,17 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            Contact
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <ion-list>
+        <!--<ion-list-header>Follow us on Twitter</ion-list-header>-->
+        <ion-item *ngFor="let record of records">
+            {{record.word}} {{record.proficiency}}
+            <span item-right>{{record.wait==-1?'永不':record.wait==0?'今天':record.wait+'天后'}}</span>
+        </ion-item>
+    </ion-list>
+</ion-content>

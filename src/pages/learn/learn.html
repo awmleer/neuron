@@ -21,6 +21,7 @@
         </ion-list-header>
         <button ion-item (click)="continueLearn()" [hidden]="wordService.wordsLearning==null">
             <b>进入未完成的学习</b> <span style="color:gray">{{wordService.wordsLearning | wordsDoneCount}}/{{wordService.wordsLearning?.length}}</span>
+            <ion-icon showWhen="android" item-right name="ios-arrow-round-forward"></ion-icon>
         </button>
         <button ion-item *ngFor="let repo of repos" (click)="startLearn(repo)">
             {{repo.name}} <span style="color:gray">{{repo.words | howManyIn:wordService.wordRecords}}/{{repo.amount}}</span>

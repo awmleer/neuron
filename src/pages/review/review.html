@@ -6,35 +6,43 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-    <ion-card>
-        <ion-card-header>
-            复习进度
-        </ion-card-header>
-        <ion-card-content *ngIf="wordService.wordsReviewing?.length>0">
-            <p>今日已复习<span style="float: right;">{{wordService.wordsReviewing | wordsDoneCount}}</span></p>
-            <p>今日需复习<span style="float: right;">{{wordService.wordsReviewing?.length}}</span></p>
-        </ion-card-content>
-        <ion-card-content *ngIf="wordService.wordsReviewing?.length==0">
-            <p>今日无需复习</p>
-        </ion-card-content>
-        <ion-item *ngIf="wordService.wordsReviewing?.length>0">
-            <!--<button ion-button clear item-left>Like</button>-->
-            <p item-right *ngIf="wordService.wordsReviewing | wordsAllDone">
-                <ion-icon name="checkmark-circle"></ion-icon>
-                已全部完成
-            </p>
-            <button *ngIf="(wordService.wordsReviewing | wordsAllDone) == false" (click)="startReview()" ion-button item-right outline>开始复习</button>
+<ion-content>
+    <ion-list *ngIf="wordService.wordsReviewing?.length>0">
+        <ion-list-header>复习进度</ion-list-header>
+        <ion-item>
+            今日已复习<span item-right>{{wordService.wordsReviewing | wordsDoneCount}}</span>
         </ion-item>
-    </ion-card>
+        <ion-item>
+            今日需复习<span item-right>{{wordService.wordsReviewing?.length}}</span>
+        </ion-item>
+        <ion-item *ngIf="wordService.wordsReviewing | wordsAllDone">
+            <b>已全部完成</b>
+            <ion-icon item-right name="checkmark-circle"></ion-icon>
+        </ion-item>
+        <ion-item *ngIf="(wordService.wordsReviewing | wordsAllDone) == false" (click)="startReview()">
+            <b>开始复习</b>
+            <ion-icon showWhen="android" item-right name="ios-arrow-round-forward"></ion-icon>
+        </ion-item>
+    </ion-list>
 
-    <ion-card>
-        <ion-card-header>明日预计</ion-card-header>
-        <ion-card-content>
-            <p>预计明天需要复习<span style="float: right;">{{wordService.wordRecords | tomorrowReviewPipe}}</span></p>
-        </ion-card-content>
-    </ion-card>
+    <ion-list *ngIf="wordService.wordsReviewing?.length==0">
+        <ion-list-header>复习进度</ion-list-header>
+        <ion-item>
+            今日无需复习
+        </ion-item>
+    </ion-list>
 
-    <canvas #chartHistory height="200"></canvas>
+    <ion-list>
+        <ion-list-header>明日预计</ion-list-header>
+        <ion-item>
+            预计明天需要复习<span item-right>{{wordService.wordRecords | tomorrowReviewPipe}}</span>
+        </ion-item>
+    </ion-list>
+
+    <ion-list>
+        <ion-list-header>数据统计</ion-list-header>
+        <ion-item><canvas #chartHistory height="200"></canvas></ion-item>
+    </ion-list>
+
 
 </ion-content>

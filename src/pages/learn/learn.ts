@@ -64,8 +64,8 @@ export class LearnPage {
 
     newLearn(repo:RepoDetail):void{
         let alert=this.alertCtrl.create({
-            title: '设置',
-            message: "请输入计划新学的单词个数",
+            title: '开始',
+            message: "请输入计划新学的单词个数（建议15个-50个）",
             inputs: [
                 {
                     name: 'amount',

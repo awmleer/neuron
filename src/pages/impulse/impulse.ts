@@ -48,6 +48,7 @@ export class ImpulsePage {
             if (this.wordsImpulsing[i].wait==0) {
                 this.currentWord=this.wordsImpulsing[i];
                 this.baffleShowing=true;
+                this.entry=null;
                 this.wordService.getEntry(this.wordsImpulsing[i].word)
                     .then(entry=>{
                         this.entry=entry;

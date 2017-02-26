@@ -12,7 +12,10 @@
 </ion-header>
 
 <ion-content padding>
-    <h1><a (click)="playSound()">{{currentWord.word}}</a></h1>
+    <h1>
+        <a (click)="playSound()">{{currentWord?.word}}</a>
+        <progress-icon *ngIf="type=='review'&&currentWord" [percent]="wordService.wordRecords[currentWord?.word]?.proficiency/8" style="margin-left: 5px"></progress-icon>
+    </h1>
     <span style="position: absolute;top: 20px;right: 10px;">
         <ion-icon *ngIf="entry?.level>0" name="star" style="color: #f3c715;"></ion-icon>
         <ion-icon *ngIf="entry?.level>1" name="star" style="color: #f3c715;"></ion-icon>

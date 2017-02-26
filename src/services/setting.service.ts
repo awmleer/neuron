@@ -21,7 +21,7 @@ export class SettingService {
             gender:'male',
             accent:'US',
         },
-        soundSource:'haici',
+        soundSource:'youdao',
         autoRead:true
     };
 

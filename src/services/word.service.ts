@@ -240,6 +240,10 @@ export class WordService {
         this.history[today].review++;
         this.saveHistory();
     }
+    deleteRecord(word:string):void{
+        delete this.wordRecords[word];
+        this.saveWordRecords();
+    }
 
     getRepos():Promise<RepoBrief[]> {
         return this.http.get(CONFIG.apiUrl+'/repo/list/')

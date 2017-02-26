@@ -8,10 +8,18 @@
 
 <ion-content>
     <ion-list>
-        <ion-item *ngFor="let record of records">
-            <progress-icon [percent]="record.proficiency/8" style="margin-right: 4px"></progress-icon>
-            {{record.word}} （熟练度{{record.proficiency}}）
-            <span item-right>{{record.wait==-1?'永不':record.wait==0?'今天':record.wait+'天后'}}</span>
-        </ion-item>
+        <ion-item-sliding *ngFor="let record of records; let i=index">
+            <ion-item>
+                <progress-icon [percent]="record.proficiency/8" style="margin-right: 4px"></progress-icon>
+                {{record.word}} （熟练度{{record.proficiency}}）
+                <span item-right>{{record.wait==-1?'永不':record.wait==0?'今天':record.wait+'天后'}}</span>
+            </ion-item>
+            <ion-item-options side="right">
+                <button ion-button color="danger" (click)="deleteRecord(record.word,i)">
+                    <ion-icon name="trash"></ion-icon>
+                    删除
+                </button>
+            </ion-item-options>
+        </ion-item-sliding>
     </ion-list>
 </ion-content>

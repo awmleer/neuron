@@ -1,0 +1,16 @@
+.progress-icon.border {
+    display: inline-block;
+    border:1px solid #387ef5;
+    width:14px;
+    height: 14px;
+    position: relative;
+}
+
+.progress-icon.content{
+    width:100%;
+    position: absolute;
+    background: #387ef5;
+    border:none;
+    bottom:0;
+    left:0;
+}

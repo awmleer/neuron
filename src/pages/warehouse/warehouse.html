@@ -9,6 +9,7 @@
 <ion-content>
     <ion-list>
         <ion-item *ngFor="let record of records">
+            <progress-icon [percent]="record.proficiency/8" style="margin-right: 4px"></progress-icon>
             {{record.word}} （熟练度{{record.proficiency}}）
             <span item-right>{{record.wait==-1?'永不':record.wait==0?'今天':record.wait+'天后'}}</span>
         </ion-item>

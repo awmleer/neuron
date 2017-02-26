@@ -21,6 +21,7 @@ import {DefinitionRatePipe} from "../pipes/definition-rate.pipe";
 import {ImpulsePercentPipe} from "../pipes/impulse-percent";
 import {WarehousePage} from "../pages/warehouse/warehouse";
 import {StatisticPage} from "../pages/statistic/statistic";
+import {ProgressIconComponent} from "../components/progress-icon/progress-icon";
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import {StatisticPage} from "../pages/statistic/statistic";
         WordsAllDonePipe,
         TomorrowReviewPipe,
         DefinitionRatePipe,
-        ImpulsePercentPipe
+        ImpulsePercentPipe,
+        ProgressIconComponent
     ],
     imports: [
         IonicModule.forRoot(MyApp),

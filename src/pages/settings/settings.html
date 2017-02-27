@@ -38,6 +38,13 @@
     <ion-list>
         <ion-list-header>设置</ion-list-header>
         <ion-item>
+            <ion-label>主题</ion-label>
+            <ion-select [(ngModel)]="settingService.settings.theme" (ionChange)="settingService.saveSettings()" cancelText="取消" okText="确定">
+                <ion-option value="normal">普通</ion-option>
+                <ion-option value="night">夜间模式</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item>
             <ion-label>点击屏幕自动发音</ion-label>
             <ion-toggle [(ngModel)]="settingService.settings.autoRead" (ionChange)="settingService.saveSettings()"></ion-toggle>
         </ion-item>

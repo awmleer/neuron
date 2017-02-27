@@ -22,7 +22,8 @@ export class SettingService {
             accent:'US',
         },
         soundSource:'youdao',
-        autoRead:true
+        autoRead:true,
+        theme:'normal'
     };
 
     initialize():void{

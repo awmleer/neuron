@@ -208,8 +208,8 @@ export class ImpulsePage {
         new InAppBrowser(href,'_blank','location=no');
     }
 
-    ionViewWillLeave():void{
-        console.log('will leave this page');
-    }
+    // ionViewWillLeave():void{
+    //     console.log('will leave this page');
+    // }
 
 }

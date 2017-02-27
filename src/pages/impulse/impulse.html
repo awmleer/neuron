@@ -28,7 +28,7 @@
     </a>
 
     <div id="phonetic">
-        <span style="vertical-align: middle;"><a (click)="playSound()" style="color: #000000;">{{entry?.phonetic.US.symbol}}</a></span>
+        <span style="vertical-align: middle;"><a (click)="playSound()" style="color: inherit;">{{entry?.phonetic.US.symbol}}</a></span>
         <button (click)="playSound()" ion-button icon-only clear small style="vertical-align: middle;">
             <ion-icon name="md-volume-up"></ion-icon>
         </button>
@@ -54,12 +54,12 @@
             <h5><ion-icon name="md-chatbubbles"></ion-icon> 例句</h5>
             <p style="border-left: 5px solid #adadad;padding-left: 5px">
                 <span *ngFor="let sentence of entry?.sentences; let i=index;" style="display: block;margin-bottom: 5px;">
-                    <a (click)="unstarSentence(i)" *ngIf="wordService.starredSentences[currentWord.word]!=null && wordService.starredSentences[currentWord.word]?.indexOf(i)>=0" [innerHTML]="sentence" style="color: #000;display: block;"></a>
+                    <a (click)="unstarSentence(i)" *ngIf="wordService.starredSentences[currentWord.word]!=null && wordService.starredSentences[currentWord.word]?.indexOf(i)>=0" [innerHTML]="sentence" style="color: inherit;display: block;"></a>
                 </span>
             </p>
             <p>
                 <span *ngFor="let sentence of entry?.sentences; let i=index;" style="display: block;margin-bottom: 5px;">
-                    <a (click)="starSentence(i)" *ngIf="wordService.starredSentences[currentWord.word]==null || wordService.starredSentences[currentWord.word]?.indexOf(i)<0" [innerHTML]="sentence" style="color: #000;display: block;"></a>
+                    <a (click)="starSentence(i)" *ngIf="wordService.starredSentences[currentWord.word]==null || wordService.starredSentences[currentWord.word]?.indexOf(i)<0" [innerHTML]="sentence" style="color: inherit;display: block;"></a>
                 </span>
             </p>
 

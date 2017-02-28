@@ -15,6 +15,10 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
+.item-select .label-md{
+    color: #000;
+}
+
 .theme-night{
     $color-dark: #2c3340;
     .scroll-content,.item,.list,.tabbar,.toolbar-background,#baffle{

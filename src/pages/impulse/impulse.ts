@@ -19,6 +19,7 @@ export class ImpulsePage {
     currentWord:any;
     baffleShowing:boolean=true;
     type:string;
+    showChinese:boolean;
     entry:WordEntry;
     constructor(
         public nav: NavController,
@@ -48,6 +49,7 @@ export class ImpulsePage {
             if (this.wordsImpulsing[i].wait==0) {
                 this.currentWord=this.wordsImpulsing[i];
                 this.baffleShowing=true;
+                this.showChinese=(this.type=='learn'&&this.currentWord.dirty==0)?true:this.settingService.settings.showChineseWhenReviewing;
                 this.entry=null;
                 this.wordService.getEntry(this.wordsImpulsing[i].word)
                     .then(entry=>{
@@ -179,6 +181,9 @@ export class ImpulsePage {
         this.wordService.saveWordTags();
     }
 
+    doShowChinese():void{
+        this.showChinese=true;
+    }
 
     showActionSheet():void{
         let actionSheet=this.actionSheetCtrl.create({

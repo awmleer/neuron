@@ -38,6 +38,10 @@
     <ion-list>
         <ion-list-header>设置</ion-list-header>
         <ion-item>
+            <ion-label>复习时显示例句翻译</ion-label>
+            <ion-toggle [(ngModel)]="settingService.settings.showChineseWhenReviewing" (ionChange)="settingService.saveSettings()"></ion-toggle>
+        </ion-item>
+        <ion-item>
             <ion-label>主题</ion-label>
             <ion-select [(ngModel)]="settingService.settings.theme" (ionChange)="settingService.saveSettings()" cancelText="取消" okText="确定">
                 <ion-option value="normal">普通</ion-option>

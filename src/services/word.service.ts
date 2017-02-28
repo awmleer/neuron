@@ -15,6 +15,7 @@ export class WordService {
     wordsLearning:WordImpulsing[]=null;
     wordsReviewing:WordImpulsing[];
     starredSentences={};
+    wordTags={};
     history={};
 
     constructor(
@@ -40,6 +41,13 @@ export class WordService {
                 this.starredSentences={};
             }
         });
+        this.storage.get('wordTags').then((wordTags)=>{
+            if (wordTags) {
+                this.wordTags=wordTags;
+            }else {
+                this.wordTags={};
+            }
+        });
         this.storage.get('history').then((history)=>{
             if (history) {
                 this.history=history;
@@ -63,6 +71,9 @@ export class WordService {
 
     saveStarredSentences():void{
         this.storage.set('starredSentences',this.starredSentences);
+    }
+    saveWordTags():void{
+        this.storage.set('wordTags',this.wordTags);
     }
     saveHistory():void{
         this.storage.set('history',this.history);

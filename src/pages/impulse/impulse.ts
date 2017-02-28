@@ -166,6 +166,19 @@ export class ImpulsePage {
         this.wordService.saveStarredSentences();
     }
 
+    toggleTag(tag:string):void{
+        if (this.wordService.wordTags[this.currentWord.word]==null) {
+            this.wordService.wordTags[this.currentWord.word]=tag;
+        }else{
+            if (this.wordService.wordTags[this.currentWord.word].indexOf(tag)==-1) {
+                this.wordService.wordTags[this.currentWord.word]+=tag;
+            }else{
+                this.wordService.wordTags[this.currentWord.word]=this.wordService.wordTags[this.currentWord.word].replace(tag,'');
+            }
+        }
+        this.wordService.saveWordTags();
+    }
+
 
     showActionSheet():void{
         let actionSheet=this.actionSheetCtrl.create({

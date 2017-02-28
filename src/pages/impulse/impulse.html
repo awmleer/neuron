@@ -15,6 +15,9 @@
     <h1>
         <a (click)="playSound()">{{currentWord?.word}}</a>
         <progress-icon *ngIf="type=='review'&&currentWord" [percent]="wordService.wordRecords[currentWord?.word]?.proficiency/8" style="margin-left: 5px"></progress-icon>
+        <ion-badge mode="md" *ngIf="wordService.wordTags[this.currentWord.word]?.indexOf('d')>=0">释义</ion-badge>
+        <ion-badge mode="md" *ngIf="wordService.wordTags[this.currentWord.word]?.indexOf('p')>=0">发音</ion-badge>
+        <ion-badge mode="md" *ngIf="wordService.wordTags[this.currentWord.word]?.indexOf('s')>=0">拼写</ion-badge>
     </h1>
     <span style="position: absolute;top: 20px;right: 10px;">
         <ion-icon *ngIf="entry?.level>0" name="star" style="color: #f3c715;"></ion-icon>
@@ -66,6 +69,12 @@
         </ion-slide>
 
         <ion-slide>
+            <h5><ion-icon name="pricetags"></ion-icon> 标记</h5>
+            <ion-row>
+                <ion-col><button (click)="toggleTag('d')" ion-button [outline]="wordService.wordTags[this.currentWord.word]==null || wordService.wordTags[this.currentWord.word]?.indexOf('d')==-1" block color="dark">释义</button></ion-col>
+                <ion-col><button (click)="toggleTag('p')" ion-button [outline]="wordService.wordTags[this.currentWord.word]==null || wordService.wordTags[this.currentWord.word]?.indexOf('p')==-1" outline block color="dark">发音</button></ion-col>
+                <ion-col><button (click)="toggleTag('s')" ion-button [outline]="wordService.wordTags[this.currentWord.word]==null || wordService.wordTags[this.currentWord.word]?.indexOf('s')==-1" outline block color="dark">拼写</button></ion-col>
+            </ion-row>
             <h5><ion-icon name="ios-pulse"></ion-icon> 意频</h5>
             <div>
                 <span *ngFor="let rate of entry?.definition_rates | definitionRate" style="display: block;margin-bottom: 5px;">

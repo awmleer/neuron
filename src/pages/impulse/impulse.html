@@ -15,9 +15,9 @@
     <h1>
         <a (click)="playSound()">{{currentWord?.word}}</a>
         <progress-icon *ngIf="type=='review'&&currentWord" [percent]="wordService.wordRecords[currentWord?.word]?.proficiency/8" style="margin-left: 5px"></progress-icon>
-        <ion-badge mode="md" *ngIf="wordService.wordTags[this.currentWord.word]?.indexOf('d')>=0">释义</ion-badge>
-        <ion-badge mode="md" *ngIf="wordService.wordTags[this.currentWord.word]?.indexOf('p')>=0">发音</ion-badge>
-        <ion-badge mode="md" *ngIf="wordService.wordTags[this.currentWord.word]?.indexOf('s')>=0">拼写</ion-badge>
+        <ion-badge mode="md" *ngIf="wordService.wordTags[currentWord.word]!=null && wordService.wordTags[currentWord.word]?.indexOf('d')>=0">释义</ion-badge>
+        <ion-badge mode="md" *ngIf="wordService.wordTags[currentWord.word]!=null && wordService.wordTags[currentWord.word]?.indexOf('p')>=0">发音</ion-badge>
+        <ion-badge mode="md" *ngIf="wordService.wordTags[currentWord.word]!=null && wordService.wordTags[currentWord.word]?.indexOf('s')>=0">拼写</ion-badge>
     </h1>
     <span style="position: absolute;top: 20px;right: 10px;">
         <ion-icon *ngIf="entry?.level>0" name="star" style="color: #f3c715;"></ion-icon>

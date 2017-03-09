@@ -3,9 +3,10 @@ import {NavParams, ActionSheetController} from 'ionic-angular';
 import { NavController } from 'ionic-angular';
 import {RepoDetail} from "../../classes/repo";
 import {WordService} from "../../services/word.service";
-import {WordEntry, WordImpulsing} from "../../classes/word";
+import {WordEntry, WordImpulsing, WordRecord} from "../../classes/word";
 import {SettingService} from "../../services/setting.service";
 import {InAppBrowser} from 'ionic-native';
+import * as _ from "lodash"
 
 
 
@@ -16,11 +17,15 @@ import {InAppBrowser} from 'ionic-native';
 export class ImpulsePage {
     amount:number;
     wordsImpulsing:WordImpulsing[];
-    currentWord:any;
+    currentWord:WordImpulsing;
     baffleShowing:boolean=true;
     type:string;
     showChinese:boolean;
     entry:WordEntry;
+    lastWordImpulsing:WordImpulsing;
+    lastWordRecord:WordRecord;
+
+
     constructor(
         public nav: NavController,
         private navParams: NavParams,
@@ -48,15 +53,7 @@ export class ImpulsePage {
         for (let i = 0; i < this.wordsImpulsing.length; i++) {
             if (this.wordsImpulsing[i].wait==0) {
                 this.currentWord=this.wordsImpulsing[i];
-                this.baffleShowing=true;
-                this.showChinese=(this.type=='learn'&&this.currentWord.dirty==0)?true:this.settingService.settings.showChineseWhenReviewing;
-                this.entry=null;
-                this.wordService.getEntry(this.wordsImpulsing[i].word)
-                    .then(entry=>{
-                        this.entry=entry;
-                    });
-                //saveWordsImpulsing every time we get a new currentWord
-                this.wordService.saveWordsImpulsing(this.type);
+                this.initWord();
                 return;
             }else {
                 if(this.wordsImpulsing[i].wait!=-1)allDone=false;
@@ -76,6 +73,43 @@ export class ImpulsePage {
         this.nextWord();
     }
 
+    initWord():void{
+        this.baffleShowing=true;
+        this.showChinese=(this.type=='learn'&&this.currentWord.dirty==0)?true:this.settingService.settings.showChineseWhenReviewing;
+        this.entry=null;
+        this.wordService.getEntry(this.currentWord.word)
+            .then(entry=>{
+                this.entry=entry;
+            });
+        //saveWordsImpulsing every time we get a new currentWord
+        this.wordService.saveWordsImpulsing(this.type);
+    }
+
+    cacheLastWord():void{
+        this.lastWordImpulsing=_.cloneDeep(this.currentWord);
+        this.lastWordRecord=_.cloneDeep(this.wordService.wordRecords[this.currentWord.word]);
+    }
+
+
+    rewind():void{
+        for (let i in this.wordsImpulsing) {
+            if (this.wordsImpulsing[i].word == this.lastWordImpulsing.word) {
+                this.wordsImpulsing[i]=_.cloneDeep(this.lastWordImpulsing);
+            }
+        }
+        if (this.lastWordRecord) {
+            this.wordService.wordRecords[this.lastWordImpulsing.word]=_.cloneDeep(this.lastWordRecord);
+        }else {
+            delete this.wordService.wordRecords[this.lastWordImpulsing.word];
+        }
+        this.wordService.saveWordRecords();
+        this.lastWordImpulsing=null;
+        this.lastWordRecord=null;
+        this.nextWord();
+        this.baffleShowing=false;
+    }
+
+
     finish():void{
         if (this.type == 'learn') {
             this.wordService.removeWordsLearning();
@@ -86,6 +120,7 @@ export class ImpulsePage {
     }
 
     clickKnow():void{
+        this.cacheLastWord();
         if (this.currentWord.dirty==0) {//First time today
             this.currentWord.dirty=1;
             this.currentWord.wait=-1;//never show this word today
@@ -110,6 +145,7 @@ export class ImpulsePage {
     }
 
     clickVague():void{
+        this.cacheLastWord();
         if (this.currentWord.dirty==0) {//First time today
             this.currentWord.count=3;
             this.currentWord.wait=2;
@@ -122,6 +158,7 @@ export class ImpulsePage {
     }
 
     clickForget():void{
+        this.cacheLastWord();
         if (this.currentWord.dirty==0) {//First time today
             this.currentWord.count=1;
             this.currentWord.wait=2;

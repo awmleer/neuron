@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import {Http} from "@angular/http";
 import 'rxjs/add/operator/toPromise'
 import { Storage } from '@ionic/storage';
-import * as moment from "moment";
-import * as _ from "lodash"
 import {ToastController} from "ionic-angular";
+// import * as moment from "moment";
+// import * as _ from "lodash"
 
 
 @Injectable()

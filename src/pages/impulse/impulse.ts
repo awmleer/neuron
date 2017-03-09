@@ -95,6 +95,7 @@ export class ImpulsePage {
         for (let i in this.wordsImpulsing) {
             if (this.wordsImpulsing[i].word == this.lastWordImpulsing.word) {
                 this.wordsImpulsing[i]=_.cloneDeep(this.lastWordImpulsing);
+                this.currentWord=this.wordsImpulsing[i];
             }
         }
         if (this.lastWordRecord) {
@@ -103,9 +104,10 @@ export class ImpulsePage {
             delete this.wordService.wordRecords[this.lastWordImpulsing.word];
         }
         this.wordService.saveWordRecords();
+        this.initWord();
         this.lastWordImpulsing=null;
         this.lastWordRecord=null;
-        this.nextWord();
+        // this.nextWord();
         this.baffleShowing=false;
     }
 

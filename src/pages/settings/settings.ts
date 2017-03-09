@@ -4,6 +4,7 @@ import {NavController, ModalController} from 'ionic-angular';
 import {AccountService} from "../../services/account.service";
 import {LoginPage} from "../login/login";
 import {SettingService} from "../../services/setting.service";
+import {InAppBrowser} from "ionic-native";
 
 @Component({
     selector: 'page-settings',
@@ -22,6 +23,10 @@ export class SettingsPage {
 
     showLoginModal():void{
         this.modalCtrl.create(LoginPage).present();
+    }
+
+    openHelpPage():void{
+        new InAppBrowser('http://neuron.sparker.top/readme.html','_blank','location=no');
     }
 
     // scaleChange():void{

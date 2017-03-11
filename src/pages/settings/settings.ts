@@ -5,6 +5,7 @@ import {AccountService} from "../../services/account.service";
 import {LoginPage} from "../login/login";
 import {SettingService} from "../../services/setting.service";
 import {InAppBrowser} from "ionic-native";
+import {AboutPage} from "../about/about";
 
 @Component({
     selector: 'page-settings',
@@ -27,6 +28,10 @@ export class SettingsPage {
 
     openHelpPage():void{
         new InAppBrowser('http://neuron.sparker.top/readme.html','_blank','location=no');
+    }
+
+    openAboutPage():void{
+        this.navCtrl.push(AboutPage);
     }
 
     // scaleChange():void{

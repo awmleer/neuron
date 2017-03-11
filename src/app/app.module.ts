@@ -23,6 +23,7 @@ import {WarehousePage} from "../pages/warehouse/warehouse";
 import {StatisticPage} from "../pages/statistic/statistic";
 import {ProgressIconComponent} from "../components/progress-icon/progress-icon";
 import {WordSentencePipe} from "../pipes/word-sentence.pipe";
+import {AboutPage} from "../pages/about/about";
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import {WordSentencePipe} from "../pipes/word-sentence.pipe";
         LoginPage,
         WarehousePage,
         StatisticPage,
+        AboutPage,
         TodayLearnPipe,
         HowManyInPipe,
         WordsDoneCountPipe,
@@ -62,7 +64,8 @@ import {WordSentencePipe} from "../pipes/word-sentence.pipe";
         ImpulsePage,
         LoginPage,
         WarehousePage,
-        StatisticPage
+        StatisticPage,
+        AboutPage
     ],
     providers: [
         {provide: ErrorHandler, useClass: IonicErrorHandler},

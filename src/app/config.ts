@@ -1,4 +1,4 @@
+import {isDevMode} from "@angular/core"
 export const CONFIG={
-    // apiUrl:'/api'
-    apiUrl:'http://neuron.sparker.top'
+    apiUrl:isDevMode()?'/api':'http://neuron.sparker.top'
 };

@@ -9,7 +9,6 @@ import {SettingsPage} from "../pages/settings/settings";
 import {HttpModule} from "@angular/http";
 import {WordService} from "../services/word.service";
 import {ImpulsePage} from "../pages/impulse/impulse";
-import { Storage } from '@ionic/storage';
 import {TodayLearnPipe} from "../pipes/today.pipe";
 import {HowManyInPipe} from "../pipes/how-many-in.pipe";
 import {WordsDoneCountPipe, WordsAllDonePipe} from "../pipes/words-done.pipe";
@@ -24,6 +23,8 @@ import {StatisticPage} from "../pages/statistic/statistic";
 import {ProgressIconComponent} from "../components/progress-icon/progress-icon";
 import {WordSentencePipe} from "../pipes/word-sentence.pipe";
 import {AboutPage} from "../pages/about/about";
+import {IonicStorageModule} from "@ionic/storage";
+import {BrowserModule} from "@angular/platform-browser";
 
 
 @NgModule({
@@ -51,6 +52,8 @@ import {AboutPage} from "../pages/about/about";
     ],
     imports: [
         IonicModule.forRoot(MyApp),
+        IonicStorageModule.forRoot(),
+        BrowserModule,
         HttpModule
     ],
     bootstrap: [IonicApp],
@@ -69,7 +72,6 @@ import {AboutPage} from "../pages/about/about";
     ],
     providers: [
         {provide: ErrorHandler, useClass: IonicErrorHandler},
-        Storage,
         WordService,
         AccountService,
         SettingService

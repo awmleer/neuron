@@ -1,19 +1,77 @@
 $hot-color: #6e7be7;
+$card-border-radius: 8px;
 
 page-impulse {
-    .progress-bar{
+    #progress-bar{
         position: fixed;
         bottom: 0;
         left: 0;
         width: 100%;
         height: 3px;
         z-index: 100;
-        .current-progress{
+        #current-progress{
             height: 3px;
             background-color: $hot-color;
             transition: width 0.2s ease;
         }
     }
+
+    #card{
+        background-color: #f6f6f6;
+        border-radius: $card-border-radius;
+        box-shadow: 0 0 10px 5px rgba(215, 215, 215, 0.92);
+        height: 60px;
+        overflow: hidden;
+        transition: height 500ms ease;
+        .card-scroll{
+            overflow-y: scroll;
+            height:calc(100vh - 220px);
+            border-radius: $card-border-radius;
+        }
+        .card-part{
+            border-radius: $card-border-radius;
+            .card-part-head:first-of-type{
+                margin-top: 0;
+            }
+            .card-part-head{
+                font-size: 1.8rem;
+                background-color: $hot-color;
+                border-top-left-radius: $card-border-radius;
+                border-top-right-radius: $card-border-radius;
+                margin-top: -10px;
+                padding: 8px 10px 8px 10px;
+                color: #ffffff;
+            }
+            .card-part-body{
+                padding: 8px 10px 10px 10px;
+                background-color: #ffffff;
+            }
+            .card-part-body:last-of-type{
+                border-bottom-left-radius: $card-border-radius;
+                border-bottom-right-radius: $card-border-radius;
+            }
+        }
+    }
+    #card.expanding{
+        height:calc(100vh - 160px);
+    }
+
+    #entry{
+        display: block;
+        color: inherit;
+        position: relative;
+        height:70px;
+        padding: 10px 10px 0 10px;
+        .level-star{
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            ion-icon{
+                color: #f3c715;
+            }
+        }
+    }
+
 
     em.hot{
         color: $hot-color;
@@ -74,23 +132,23 @@ page-impulse {
     ion-slides{
         height: calc(100% - 110px)!important;
     }
-    ion-slide{
-        margin-top: 5px;
-        justify-content:flex-start!important;
-        text-align: left!important;
-        font-size: 1.4rem!important;
-        .slide-zoom{
-            text-align: left;
-            height: 100%;
-            overflow-y: scroll;
-        }
-        h5{
-            line-height:1.6em;
-            margin-bottom: 2px;
-        }
-        p{
-            margin-top: 2px;
-            margin-bottom: 2px;
-        }
-    }
+    //ion-slide{
+    //    margin-top: 5px;
+    //    justify-content:flex-start!important;
+    //    text-align: left!important;
+    //    font-size: 1.4rem!important;
+    //    .slide-zoom{
+    //        text-align: left;
+    //        height: 100%;
+    //        overflow-y: scroll;
+    //    }
+    //    h5{
+    //        line-height:1.6em;
+    //        margin-bottom: 2px;
+    //    }
+    //    p{
+    //        margin-top: 2px;
+    //        margin-bottom: 2px;
+    //    }
+    //}
 }

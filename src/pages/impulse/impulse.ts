@@ -19,6 +19,7 @@ export class ImpulsePage {
     wordsImpulsing:WordImpulsing[];
     currentWord:WordImpulsing;
     baffleShowing:boolean=true;
+    cardExpanding:boolean=false;
     type:string;
     showChinese:boolean;
     entry:WordEntry;
@@ -34,11 +35,10 @@ export class ImpulsePage {
         public settingService: SettingService,
         public actionSheetCtrl:ActionSheetController,
         private zone: NgZone
-    ) {
-        zone.run(()=>this.baffleShowing=true);
-    }
+    ) {}
 
     ngOnInit(): void {
+        this.zone.run(()=>this.baffleShowing=true);
         this.type=this.navParams.get('type');
         if (this.type == 'learn') {
             this.wordsImpulsing=this.wordService.wordsLearning;

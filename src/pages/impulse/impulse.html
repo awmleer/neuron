@@ -23,72 +23,30 @@
     <div id="current-progress" [style.width]="wordsImpulsing | impulsePercent"></div>
 </div>
 
-<ion-content padding>
-    <div *ngIf="currentWord">
-        <impulse-card [wordImpulsing]="currentWord" [type]="type"></impulse-card>
-    </div>
-
-    <a (click)="hideBaffle()" id="baffle" [hidden]="!baffleShowing">
-        <p style="text-align: center;margin-top: 50%">点击屏幕查看释义</p>
-    </a>
-
-
-
-
-
-    <!--<ion-slides pager>-->
-
-        <!--<ion-slide>-->
-            <!--<h5><ion-icon name="md-text"></ion-icon> 释义</h5>-->
-            <!--<p>-->
-                <!--<span *ngFor="let definition of entry?.definitions; ">-->
-                    <!--<span style="color: gray;">{{definition.type}}</span> {{definition.text}}<br>-->
-                <!--</span>-->
-            <!--</p>-->
-            <!--<h5><ion-icon name="md-chatbubbles"></ion-icon> 例句</h5>-->
-            <!--<div>-->
-                <!--<div *ngFor="let sentence of sentences; let i=index;" class="sentence">-->
-                    <!--&lt;!&ndash;(entry?.sentences|sortSentence:wordService.starredSentences[currentWord.word])&ndash;&gt;-->
-                    <!--&lt;!&ndash;TODO change to sentence id&ndash;&gt;-->
-                    <!--<a (click)="toggleSentenceStar(sentence)" class="star-button" [class.starred]="sentence.starred">-->
-                        <!--<ion-icon name="md-disc"></ion-icon>-->
-                    <!--</a>-->
-                    <!--<span [innerHTML]="sentence.text | wordSentence:showChinese"></span>-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--<button ion-button small clear block (click)="doShowChinese()" *ngIf="!showChinese">显示中文</button>-->
-        <!--</ion-slide>-->
-
-        <!--<ion-slide>-->
-            <!--<h5><ion-icon name="pricetags"></ion-icon> 标记</h5>-->
-            <!--<ion-row>-->
-                <!--<ion-col><button (click)="toggleTag('d')" ion-button [outline]="wordService.wordTags[this.currentWord.word]==null || wordService.wordTags[this.currentWord.word]?.indexOf('d')==-1" block color="dark">释义</button></ion-col>-->
-                <!--<ion-col><button (click)="toggleTag('p')" ion-button [outline]="wordService.wordTags[this.currentWord.word]==null || wordService.wordTags[this.currentWord.word]?.indexOf('p')==-1" outline block color="dark">发音</button></ion-col>-->
-                <!--<ion-col><button (click)="toggleTag('s')" ion-button [outline]="wordService.wordTags[this.currentWord.word]==null || wordService.wordTags[this.currentWord.word]?.indexOf('s')==-1" outline block color="dark">拼写</button></ion-col>-->
-            <!--</ion-row>-->
-            <!--<h5><ion-icon name="ios-pulse"></ion-icon> 意频</h5>-->
-            <!--<div>-->
-                <!--<span *ngFor="let rate of entry?.definition_rates | definitionRate" style="display: block;margin-bottom: 5px;">-->
-                    <!--{{rate.sense}} : {{rate.percent}}%-->
-                <!--</span>-->
-            <!--</div>-->
-            <!--<h5><ion-icon name="md-bookmarks"></ion-icon> 更多词典</h5>-->
-            <!--<ion-row>-->
-                <!--<ion-col><button (click)="openDictionary('youdao')" ion-button outline block color="dark">有道</button></ion-col>-->
-                <!--<ion-col><button (click)="openDictionary('ciba')" ion-button outline block color="dark">词霸</button></ion-col>-->
-                <!--<ion-col><button (click)="openDictionary('bing')" ion-button outline block color="dark">必应</button></ion-col>-->
-            <!--</ion-row>-->
-        <!--</ion-slide>-->
-
-    <!--</ion-slides>-->
-
-
-
+<div class="action-button-group">
     <ion-row>
         <ion-col><button (click)="clickKnow()" ion-button color="default" block>认识</button></ion-col>
         <ion-col><button (click)="clickVague()" ion-button color="light" block>模糊</button></ion-col>
-        <ion-col><button (click)="clickForget()" ion-button color="danger" block>{{(type=='learn'&&currentWord.dirty==0)?'不认识':'忘记'}}</button></ion-col>
+        <ion-col><button (click)="clickForget()" ion-button color="danger" block>{{(type=='learn'&&wordsRendering[1]?.dirty==0)?'不认识':'忘记'}}</button></ion-col>
     </ion-row>
+</div>
+
+<ion-content>
+    <div style="position: relative">
+        <impulse-card
+            *ngFor="let word of wordsRendering;let i=index"
+            [wordImpulsing]="word"
+            [type]="type"
+            [class.last]="i==0"
+            [class.current]="i==1"
+            [class.next]="i==2"
+        ></impulse-card>
+    </div>
+
+
+    <!--<a (click)="hideBaffle()" id="baffle" [hidden]="!baffleShowing">-->
+        <!--<p style="text-align: center;margin-top: 50%">点击屏幕查看释义</p>-->
+    <!--</a>-->
 
 
 </ion-content>

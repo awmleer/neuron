@@ -2,16 +2,20 @@ $hot-color: #6e7be7;
 $card-border-radius: 8px;
 
 impulse-card {
-    #card{
+    width:100vw;
+    padding: 5px 15px;
+    .card{
         background-color: #f6f6f6;
         border-radius: $card-border-radius;
         box-shadow: 0 0 10px 5px rgba(215, 215, 215, 0.92);
-        height: 60px;
+        height: 80px;
+        //width:100;
         overflow: hidden;
         transition: height 500ms ease;
         .card-scroll{
+            background-color: #ffffff;
             overflow-y: scroll;
-            height:calc(100vh - 220px);
+            height:calc(100vh - 240px);
             border-radius: $card-border-radius;
         }
         .card-part{
@@ -38,22 +42,32 @@ impulse-card {
             }
         }
     }
-    #card.expanding{
+    .card.expanding{
         height:calc(100vh - 160px);
     }
 
-    #entry{
+    .entry{
         display: block;
         color: inherit;
         position: relative;
-        height:70px;
-        padding: 10px 10px 0 10px;
+        height:80px;
+        padding: 12px 10px 0 10px;
         .level-star{
             position: absolute;
-            top: 10px;
+            top: 15px;
             right: 10px;
             ion-icon{
                 color: #f3c715;
+            }
+        }
+        h1{
+            margin-bottom: 0;
+            margin-top: 0;
+            a{
+                color: #000;
+            }
+            ion-badge{
+                vertical-align: middle;
             }
         }
     }
@@ -62,15 +76,6 @@ impulse-card {
     em.hot{
         color: $hot-color;
         font-weight: bold;
-    }
-    h1{
-        margin-bottom: 0;
-        a{
-            color: #000;
-        }
-        ion-badge{
-            vertical-align: middle;
-        }
     }
     .sentence{
         display: block;
@@ -93,7 +98,7 @@ impulse-card {
             width: calc(100% - 34px);
         }
     }
-    #phonetic{
+    .phonetic{
         margin-top: -5px;
         //cursor:pointer;
     }

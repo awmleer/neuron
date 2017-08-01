@@ -1,5 +1,5 @@
-<div id="card" [class.expanding]="cardExpanding">
-    <a id="entry" class="card-part" (click)="expand()">
+<div class="card" [class.expanding]="cardExpanding">
+    <a class="entry card-part" (click)="expand()" *ngIf="wordImpulsing">
         <h1>
             <a (click)="playSound()">{{wordImpulsing?.word}}</a>
             <progress-icon *ngIf="type=='review'&&wordImpulsing" [percent]="wordService.wordRecords[wordImpulsing?.word]?.proficiency/8" style="margin-left: 5px"></progress-icon>
@@ -15,7 +15,7 @@
             <ion-icon *ngIf="entry?.level>4" name="star"></ion-icon>
         </div>
 
-        <div id="phonetic">
+        <div class="phonetic">
             <span style="vertical-align: middle;"><a (click)="playSound()" style="color: inherit;">{{entry?.phonetic.US.symbol}}</a></span>
             <button (click)="playSound()" ion-button icon-only clear small style="vertical-align: middle;">
                 <ion-icon name="md-volume-up"></ion-icon>
@@ -30,7 +30,7 @@
         </div>
     </a>
 
-    <div class="card-scroll">
+    <div class="card-scroll" *ngIf="wordImpulsing">
         <div class="card-part">
             <div class="card-part-head">
                 <ion-icon name="md-text"></ion-icon> 释义

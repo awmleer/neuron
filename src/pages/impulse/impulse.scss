@@ -9,47 +9,45 @@ page-impulse {
         #current-progress{
             height: 3px;
             background-color: $hot-color;
-            transition: width 0.2s ease;
+            transition: width 200ms ease;
         }
     }
 
-
-    #baffle{
-        background: #ffffff;
-        display: block;
+    impulse-card{
         position: absolute;
-        z-index: 10;
-        width: 100%;
-        height: calc(100% - 46px);
-        top: 46px;
+        top:0;
+        transition: left 300ms ease;
+    }
+    impulse-card.last{
+        left: -100%;
+    }
+    impulse-card.current{
         left: 0;
-        //cursor:pointer;
+    }
+    impulse-card.next{
+        left: 100%;
     }
 
-    //.swiper-wrapper{
-    //    padding-bottom: 30px;
-    //    box-sizing: border-box;
+    .action-button-group{
+        z-index: 10;
+        position: fixed;
+        left:0;
+        bottom:30px;
+        width:100%;
+    }
+
+    //#baffle{
+    //    background: #ffffff;
+    //    display: block;
+    //    position: absolute;
+    //    z-index: 10;
+    //    width: 100%;
+    //    height: calc(100% - 46px);
+    //    top: 46px;
+    //    left: 0;
+    //    //cursor:pointer;
     //}
-    //ion-slides{
-    //    height: calc(100% - 110px)!important;
-    //}
-    //ion-slide{
-    //    margin-top: 5px;
-    //    justify-content:flex-start!important;
-    //    text-align: left!important;
-    //    font-size: 1.4rem!important;
-    //    .slide-zoom{
-    //        text-align: left;
-    //        height: 100%;
-    //        overflow-y: scroll;
-    //    }
-    //    h5{
-    //        line-height:1.6em;
-    //        margin-bottom: 2px;
-    //    }
-    //    p{
-    //        margin-top: 2px;
-    //        margin-bottom: 2px;
-    //    }
-    //}
+
+
+
 }

@@ -26,6 +26,7 @@ export class ImpulseCardComponent {
     ) {}
 
     ngOnInit(){
+        if(!this.wordImpulsing)return;
         this.showChinese=(this.type=='learn'&&this.wordImpulsing.dirty==0)?true:this.settingService.settings.showChineseWhenReviewing;
         this.entry=null;
         this.wordService.getEntry(this.wordImpulsing.word)

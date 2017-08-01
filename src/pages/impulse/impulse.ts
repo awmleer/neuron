@@ -1,4 +1,4 @@
-import {Component, NgZone} from '@angular/core';
+import {ApplicationRef, Component, NgZone} from '@angular/core';
 import {NavParams, ActionSheetController} from 'ionic-angular';
 import { NavController } from 'ionic-angular';
 import {RepoDetail} from "../../classes/repo";
@@ -16,10 +16,11 @@ import * as _ from "lodash"
 export class ImpulsePage {
     amount:number;
     wordsImpulsing:WordImpulsing[];
-    currentWord:WordImpulsing;
+    wordsRendering:WordImpulsing[]=[null,null];
     type:'learn'|'review';
     lastWordImpulsing:WordImpulsing;
     lastWordRecord:WordRecord;
+    shouldAnimate:boolean=false;
 
 
     constructor(
@@ -28,11 +29,11 @@ export class ImpulsePage {
         public wordService:WordService,
         public settingService: SettingService,
         public actionSheetCtrl:ActionSheetController,
+        private applicationRef:ApplicationRef,
         private zone: NgZone
     ) {}
 
     ngOnInit(): void {
-        // this.zone.run(()=>this.baffleShowing=true);
         this.type=this.navParams.get('type');
         if (this.type == 'learn') {
             this.wordsImpulsing=this.wordService.wordsLearning;
@@ -41,6 +42,7 @@ export class ImpulsePage {
         }
         this.amount=this.wordsImpulsing.length;
         this.nextWord();
+        this.shouldAnimate=true;
     }
 
 
@@ -49,7 +51,8 @@ export class ImpulsePage {
         let allDone=true;
         for (let i = 0; i < this.wordsImpulsing.length; i++) {
             if (this.wordsImpulsing[i].wait==0) {
-                this.currentWord=this.wordsImpulsing[i];
+                // this.wordsRendering[1]=this.wordsImpulsing[i];
+                this.transitNext(this.wordsImpulsing[i]);
                 // this.initWord();
                 return;
             }else {
@@ -71,10 +74,25 @@ export class ImpulsePage {
     }
 
 
+    transitNext(word:WordImpulsing){
+        if (this.shouldAnimate) {
+            // this.zone.run(()=>{
+            // });
+            this.wordsRendering.push(word);
+            // this.applicationRef.tick();
+            setTimeout(()=>{
+                this.wordsRendering.shift();
+            },10);
+        }else{
+            this.wordsRendering.push(word);
+            this.wordsRendering.shift();
+        }
+    }
+
 
     cacheLastWord():void{
-        this.lastWordImpulsing=_.cloneDeep(this.currentWord);
-        this.lastWordRecord=_.cloneDeep(this.wordService.wordRecords[this.currentWord.word]);
+        this.lastWordImpulsing=_.cloneDeep(this.wordsRendering[1]);
+        this.lastWordRecord=_.cloneDeep(this.wordService.wordRecords[this.wordsRendering[1].word]);
     }
 
 
@@ -82,7 +100,7 @@ export class ImpulsePage {
         for (let i in this.wordsImpulsing) {
             if (this.wordsImpulsing[i].word == this.lastWordImpulsing.word) {
                 this.wordsImpulsing[i]=_.cloneDeep(this.lastWordImpulsing);
-                this.currentWord=this.wordsImpulsing[i];
+                this.wordsRendering[1]=this.wordsImpulsing[i];
             }
         }
         if (this.lastWordRecord) {
@@ -109,24 +127,24 @@ export class ImpulsePage {
 
     clickKnow():void{
         this.cacheLastWord();
-        if (this.currentWord.dirty==0) {//First time today
-            this.currentWord.dirty=1;
-            this.currentWord.wait=-1;//never show this word today
-            if(this.type=='learn')this.wordService.addRecord(this.currentWord.word,'know');
-            if(this.type=='review')this.wordService.moltRecord(this.currentWord.word,'know');
+        if (this.wordsRendering[1].dirty==0) {//First time today
+            this.wordsRendering[1].dirty=1;
+            this.wordsRendering[1].wait=-1;//never show this word today
+            if(this.type=='learn')this.wordService.addRecord(this.wordsRendering[1].word,'know');
+            if(this.type=='review')this.wordService.moltRecord(this.wordsRendering[1].word,'know');
         }else {
-            this.currentWord.count+=1;
-            if (this.currentWord.count == 6) {//if count reaches 6
-                this.currentWord.wait=-1;//this word is done for today
-                if (this.currentWord.dirty == 2) {
-                    if(this.type=='learn')this.wordService.addRecord(this.currentWord.word,'vague');
-                    if(this.type=='review')this.wordService.moltRecord(this.currentWord.word,'vague');
-                }else if (this.currentWord.dirty == 3) {
-                    if(this.type=='learn')this.wordService.addRecord(this.currentWord.word,'forget');
-                    if(this.type=='review')this.wordService.moltRecord(this.currentWord.word,'forget');
+            this.wordsRendering[1].count+=1;
+            if (this.wordsRendering[1].count == 6) {//if count reaches 6
+                this.wordsRendering[1].wait=-1;//this word is done for today
+                if (this.wordsRendering[1].dirty == 2) {
+                    if(this.type=='learn')this.wordService.addRecord(this.wordsRendering[1].word,'vague');
+                    if(this.type=='review')this.wordService.moltRecord(this.wordsRendering[1].word,'vague');
+                }else if (this.wordsRendering[1].dirty == 3) {
+                    if(this.type=='learn')this.wordService.addRecord(this.wordsRendering[1].word,'forget');
+                    if(this.type=='review')this.wordService.moltRecord(this.wordsRendering[1].word,'forget');
                 }
             }else {
-                this.currentWord.wait=this.currentWord.count*2+1;
+                this.wordsRendering[1].wait=this.wordsRendering[1].count*2+1;
             }
         }
         this.nextWord();
@@ -134,42 +152,36 @@ export class ImpulsePage {
 
     clickVague():void{
         this.cacheLastWord();
-        if (this.currentWord.dirty==0) {//First time today
-            this.currentWord.count=3;
-            this.currentWord.wait=2;
-            this.currentWord.dirty=2;
+        if (this.wordsRendering[1].dirty==0) {//First time today
+            this.wordsRendering[1].count=3;
+            this.wordsRendering[1].wait=2;
+            this.wordsRendering[1].dirty=2;
         }else {
             //currentWord.count do not change
-            this.currentWord.wait=this.currentWord.count*2+1;
+            this.wordsRendering[1].wait=this.wordsRendering[1].count*2+1;
         }
         this.nextWord();
     }
 
     clickForget():void{
         this.cacheLastWord();
-        if (this.currentWord.dirty==0) {//First time today
-            this.currentWord.count=1;
-            this.currentWord.wait=2;
-            this.currentWord.dirty=3;
+        if (this.wordsRendering[1].dirty==0) {//First time today
+            this.wordsRendering[1].count=1;
+            this.wordsRendering[1].wait=2;
+            this.wordsRendering[1].dirty=3;
         }else {
-            if(this.currentWord.count>0)this.currentWord.count--;
-            this.currentWord.wait=this.currentWord.count*2+1;
+            if(this.wordsRendering[1].count>0)this.wordsRendering[1].count--;
+            this.wordsRendering[1].wait=this.wordsRendering[1].count*2+1;
         }
         this.nextWord();
     }
 
     markAsMaster():void{
-        if(this.type=='learn')this.wordService.addRecord(this.currentWord.word,'master');
-        if(this.type=='review')this.wordService.moltRecord(this.currentWord.word,'master');
-        this.currentWord.wait=-1;//never show it today
-        this.currentWord.dirty=4;
+        if(this.type=='learn')this.wordService.addRecord(this.wordsRendering[1].word,'master');
+        if(this.type=='review')this.wordService.moltRecord(this.wordsRendering[1].word,'master');
+        this.wordsRendering[1].wait=-1;//never show it today
+        this.wordsRendering[1].dirty=4;
         this.nextWord();
-    }
-
-    hideBaffle():void{
-        // this.zone.run(()=>this.baffleShowing=false);
-        // this.baffleShowing=false;
-
     }
 
 

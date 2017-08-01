@@ -59,16 +59,15 @@
                 </span>
             </p>
             <h5><ion-icon name="md-chatbubbles"></ion-icon> 例句</h5>
-            <p style="border-left: 5px solid #adadad;padding-left: 5px">
-                <span *ngFor="let sentence of entry?.sentences; let i=index;" class="sentence">
-                    <a (click)="unstarSentence(i)" *ngIf="wordService.starredSentences[currentWord.word]!=null && wordService.starredSentences[currentWord.word]?.indexOf(i)>=0" [innerHTML]="sentence | wordSentence:showChinese" style="color: inherit;display: block;"></a>
-                </span>
-            </p>
-            <p>
-                <span *ngFor="let sentence of entry?.sentences; let i=index;" class="sentence">
-                    <a (click)="starSentence(i)" *ngIf="wordService.starredSentences[currentWord.word]==null || wordService.starredSentences[currentWord.word]?.indexOf(i)<0" [innerHTML]="sentence | wordSentence:showChinese" style="color: inherit;display: block;"></a>
-                </span>
-            </p>
+            <div>
+                <div *ngFor="let sentence of entry?.sentences; let i=index;" class="sentence">
+                    <!--TODO change to sentence id-->
+                    <a (click)="toggleSentenceStar(i)" class="star-button" [class.starred]="wordService.starredSentences[currentWord.word]!=null && wordService.starredSentences[currentWord.word]?.indexOf(i)>=0">
+                        <ion-icon name="md-disc"></ion-icon>
+                    </a>
+                    <span [innerHTML]="sentence | wordSentence:showChinese" style="color: inherit;"></span>
+                </div>
+            </div>
             <button ion-button small clear block (click)="doShowChinese()" *ngIf="!showChinese">显示中文</button>
         </ion-slide>
 

@@ -1,6 +1,8 @@
+$hot-color: #6e7be7;
+
 page-impulse {
     em.hot{
-        color: #6e7be7;
+        color: $hot-color;
         font-weight: bold;
     }
     h1{
@@ -16,6 +18,22 @@ page-impulse {
         display: block;
         margin-bottom: 8px;
         line-height: 1.3em;
+        .star-button{
+            vertical-align: middle;
+            display: inline-block;
+            color: #d5d5d5;
+            transition: color 0.2s ease;
+            font-size: 24px;
+            width: 30px;
+        }
+        .star-button.starred{
+            color: $hot-color;
+        }
+        span{
+            display: inline-block;
+            vertical-align: middle;
+            width: calc(100% - 34px);
+        }
     }
     #phonetic{
         margin-top: -5px;

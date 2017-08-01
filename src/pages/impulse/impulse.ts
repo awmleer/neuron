@@ -193,17 +193,17 @@ export class ImpulsePage {
     }
 
 
-    starSentence(i):void{
-        if (this.wordService.starredSentences[this.currentWord.word]==null) {
-            this.wordService.starredSentences[this.currentWord.word]=[i];
-        }else {
-            this.wordService.starredSentences[this.currentWord.word].push(i);
+    toggleSentenceStar(id):void{
+        if (this.wordService.starredSentences[this.currentWord.word] == null) {
+            this.wordService.starredSentences[this.currentWord.word]=[];
         }
-        this.wordService.saveStarredSentences();
-    }
-    unstarSentence(i):void{
-        let index=this.wordService.starredSentences[this.currentWord.word].indexOf(i);
-        this.wordService.starredSentences[this.currentWord.word].splice(index,1);
+        let starred=this.wordService.starredSentences[this.currentWord.word];
+        let index=starred.indexOf(id);
+        if (index==-1) {
+            starred.push(id);
+        }else{
+            starred.splice(index,1);
+        }
         this.wordService.saveStarredSentences();
     }
 

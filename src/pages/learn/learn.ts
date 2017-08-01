@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {NavController, AlertController, ToastController} from 'ionic-angular';
+import {NavController, AlertController, ToastController, ModalController} from 'ionic-angular';
 import {WordService} from "../../services/word.service";
 import {RepoBrief, RepoDetail} from "../../classes/repo";
 import {ImpulsePage} from "../impulse/impulse";
@@ -18,6 +18,7 @@ export class LearnPage {
     constructor(
         public nav: NavController,
         public alertCtrl: AlertController,
+        private modalCtrl: ModalController,
         private wordService:WordService,
         public toastCtrl: ToastController
     ) {}
@@ -83,9 +84,7 @@ export class LearnPage {
                         if (amount>0) {
                             alert.dismiss().then(() => {
                                 this.generateWordsLearning(repo,amount);
-                                this.nav.push(ImpulsePage,{
-                                    type:'learn'
-                                });
+                                this.goImpulsePage();
                             });
                         }else {
                             this.toastCtrl.create({
@@ -102,9 +101,13 @@ export class LearnPage {
     }
 
     continueLearn():void{
-        this.nav.push(ImpulsePage,{
+        this.goImpulsePage();
+    }
+
+    goImpulsePage(){
+        this.modalCtrl.create(ImpulsePage,{
             type:'learn'
-        });
+        }).present();
     }
 
     generateWordsLearning(repo:RepoDetail,amount:number):void{

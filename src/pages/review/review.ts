@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import {ModalController, NavController} from 'ionic-angular';
 import {ImpulsePage} from "../impulse/impulse";
 import {WordService} from "../../services/word.service";
 
@@ -16,13 +16,14 @@ export class ReviewPage {
 
     constructor(
         public nav: NavController,
+        private modalCtrl: ModalController,
         private wordService:WordService
     ) {}
 
     startReview():void{
-        this.nav.push(ImpulsePage,{
-            type:'review'
-        });
+        this.modalCtrl.create(ImpulsePage,{
+            type:'learn'
+        }).present();
     }
 
     goWarehouse():void{

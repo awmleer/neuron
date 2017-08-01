@@ -9,7 +9,6 @@ import {SettingsPage} from "../pages/settings/settings";
 import {HttpModule} from "@angular/http";
 import {WordService} from "../services/word.service";
 import {ImpulsePage} from "../pages/impulse/impulse";
-import {TodayLearnPipe} from "../pipes/today.pipe";
 import {HowManyInPipe} from "../pipes/how-many-in.pipe";
 import {WordsDoneCountPipe, WordsAllDonePipe} from "../pipes/words-done.pipe";
 import {TomorrowReviewPipe} from "../pipes/tomorrow-review.pipe";
@@ -40,7 +39,6 @@ import {BrowserModule} from "@angular/platform-browser";
         WarehousePage,
         StatisticPage,
         AboutPage,
-        TodayLearnPipe,
         HowManyInPipe,
         WordsDoneCountPipe,
         WordsAllDonePipe,

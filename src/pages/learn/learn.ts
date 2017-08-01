@@ -5,6 +5,8 @@ import {RepoBrief, RepoDetail} from "../../classes/repo";
 import {ImpulsePage} from "../impulse/impulse";
 import {WordRecord} from "../../classes/word";
 import * as _ from "lodash"
+import * as moment from "moment";
+
 
 @Component({
     selector: 'page-learn',
@@ -22,6 +24,16 @@ export class LearnPage {
         private wordService:WordService,
         public toastCtrl: ToastController
     ) {}
+
+    get todayLearned():number{
+        let count:number=0;
+        for (let word in this.wordService.wordRecords) {
+            if (moment(this.wordService.wordRecords[word].addTime).isSame(moment(),'day')) {
+                count++;
+            }
+        }
+        return count;
+    }
 
     getRepos():void{
         this.wordService.getRepos().then(repos=>{

@@ -1,5 +1,10 @@
 <ion-header>
-    <ion-navbar>
+    <ion-navbar [hideBackButton]="false">
+        <ion-buttons left>
+            <button ion-button icon-only navPop>
+                <ion-icon name="arrow-back"></ion-icon>
+            </button>
+        </ion-buttons>
         <ion-title>
             记忆<span *ngIf="type=='learn'"> - {{wordsImpulsing | impulsePercent}}</span>
         </ion-title>
@@ -65,7 +70,7 @@
                     <a (click)="toggleSentenceStar(i)" class="star-button" [class.starred]="wordService.starredSentences[currentWord.word]!=null && wordService.starredSentences[currentWord.word]?.indexOf(i)>=0">
                         <ion-icon name="md-disc"></ion-icon>
                     </a>
-                    <span [innerHTML]="sentence | wordSentence:showChinese" style="color: inherit;"></span>
+                    <span [innerHTML]="sentence | wordSentence:showChinese"></span>
                 </div>
             </div>
             <button ion-button small clear block (click)="doShowChinese()" *ngIf="!showChinese">显示中文</button>

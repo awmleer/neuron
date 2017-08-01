@@ -69,12 +69,13 @@
             </p>
             <h5><ion-icon name="md-chatbubbles"></ion-icon> 例句</h5>
             <div>
-                <div *ngFor="let sentence of entry?.sentences; let i=index;" class="sentence">
+                <div *ngFor="let sentence of sentences; let i=index;" class="sentence">
+                    <!--(entry?.sentences|sortSentence:wordService.starredSentences[currentWord.word])-->
                     <!--TODO change to sentence id-->
-                    <a (click)="toggleSentenceStar(i)" class="star-button" [class.starred]="wordService.starredSentences[currentWord.word]!=null && wordService.starredSentences[currentWord.word]?.indexOf(i)>=0">
+                    <a (click)="toggleSentenceStar(sentence.id)" class="star-button" [class.starred]="sentence.starred">
                         <ion-icon name="md-disc"></ion-icon>
                     </a>
-                    <span [innerHTML]="sentence | wordSentence:showChinese"></span>
+                    <span [innerHTML]="sentence.text | wordSentence:showChinese"></span>
                 </div>
             </div>
             <button ion-button small clear block (click)="doShowChinese()" *ngIf="!showChinese">显示中文</button>

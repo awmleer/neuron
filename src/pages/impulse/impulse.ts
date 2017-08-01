@@ -24,6 +24,7 @@ export class ImpulsePage {
     entry:WordEntry;
     lastWordImpulsing:WordImpulsing;
     lastWordRecord:WordRecord;
+    sentences:any[]=[];
 
 
     constructor(
@@ -46,6 +47,29 @@ export class ImpulsePage {
         }
         this.amount=this.wordsImpulsing.length;
         this.nextWord();
+    }
+
+    updateSentences():void{
+        if (this.entry==null) {
+            this.sentences=[];
+        }
+        let starredIds=this.wordService.starredSentences[this.currentWord.word];
+        if (!starredIds) starredIds=[];
+        let starred=[];
+        let notStarred=[];
+        for (let i=0;i<this.entry.sentences.length;i++) {
+            let sentence={
+                id:i,//TODO
+                text: this.entry.sentences[i],
+                starred: starredIds.indexOf(i)>-1
+            };
+            if (sentence.starred) {
+                starred.push(sentence);
+            }else{
+                notStarred.push(sentence);
+            }
+        }
+        this.sentences=starred.concat(notStarred);
     }
 
     nextWord():void{
@@ -80,6 +104,7 @@ export class ImpulsePage {
         this.wordService.getEntry(this.currentWord.word)
             .then(entry=>{
                 this.entry=entry;
+                this.updateSentences();
             });
         //saveWordsImpulsing every time we get a new currentWord
         this.wordService.saveWordsImpulsing(this.type);
@@ -205,6 +230,7 @@ export class ImpulsePage {
             starred.splice(index,1);
         }
         this.wordService.saveStarredSentences();
+        this.updateSentences();
     }
 
     toggleTag(tag:string):void{

@@ -5,7 +5,6 @@ import {RepoDetail} from "../../classes/repo";
 import {WordService} from "../../services/word.service";
 import {WordEntry, WordImpulsing, WordRecord} from "../../classes/word";
 import {SettingService} from "../../services/setting.service";
-import {InAppBrowser} from 'ionic-native';
 import * as _ from "lodash"
 
 
@@ -18,14 +17,9 @@ export class ImpulsePage {
     amount:number;
     wordsImpulsing:WordImpulsing[];
     currentWord:WordImpulsing;
-    baffleShowing:boolean=true;
-    cardExpanding:boolean=false;
-    type:string;
-    showChinese:boolean;
-    entry:WordEntry;
+    type:'learn'|'review';
     lastWordImpulsing:WordImpulsing;
     lastWordRecord:WordRecord;
-    sentences:any[]=[];
 
 
     constructor(
@@ -38,7 +32,7 @@ export class ImpulsePage {
     ) {}
 
     ngOnInit(): void {
-        this.zone.run(()=>this.baffleShowing=true);
+        // this.zone.run(()=>this.baffleShowing=true);
         this.type=this.navParams.get('type');
         if (this.type == 'learn') {
             this.wordsImpulsing=this.wordService.wordsLearning;
@@ -49,35 +43,14 @@ export class ImpulsePage {
         this.nextWord();
     }
 
-    updateSentences():void{
-        if (this.entry==null) {
-            this.sentences=[];
-        }
-        let starredIds=this.wordService.starredSentences[this.currentWord.word];
-        if (!starredIds) starredIds=[];
-        let starred=[];
-        let notStarred=[];
-        for (let i=0;i<this.entry.sentences.length;i++) {
-            let sentence={
-                id:i,//TODO
-                text: this.entry.sentences[i],
-                starred: starredIds.indexOf(i)>-1
-            };
-            if (sentence.starred) {
-                starred.push(sentence);
-            }else{
-                notStarred.push(sentence);
-            }
-        }
-        this.sentences=starred.concat(notStarred);
-    }
+
 
     nextWord():void{
         let allDone=true;
         for (let i = 0; i < this.wordsImpulsing.length; i++) {
             if (this.wordsImpulsing[i].wait==0) {
                 this.currentWord=this.wordsImpulsing[i];
-                this.initWord();
+                // this.initWord();
                 return;
             }else {
                 if(this.wordsImpulsing[i].wait!=-1)allDone=false;
@@ -97,18 +70,7 @@ export class ImpulsePage {
         this.nextWord();
     }
 
-    initWord():void{
-        this.baffleShowing=true;
-        this.showChinese=(this.type=='learn'&&this.currentWord.dirty==0)?true:this.settingService.settings.showChineseWhenReviewing;
-        this.entry=null;
-        this.wordService.getEntry(this.currentWord.word)
-            .then(entry=>{
-                this.entry=entry;
-                this.updateSentences();
-            });
-        //saveWordsImpulsing every time we get a new currentWord
-        this.wordService.saveWordsImpulsing(this.type);
-    }
+
 
     cacheLastWord():void{
         this.lastWordImpulsing=_.cloneDeep(this.currentWord);
@@ -129,11 +91,10 @@ export class ImpulsePage {
             delete this.wordService.wordRecords[this.lastWordImpulsing.word];
         }
         this.wordService.saveWordRecords();
-        this.initWord();
+        // this.initWord();
         this.lastWordImpulsing=null;
         this.lastWordRecord=null;
         // this.nextWord();
-        this.baffleShowing=false;
     }
 
 
@@ -207,49 +168,10 @@ export class ImpulsePage {
 
     hideBaffle():void{
         // this.zone.run(()=>this.baffleShowing=false);
-        this.baffleShowing=false;
-        if (this.settingService.settings.autoRead) {
-            this.playSound();
-        }
+        // this.baffleShowing=false;
+
     }
 
-    playSound():void{
-        (<HTMLAudioElement>document.getElementById("sound-"+this.currentWord.word)).play();
-    }
-
-
-    toggleSentenceStar(sentence):void{
-        if (this.wordService.starredSentences[this.currentWord.word] == null) {
-            this.wordService.starredSentences[this.currentWord.word]=[];
-        }
-        let starred=this.wordService.starredSentences[this.currentWord.word];
-        let index=starred.indexOf(sentence.id);
-        if (index==-1) {
-            starred.push(sentence.id);
-            sentence.starred=true;
-        }else{
-            starred.splice(index,1);
-            sentence.starred=false;
-        }
-        this.wordService.saveStarredSentences();
-    }
-
-    toggleTag(tag:string):void{
-        if (this.wordService.wordTags[this.currentWord.word]==null) {
-            this.wordService.wordTags[this.currentWord.word]=tag;
-        }else{
-            if (this.wordService.wordTags[this.currentWord.word].indexOf(tag)==-1) {
-                this.wordService.wordTags[this.currentWord.word]+=tag;
-            }else{
-                this.wordService.wordTags[this.currentWord.word]=this.wordService.wordTags[this.currentWord.word].replace(tag,'');
-            }
-        }
-        this.wordService.saveWordTags();
-    }
-
-    doShowChinese():void{
-        this.showChinese=true;
-    }
 
     showActionSheet():void{
         let actionSheet=this.actionSheetCtrl.create({
@@ -274,23 +196,6 @@ export class ImpulsePage {
     }
 
 
-    openDictionary(dictName:string):void{
-        let href:string;
-        switch(dictName){
-            case 'youdao':
-                href=`https://m.youdao.com/dict?le=eng&q=${this.currentWord.word}`;
-                break;
-            case 'bing':
-                href=`http://cn.bing.com/dict/search?q=${this.currentWord.word}`;
-                break;
-            case 'ciba':
-                href = `http://m.iciba.com/${this.currentWord.word}`
-                break;
-            default:
-                return;
-        }
-        new InAppBrowser(href,'_blank','location=no');
-    }
 
     // ionViewWillLeave():void{
     //     console.log('will leave this page');

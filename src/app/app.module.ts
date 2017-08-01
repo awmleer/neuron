@@ -24,6 +24,7 @@ import {WordSentencePipe} from "../pipes/word-sentence.pipe";
 import {AboutPage} from "../pages/about/about";
 import {IonicStorageModule} from "@ionic/storage";
 import {BrowserModule} from "@angular/platform-browser";
+import {ImpulseCardComponent} from "../components/impulse-card/impulse-card";
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import {BrowserModule} from "@angular/platform-browser";
         DefinitionRatePipe,
         ImpulsePercentPipe,
         WordSentencePipe,
-        ProgressIconComponent
+        ProgressIconComponent,
+        ImpulseCardComponent
     ],
     imports: [
         IonicModule.forRoot(MyApp),

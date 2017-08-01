@@ -72,7 +72,7 @@
                 <div *ngFor="let sentence of sentences; let i=index;" class="sentence">
                     <!--(entry?.sentences|sortSentence:wordService.starredSentences[currentWord.word])-->
                     <!--TODO change to sentence id-->
-                    <a (click)="toggleSentenceStar(sentence.id)" class="star-button" [class.starred]="sentence.starred">
+                    <a (click)="toggleSentenceStar(sentence)" class="star-button" [class.starred]="sentence.starred">
                         <ion-icon name="md-disc"></ion-icon>
                     </a>
                     <span [innerHTML]="sentence.text | wordSentence:showChinese"></span>

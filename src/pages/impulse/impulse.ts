@@ -218,19 +218,20 @@ export class ImpulsePage {
     }
 
 
-    toggleSentenceStar(id):void{
+    toggleSentenceStar(sentence):void{
         if (this.wordService.starredSentences[this.currentWord.word] == null) {
             this.wordService.starredSentences[this.currentWord.word]=[];
         }
         let starred=this.wordService.starredSentences[this.currentWord.word];
-        let index=starred.indexOf(id);
+        let index=starred.indexOf(sentence.id);
         if (index==-1) {
-            starred.push(id);
+            starred.push(sentence.id);
+            sentence.starred=true;
         }else{
             starred.splice(index,1);
+            sentence.starred=false;
         }
         this.wordService.saveStarredSentences();
-        this.updateSentences();
     }
 
     toggleTag(tag:string):void{

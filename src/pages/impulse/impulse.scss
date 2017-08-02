@@ -1,15 +1,16 @@
 page-impulse {
     #progress-bar{
+        $progress-bar-height: 6px;
         position: fixed;
         bottom:30vh;
         width:70vw;
         left: 15vw;
         transition: bottom 300ms ease, width 300ms ease, left 300ms ease;
-        height: 3px;
+        height: $progress-bar-height;
         background-color: #e0e0e0;
         z-index: 100;
         #current-progress{
-            height: 3px;
+            height: $progress-bar-height;
             background-color: $hot-color;
             transition: width 300ms ease;
         }
@@ -22,7 +23,7 @@ page-impulse {
 
     impulse-card{
         position: absolute;
-        top:53px;
+        top:65px;
         transition: left 300ms ease;
     }
     impulse-card.last{

@@ -23,11 +23,24 @@
     <div id="current-progress" [style.width]="wordsImpulsing | impulsePercent"></div>
 </div>
 
-<div class="action-button-group">
+<div class="action-button-group" [class.squeezed]="cardExpandingFlags[1]">
     <ion-row>
-        <ion-col><button (click)="clickKnow()" ion-button color="default" block>认识{{cardExpandingFlags[1]}}</button></ion-col>
-        <ion-col><button (click)="clickVague()" ion-button color="light" block>模糊</button></ion-col>
-        <ion-col><button (click)="clickForget()" ion-button color="danger" block>{{(type=='learn'&&wordsRendering[1]?.dirty==0)?'不认识':'忘记'}}</button></ion-col>
+        <ion-col text-center>
+            <button (click)="clickForget()" ion-fab color="danger" block>
+                <ion-icon name="md-close"></ion-icon>
+            </button>
+            <!--{{(type=='learn'&&wordsRendering[1]?.dirty==0)?'不认识':'忘记'}}-->
+        </ion-col>
+        <ion-col text-center>
+            <button (click)="clickVague()" ion-fab color="light" block>
+                <ion-icon name="md-help"></ion-icon>
+            </button>
+        </ion-col>
+        <ion-col text-center>
+            <button (click)="clickKnow()" ion-fab color="default" block>
+                <ion-icon name="md-checkmark"></ion-icon>
+            </button>
+        </ion-col>
     </ion-row>
 </div>
 

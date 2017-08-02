@@ -9,13 +9,13 @@ page-impulse {
         #current-progress{
             height: 3px;
             background-color: $hot-color;
-            transition: width 200ms ease;
+            transition: width 300ms ease;
         }
     }
 
     impulse-card{
         position: absolute;
-        top:60px;
+        top:50px;
         transition: left 300ms ease;
     }
     impulse-card.last{
@@ -32,8 +32,17 @@ page-impulse {
         z-index: 10;
         position: fixed;
         left:0;
-        bottom:30px;
+        bottom:40vh;
+        transition: bottom 300ms ease;
         width:100%;
+        padding:0 20px;
+        button{
+            display: inline-block;
+            box-shadow: 0 0 10px 3px rgba(215, 215, 215, 0.92);
+        }
+    }
+    .action-button-group.squeezed{
+        bottom:25px;
     }
 
     //#baffle{

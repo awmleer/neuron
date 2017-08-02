@@ -21,6 +21,7 @@ export class ImpulsePage {
     lastWordImpulsing:WordImpulsing;
     lastWordRecord:WordRecord;
     shouldAnimate:boolean=false;
+    transiting:boolean=false;
 
 
     constructor(
@@ -72,21 +73,27 @@ export class ImpulsePage {
 
 
     transitNext(word:WordImpulsing){
+        this.transiting=true;
         this.wordsRendering[2]=word;
         this.cardExpandingFlags.push(false);
         setTimeout(()=>{
             this.wordsRendering.shift();
             this.cardExpandingFlags.shift();
+            setTimeout(()=>{
+                this.transiting=false;
+            },320);
         },10);
     }
 
     transitPrevious(){
+        this.transiting=true;
         this.wordsRendering.unshift(null);
         this.cardExpandingFlags.unshift(false);
         setTimeout(()=>{//after the transition animation ends
             this.wordsRendering.pop();
             this.cardExpandingFlags.pop();
-        },300);
+            this.transiting=false;
+        },320);
     }
 
 
@@ -97,6 +104,7 @@ export class ImpulsePage {
 
 
     rewind():void{
+        if (this.transiting) return;
         for (let i in this.wordsImpulsing) {
             if (this.wordsImpulsing[i].word == this.lastWordImpulsing.word) {
                 this.wordsImpulsing[i]=_.cloneDeep(this.lastWordImpulsing);
@@ -128,6 +136,7 @@ export class ImpulsePage {
     }
 
     clickKnow():void{
+        if (this.transiting) return;
         this.cacheLastWord();
         if (this.wordsRendering[1].dirty==0) {//First time today
             this.wordsRendering[1].dirty=1;
@@ -153,6 +162,7 @@ export class ImpulsePage {
     }
 
     clickVague():void{
+        if (this.transiting) return;
         this.cacheLastWord();
         if (this.wordsRendering[1].dirty==0) {//First time today
             this.wordsRendering[1].count=3;
@@ -166,6 +176,7 @@ export class ImpulsePage {
     }
 
     clickForget():void{
+        if (this.transiting) return;
         this.cacheLastWord();
         if (this.wordsRendering[1].dirty==0) {//First time today
             this.wordsRendering[1].count=1;
@@ -179,6 +190,7 @@ export class ImpulsePage {
     }
 
     markAsMaster():void{
+        if (this.transiting) return;
         if(this.type=='learn')this.wordService.addRecord(this.wordsRendering[1].word,'master');
         if(this.type=='review')this.wordService.moltRecord(this.wordsRendering[1].word,'master');
         this.wordsRendering[1].wait=-1;//never show it today
@@ -211,6 +223,7 @@ export class ImpulsePage {
 
 
     expandCard(i){
+        if (this.transiting) return;
         console.log(i);
         this.cardExpandingFlags[i]=true;
     }

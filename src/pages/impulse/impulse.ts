@@ -39,20 +39,19 @@ export class ImpulsePage {
             this.wordsImpulsing=this.wordService.wordsReviewing;
         }
         this.amount=this.wordsImpulsing.length;
-        this.nextWord();
+        this.wordsRendering[1]=this.nextWord();
         this.shouldAnimate=true;
     }
 
 
 
-    nextWord():void{
+    nextWord():WordImpulsing{
         let allDone=true;
         for (let i = 0; i < this.wordsImpulsing.length; i++) {
             if (this.wordsImpulsing[i].wait==0) {
                 // this.wordsRendering[1]=this.wordsImpulsing[i];
-                this.transitNext(this.wordsImpulsing[i]);
                 // this.initWord();
-                return;
+                return this.wordsImpulsing[i];
             }else {
                 if(this.wordsImpulsing[i].wait!=-1)allDone=false;
             }
@@ -60,7 +59,7 @@ export class ImpulsePage {
         if (allDone) {
             console.log('all words are done');
             this.finish();
-            return;
+            return null;
         }
         //if all wordImpulsing.wait > 0
         for (let i = 0; i < this.wordsImpulsing.length; i++) {
@@ -68,27 +67,26 @@ export class ImpulsePage {
                 this.wordsImpulsing[i].wait--;
             }
         }
-        this.nextWord();
+        return this.nextWord();
     }
 
 
     transitNext(word:WordImpulsing){
-        if (this.shouldAnimate) {
-            // this.zone.run(()=>{
-            // });
-            this.wordsRendering.push(word);
-            this.cardExpandingFlags.push(false);
-            // this.applicationRef.tick();
-            setTimeout(()=>{
-                this.wordsRendering.shift();
-                this.cardExpandingFlags.shift();
-            },10);
-        }else{
-            this.wordsRendering.push(word);
-            this.cardExpandingFlags.push(false);
+        this.wordsRendering[2]=word;
+        this.cardExpandingFlags.push(false);
+        setTimeout(()=>{
             this.wordsRendering.shift();
             this.cardExpandingFlags.shift();
-        }
+        },10);
+    }
+
+    transitPrevious(){
+        this.wordsRendering.unshift(null);
+        this.cardExpandingFlags.unshift(false);
+        setTimeout(()=>{//after the transition animation ends
+            this.wordsRendering.pop();
+            this.cardExpandingFlags.pop();
+        },300);
     }
 
 
@@ -102,7 +100,10 @@ export class ImpulsePage {
         for (let i in this.wordsImpulsing) {
             if (this.wordsImpulsing[i].word == this.lastWordImpulsing.word) {
                 this.wordsImpulsing[i]=_.cloneDeep(this.lastWordImpulsing);
-                this.wordsRendering[1]=this.wordsImpulsing[i];
+                this.wordsRendering[0]=this.wordsImpulsing[i];
+                setTimeout(()=>{
+                    this.transitPrevious();
+                },10);
             }
         }
         if (this.lastWordRecord) {
@@ -111,7 +112,6 @@ export class ImpulsePage {
             delete this.wordService.wordRecords[this.lastWordImpulsing.word];
         }
         this.wordService.saveWordRecords();
-        // this.initWord();
         this.lastWordImpulsing=null;
         this.lastWordRecord=null;
         // this.nextWord();
@@ -149,7 +149,7 @@ export class ImpulsePage {
                 this.wordsRendering[1].wait=this.wordsRendering[1].count*2+1;
             }
         }
-        this.nextWord();
+        this.transitNext(this.nextWord());
     }
 
     clickVague():void{
@@ -162,7 +162,7 @@ export class ImpulsePage {
             //currentWord.count do not change
             this.wordsRendering[1].wait=this.wordsRendering[1].count*2+1;
         }
-        this.nextWord();
+        this.transitNext(this.nextWord());
     }
 
     clickForget():void{
@@ -175,7 +175,7 @@ export class ImpulsePage {
             if(this.wordsRendering[1].count>0)this.wordsRendering[1].count--;
             this.wordsRendering[1].wait=this.wordsRendering[1].count*2+1;
         }
-        this.nextWord();
+        this.transitNext(this.nextWord());
     }
 
     markAsMaster():void{
@@ -183,7 +183,7 @@ export class ImpulsePage {
         if(this.type=='review')this.wordService.moltRecord(this.wordsRendering[1].word,'master');
         this.wordsRendering[1].wait=-1;//never show it today
         this.wordsRendering[1].dirty=4;
-        this.nextWord();
+        this.transitNext(this.nextWord());
     }
 
 

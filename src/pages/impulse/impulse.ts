@@ -16,6 +16,7 @@ export class ImpulsePage {
     amount:number;
     wordsImpulsing:WordImpulsing[];
     wordsRendering:WordImpulsing[]=[null,null];
+    cardExpandingFlags:boolean[]=[false,false];
     type:'learn'|'review';
     lastWordImpulsing:WordImpulsing;
     lastWordRecord:WordRecord;
@@ -76,13 +77,17 @@ export class ImpulsePage {
             // this.zone.run(()=>{
             // });
             this.wordsRendering.push(word);
+            this.cardExpandingFlags.push(false);
             // this.applicationRef.tick();
             setTimeout(()=>{
                 this.wordsRendering.shift();
+                this.cardExpandingFlags.shift();
             },10);
         }else{
             this.wordsRendering.push(word);
+            this.cardExpandingFlags.push(false);
             this.wordsRendering.shift();
+            this.cardExpandingFlags.shift();
         }
     }
 
@@ -205,8 +210,9 @@ export class ImpulsePage {
     }
 
 
-    handleCardExpandedEvent(i){
+    expandCard(i){
         console.log(i);
+        this.cardExpandingFlags[i]=true;
     }
 
     // ionViewWillLeave():void{

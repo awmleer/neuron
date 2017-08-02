@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {WordEntry, WordImpulsing} from "../../classes/word";
 import {WordService} from "../../services/word.service";
 import {SettingService} from "../../services/setting.service";
@@ -10,12 +10,11 @@ import {InAppBrowser} from 'ionic-native';
     templateUrl: 'impulse-card.html'
 })
 export class ImpulseCardComponent {
-    @Input()
-    wordImpulsing:WordImpulsing;
-    @Input()
-    type:'learn'|'review';
+    @Input() wordImpulsing:WordImpulsing;
+    @Input() type:'learn'|'review';
+    @Input() cardExpanding:boolean;
+    @Output() wantExpanding=new EventEmitter();
     entry: WordEntry;
-    public cardExpanding:boolean=false;
     showChinese:boolean;
     sentences:any[]=[];
 
@@ -63,7 +62,8 @@ export class ImpulseCardComponent {
     }
 
     expand(){
-        this.cardExpanding=true;
+        this.wantExpanding.emit();
+        // this.cardExpanding=true;
         if (this.settingService.settings.autoRead) {
             this.playSound();
         }

@@ -19,7 +19,7 @@
     </ion-navbar>
 </ion-header>
 
-<div id="progress-bar">
+<div id="progress-bar" [class.squeezed]="cardExpandingFlags[1]">
     <div id="current-progress" [style.width]="wordsImpulsing | impulsePercent"></div>
 </div>
 

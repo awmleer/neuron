@@ -1,10 +1,12 @@
 page-impulse {
     #progress-bar{
         position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
+        bottom:30vh;
+        width:70vw;
+        left: 15vw;
+        transition: bottom 300ms ease, width 300ms ease, left 300ms ease;
         height: 3px;
+        background-color: #e0e0e0;
         z-index: 100;
         #current-progress{
             height: 3px;
@@ -12,10 +14,15 @@ page-impulse {
             transition: width 300ms ease;
         }
     }
+    #progress-bar.squeezed{
+        bottom: 0;
+        left: 0;
+        width: 100%;
+    }
 
     impulse-card{
         position: absolute;
-        top:50px;
+        top:53px;
         transition: left 300ms ease;
     }
     impulse-card.last{

@@ -18,7 +18,7 @@ impulse-card {
         transition: height 300ms ease, top 300ms ease;
         .card-scroll{
             background-color: #ffffff;
-            overflow-y: scroll;
+            //overflow-y: scroll;
             height:calc(100vh - 240px);
             border-radius: $card-border-radius;
         }

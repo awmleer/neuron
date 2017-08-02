@@ -15,7 +15,7 @@ page-impulse {
 
     impulse-card{
         position: absolute;
-        top:0;
+        top:60px;
         transition: left 300ms ease;
     }
     impulse-card.last{
@@ -47,6 +47,14 @@ page-impulse {
     //    left: 0;
     //    //cursor:pointer;
     //}
+
+    .toolbar-background{
+        display: none;
+    }
+
+    ion-header::after{
+        display: none;
+    }
 
 
 

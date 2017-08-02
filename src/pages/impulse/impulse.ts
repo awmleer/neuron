@@ -1,9 +1,8 @@
-import {ApplicationRef, Component, NgZone} from '@angular/core';
+import {Component} from '@angular/core';
 import {NavParams, ActionSheetController} from 'ionic-angular';
 import { NavController } from 'ionic-angular';
-import {RepoDetail} from "../../classes/repo";
 import {WordService} from "../../services/word.service";
-import {WordEntry, WordImpulsing, WordRecord} from "../../classes/word";
+import {WordImpulsing, WordRecord} from "../../classes/word";
 import {SettingService} from "../../services/setting.service";
 import * as _ from "lodash"
 
@@ -28,9 +27,7 @@ export class ImpulsePage {
         private navParams: NavParams,
         public wordService:WordService,
         public settingService: SettingService,
-        public actionSheetCtrl:ActionSheetController,
-        private applicationRef:ApplicationRef,
-        private zone: NgZone
+        public actionSheetCtrl:ActionSheetController
     ) {}
 
     ngOnInit(): void {
@@ -208,6 +205,9 @@ export class ImpulsePage {
     }
 
 
+    handleCardExpandedEvent(i){
+        console.log(i);
+    }
 
     // ionViewWillLeave():void{
     //     console.log('will leave this page');

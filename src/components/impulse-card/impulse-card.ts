@@ -15,7 +15,7 @@ export class ImpulseCardComponent {
     @Input()
     type:'learn'|'review';
     entry: WordEntry;
-    cardExpanding:boolean=false;
+    public cardExpanding:boolean=false;
     showChinese:boolean;
     sentences:any[]=[];
 

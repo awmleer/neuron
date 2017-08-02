@@ -31,22 +31,17 @@
     </ion-row>
 </div>
 
+<impulse-card
+    *ngFor="let word of wordsRendering;let i=index"
+    [wordImpulsing]="word"
+    [type]="type"
+    [class.last]="i==0"
+    [class.current]="i==1"
+    [class.next]="i==2"
+></impulse-card>
+
 <ion-content>
-    <div style="position: relative">
-        <impulse-card
-            *ngFor="let word of wordsRendering;let i=index"
-            [wordImpulsing]="word"
-            [type]="type"
-            [class.last]="i==0"
-            [class.current]="i==1"
-            [class.next]="i==2"
-        ></impulse-card>
-    </div>
-
-
-    <!--<a (click)="hideBaffle()" id="baffle" [hidden]="!baffleShowing">-->
-        <!--<p style="text-align: center;margin-top: 50%">点击屏幕查看释义</p>-->
-    <!--</a>-->
-
-
+    <!--<div style="position: relative">-->
+        <!---->
+    <!--</div>-->
 </ion-content>

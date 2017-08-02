@@ -4,7 +4,6 @@ $card-border-radius: 8px;
 impulse-card {
     height: calc(100vh - 160px);
     width:100%;
-    //padding: 5px 15px;
     .card{
         position: absolute;
         background-color: #f6f6f6;
@@ -15,6 +14,7 @@ impulse-card {
         width:90%;
         left: 5%;
         overflow: hidden;
+        z-index:11;
         transition: height 300ms ease, top 300ms ease;
         .card-scroll{
             background-color: #ffffff;
@@ -48,7 +48,7 @@ impulse-card {
     }
     .card.expanding{
         height: calc(100vh - 160px);
-        top: 20px;
+        top: 0;
     }
 
     .entry{

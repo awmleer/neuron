@@ -30,7 +30,74 @@
         </div>
     </a>
 
-    <ion-scroll scrollY="true" class="card-scroll" *ngIf="wordImpulsing">
+    <div *ngIf="wordImpulsing&&!platform.is('ios')" class="card-scroll">
+        <div class="card-part">
+            <div class="card-part-head">
+                <ion-icon name="md-text"></ion-icon> 释义
+            </div>
+            <div class="card-part-body">
+                <span *ngFor="let definition of entry?.definitions; ">
+                    <span style="color: gray;">{{definition.type}}</span> {{definition.text}}<br>
+                </span>
+            </div>
+        </div>
+
+        <div class="card-part">
+            <div class="card-part-head">
+                <ion-icon name="md-chatbubbles"></ion-icon> 例句
+            </div>
+            <div class="card-part-body">
+                <div *ngFor="let sentence of sentences; let i=index;" class="sentence">
+                    <!--(entry?.sentences|sortSentence:wordService.starredSentences[wordImpulsing.word])-->
+                    <!--TODO change to sentence id-->
+                    <a (click)="toggleSentenceStar(sentence)" class="star-button" [class.starred]="sentence.starred">
+                        <ion-icon name="md-disc"></ion-icon>
+                    </a>
+                    <span [innerHTML]="sentence.text | wordSentence:showChinese"></span>
+                </div>
+                <button ion-button small clear block (click)="doShowChinese()" *ngIf="!showChinese">显示中文</button>
+            </div>
+        </div>
+
+        <div class="card-part">
+            <div class="card-part-head">
+                <ion-icon name="pricetags"></ion-icon> 标记
+            </div>
+            <div class="card-part-body">
+                <ion-row>
+                    <ion-col><button (click)="toggleTag('d')" ion-button [outline]="wordService.wordTags[this.wordImpulsing.word]==null || wordService.wordTags[this.wordImpulsing.word]?.indexOf('d')==-1" block color="dark">释义</button></ion-col>
+                    <ion-col><button (click)="toggleTag('p')" ion-button [outline]="wordService.wordTags[this.wordImpulsing.word]==null || wordService.wordTags[this.wordImpulsing.word]?.indexOf('p')==-1" outline block color="dark">发音</button></ion-col>
+                    <ion-col><button (click)="toggleTag('s')" ion-button [outline]="wordService.wordTags[this.wordImpulsing.word]==null || wordService.wordTags[this.wordImpulsing.word]?.indexOf('s')==-1" outline block color="dark">拼写</button></ion-col>
+                </ion-row>
+            </div>
+        </div>
+
+        <div class="card-part" *ngIf="entry?.definition_rates?.length>0">
+            <div class="card-part-head">
+                <ion-icon name="ios-pulse"></ion-icon> 意频
+            </div>
+            <div class="card-part-body">
+                    <span *ngFor="let rate of entry?.definition_rates | definitionRate" style="display: block;margin-bottom: 5px;">
+                        {{rate.sense}} : {{rate.percent}}%
+                    </span>
+            </div>
+        </div>
+
+        <div class="card-part">
+            <div class="card-part-head">
+                <ion-icon name="md-bookmarks"></ion-icon> 更多词典
+            </div>
+            <div class="card-part-body">
+                <ion-row>
+                    <ion-col><button (click)="openDictionary('youdao')" ion-button outline block color="dark">有道</button></ion-col>
+                    <ion-col><button (click)="openDictionary('ciba')" ion-button outline block color="dark">词霸</button></ion-col>
+                    <ion-col><button (click)="openDictionary('bing')" ion-button outline block color="dark">必应</button></ion-col>
+                </ion-row>
+            </div>
+        </div>
+    </div>
+
+    <ion-scroll scrollY="true" class="card-scroll" *ngIf="wordImpulsing && platform.is('ios')">
         <div class="card-part">
             <div class="card-part-head">
                 <ion-icon name="md-text"></ion-icon> 释义
@@ -96,5 +163,6 @@
             </div>
         </div>
     </ion-scroll>
+
 
 </div>

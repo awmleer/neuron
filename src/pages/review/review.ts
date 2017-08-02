@@ -22,7 +22,7 @@ export class ReviewPage {
 
     startReview():void{
         this.modalCtrl.create(ImpulsePage,{
-            type:'learn'
+            type:'review'
         }).present();
     }
 

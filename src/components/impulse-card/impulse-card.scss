@@ -17,10 +17,12 @@ impulse-card {
         z-index:11;
         transition: height 300ms ease, top 300ms ease;
         .card-scroll{
-            background-color: #ffffff;
-            //overflow-y: scroll;
             height:calc(100vh - 240px);
             border-radius: $card-border-radius;
+            background-color: #ffffff;
+        }
+        div.card-scroll{
+            overflow-y: scroll;
         }
         .card-part{
             border-radius: $card-border-radius;
@@ -108,7 +110,7 @@ impulse-card {
         //cursor:pointer;
     }
 
-    .scroll-content{
+    .content .scroll-content{
         overflow-y: hidden;
     }
 }

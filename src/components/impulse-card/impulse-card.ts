@@ -3,6 +3,7 @@ import {WordEntry, WordImpulsing} from "../../classes/word";
 import {WordService} from "../../services/word.service";
 import {SettingService} from "../../services/setting.service";
 import {InAppBrowser} from 'ionic-native';
+import {Platform} from "ionic-angular";
 
 
 @Component({
@@ -22,6 +23,7 @@ export class ImpulseCardComponent {
     constructor(
         public wordService:WordService,
         public settingService: SettingService,
+        public platform: Platform
     ) {}
 
     ngOnInit(){

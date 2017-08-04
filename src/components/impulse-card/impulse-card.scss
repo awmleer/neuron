@@ -11,8 +11,8 @@ impulse-card {
         box-shadow: 0 0 10px 5px rgba(158, 158, 158, 0.1);
         height: 80px;
         top: 30%;
-        width:90%;
-        left: 5%;
+        width:88%;
+        left: 6%;
         overflow: hidden;
         z-index:11;
         transition: height 300ms ease, top 300ms ease;
@@ -49,8 +49,8 @@ impulse-card {
         }
     }
     .card.expanding{
-        height: calc(100vh - 180px);
-        top: 0;
+        height: calc(100vh - 190px);
+        top: 5px;
     }
 
     .entry{

@@ -52,6 +52,9 @@ page-impulse {
             margin: 0!important;
             //box-shadow: 0 0 10px 3px rgba(215, 215, 215, 0.92);
         }
+        button:active{
+            opacity: 0.5;
+        }
         .button-forget{
             color: #cf3548;
             border-color: #cf3548;
@@ -69,7 +72,7 @@ page-impulse {
         }
     }
     .action-button-group.squeezed{
-        bottom:32px;
+        bottom:38px;
     }
 
     //#baffle{

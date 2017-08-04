@@ -43,14 +43,33 @@ page-impulse {
         bottom:40vh;
         transition: bottom 300ms ease;
         width:100%;
-        padding:0 20px;
+        padding:0 15vw;
         button{
             display: inline-block;
-            box-shadow: 0 0 10px 3px rgba(215, 215, 215, 0.92);
+            border-radius: 100px;
+            height: 5rem;
+            width: 5rem;
+            margin: 0!important;
+            //box-shadow: 0 0 10px 3px rgba(215, 215, 215, 0.92);
+        }
+        .button-forget{
+            color: #cf3548;
+            border-color: #cf3548;
+            background-color: rgba(207, 53, 72, 0.12);
+        }
+        .button-vague{
+            color: #f3c715;
+            border-color: #f3c715;
+            background-color: rgba(243, 199, 21, 0.12);
+        }
+        .button-know{
+            color: #34d51d;
+            border-color: #34d51d;
+            background-color: rgba(52, 213, 29, 0.12);
         }
     }
     .action-button-group.squeezed{
-        bottom:25px;
+        bottom:32px;
     }
 
     //#baffle{
@@ -71,6 +90,10 @@ page-impulse {
 
     ion-header::after{
         display: none;
+    }
+
+    ion-content{
+        background: rgb(231, 233, 238) !important;
     }
 
 

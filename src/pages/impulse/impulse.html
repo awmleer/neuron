@@ -26,26 +26,17 @@
 <div class="action-button-group" [class.squeezed]="cardExpandingFlags[1]">
     <ion-row>
         <ion-col text-left no-padding>
-            <!--<button (click)="clickForget()" ion-fab outline color="danger">-->
-                <!--<ion-icon name="md-close"></ion-icon>-->
-            <!--</button>-->
             <button (click)="clickForget()" ion-button outline icon-only class="button-forget">
                 <ion-icon name="md-close"></ion-icon>
             </button>
             <!--{{(type=='learn'&&wordsRendering[1]?.dirty==0)?'不认识':'忘记'}}-->
         </ion-col>
         <ion-col text-center no-padding>
-            <!--<button (click)="clickVague()" ion-fab clear color="light">-->
-                <!--<ion-icon name="md-help"></ion-icon>-->
-            <!--</button>-->
             <button (click)="clickVague()" ion-button outline icon-only class="button-vague">
                 <ion-icon name="md-help"></ion-icon>
             </button>
         </ion-col>
         <ion-col text-right no-padding>
-            <!--<button (click)="clickKnow()" ion-fab clear color="default">-->
-                <!--<ion-icon name="md-checkmark"></ion-icon>-->
-            <!--</button>-->
             <button (click)="clickKnow()" ion-button outline icon-only class="button-know">
                 <ion-icon name="md-checkmark"></ion-icon>
             </button>

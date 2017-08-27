@@ -60,5 +60,12 @@ export class WordEntry{
             }
         }
     };
-    sentences:string[];
+    sentences:Sentence[];
+}
+
+
+export class Sentence {
+    id:number;
+    chinese:string;
+    english:string;
 }

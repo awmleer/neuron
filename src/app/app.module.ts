@@ -20,7 +20,6 @@ import {ImpulsePercentPipe} from "../pipes/impulse-percent";
 import {WarehousePage} from "../pages/warehouse/warehouse";
 import {StatisticPage} from "../pages/statistic/statistic";
 import {ProgressIconComponent} from "../components/progress-icon/progress-icon";
-import {WordSentencePipe} from "../pipes/word-sentence.pipe";
 import {AboutPage} from "../pages/about/about";
 import {IonicStorageModule} from "@ionic/storage";
 import {BrowserModule} from "@angular/platform-browser";
@@ -46,7 +45,6 @@ import {ImpulseCardComponent} from "../components/impulse-card/impulse-card";
         TomorrowReviewPipe,
         DefinitionRatePipe,
         ImpulsePercentPipe,
-        WordSentencePipe,
         ProgressIconComponent,
         ImpulseCardComponent
     ],

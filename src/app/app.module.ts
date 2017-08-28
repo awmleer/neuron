@@ -16,7 +16,6 @@ import {AccountService} from "../services/account.service";
 import {LoginPage} from "../pages/login/login";
 import {SettingService} from "../services/setting.service";
 import {DefinitionRatePipe} from "../pipes/definition-rate.pipe";
-import {ImpulsePercentPipe} from "../pipes/impulse-percent";
 import {WarehousePage} from "../pages/warehouse/warehouse";
 import {StatisticPage} from "../pages/statistic/statistic";
 import {ProgressIconComponent} from "../components/progress-icon/progress-icon";
@@ -46,7 +45,6 @@ import {InAppBrowser} from "@ionic-native/in-app-browser";
         WordsAllDonePipe,
         TomorrowReviewPipe,
         DefinitionRatePipe,
-        ImpulsePercentPipe,
         ProgressIconComponent,
         ImpulseCardComponent
     ],

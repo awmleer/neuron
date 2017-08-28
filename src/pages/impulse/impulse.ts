@@ -227,8 +227,18 @@ export class ImpulsePage {
         this.cardExpandingFlags[i]=true;
     }
 
-    // ionViewWillLeave():void{
-    //     console.log('will leave this page');
-    // }
+
+    get impulsePercent(){
+        let total=this.wordsImpulsing.length*6;
+        let finished=0;
+        for (let word in this.wordsImpulsing) {
+            if (this.wordsImpulsing[word].wait == -1) {
+                finished+=6;
+            }else {
+                finished+=this.wordsImpulsing[word].count;
+            }
+        }
+        return (Math.round(finished/total*100) + "%");
+    }
 
 }

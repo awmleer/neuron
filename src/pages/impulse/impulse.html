@@ -6,7 +6,7 @@
             </button>
         </ion-buttons>
         <ion-title>
-            记忆<span *ngIf="type=='learn'"> - {{wordsImpulsing | impulsePercent}}</span>
+            记忆<span *ngIf="type=='learn'"> - {{impulsePercent}}</span>
         </ion-title>
         <ion-buttons end>
             <button ion-button icon-only (click)="rewind()" [hidden]="lastWordImpulsing==null">
@@ -20,7 +20,7 @@
 </ion-header>
 
 <div id="progress-bar" [class.squeezed]="cardExpandingFlags[1]">
-    <div id="current-progress" [style.width]="wordsImpulsing | impulsePercent"></div>
+    <div id="current-progress" [style.width]="impulsePercent"></div>
 </div>
 
 <div class="action-button-group" [class.squeezed]="cardExpandingFlags[1]">

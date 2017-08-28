@@ -54,6 +54,16 @@
             <ion-toggle [(ngModel)]="settingService.settings.autoRead" (ionChange)="settingService.saveSettings()"></ion-toggle>
         </ion-item>
         <ion-item>
+            <ion-label>记忆强度</ion-label>
+            <ion-select [(ngModel)]="settingService.settings.impulseIntensity" (ionChange)="settingService.saveSettings()" cancelText="取消" okText="确定" [selectOptions]="{subTitle:'记忆力好的同学可以适当降低记忆强度'}">
+                <ion-option value="4">很低</ion-option>
+                <ion-option value="5">较低</ion-option>
+                <ion-option value="6">中等</ion-option>
+                <ion-option value="7">较高</ion-option>
+                <ion-option value="8">很高</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item>
             <ion-label>音频来源</ion-label>
             <ion-select [(ngModel)]="settingService.settings.soundSource" (ionChange)="settingService.saveSettings()" cancelText="取消" okText="确定">
                 <ion-option value="haici">海词</ion-option>

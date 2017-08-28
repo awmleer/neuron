@@ -22,6 +22,7 @@ export class SettingService {
             accent:'US',
         },
         soundSource:'youdao',
+        impulseIntensity:6,
         autoRead:true,
         showChineseWhenReviewing:true
     };

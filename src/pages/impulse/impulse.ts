@@ -145,7 +145,7 @@ export class ImpulsePage {
             if(this.type=='review')this.wordService.moltRecord(this.wordsRendering[1].word,'know');
         }else {
             this.wordsRendering[1].count+=1;
-            if (this.wordsRendering[1].count == 6) {//if count reaches 6
+            if (this.wordsRendering[1].count == this.settingService.settings.impulseIntensity) {//if count reaches max
                 this.wordsRendering[1].wait=-1;//this word is done for today
                 if (this.wordsRendering[1].dirty == 2) {
                     if(this.type=='learn')this.wordService.addRecord(this.wordsRendering[1].word,'vague');
@@ -165,7 +165,7 @@ export class ImpulsePage {
         if (this.transiting) return;
         this.cacheLastWord();
         if (this.wordsRendering[1].dirty==0) {//First time today
-            this.wordsRendering[1].count=3;
+            this.wordsRendering[1].count=Math.floor(this.settingService.settings.impulseIntensity/2);
             this.wordsRendering[1].wait=2;
             this.wordsRendering[1].dirty=2;
         }else {

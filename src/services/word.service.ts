@@ -6,7 +6,7 @@ import {WordEntry, WordRecord, WordImpulsing} from "../classes/word";
 import { Storage } from '@ionic/storage';
 import * as moment from "moment";
 import * as _ from "lodash"
-import {CONFIG} from "../app/config";
+import {CONST} from "../app/const";
 
 
 @Injectable()
@@ -191,7 +191,7 @@ export class WordService {
 
 
     getEntry(word:string):Promise<WordEntry>{
-        return this.http.get(CONFIG.apiUrl+`/entry/${word}/`)
+        return this.http.get(CONST.apiUrl+`/entry/${word}/`)
             .toPromise()
             .then(response=>response.json() as WordEntry);
     }
@@ -255,12 +255,12 @@ export class WordService {
     }
 
     getRepos():Promise<RepoBrief[]> {
-        return this.http.get(CONFIG.apiUrl+'/repo/list/')
+        return this.http.get(CONST.apiUrl+'/repo/list/')
             .toPromise()
             .then(response=>response.json() as RepoBrief[]);
     }
     getRepo(id:number):Promise<RepoDetail> {
-        return this.http.get(CONFIG.apiUrl+`/repo/${id}/`)
+        return this.http.get(CONST.apiUrl+`/repo/${id}/`)
             .toPromise()
             .then(response=>new RepoDetail(response.json()) as RepoDetail);
     }

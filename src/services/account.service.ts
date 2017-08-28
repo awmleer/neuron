@@ -10,12 +10,11 @@ import {ToastController, AlertController, LoadingController} from "ionic-angular
 import {User, LoginData} from "../classes/user";
 import {WordService} from "./word.service";
 import {SettingService} from "./setting.service";
-import {CONFIG} from "../app/config";
+import {CONST} from "../app/const";
 
 
 @Injectable()
 export class AccountService {
-
     user:User;
     syncTime:number=0;
 
@@ -37,7 +36,7 @@ export class AccountService {
 
     initialize():void{
         //first, check whether the user is logged in
-        this.http.get(CONFIG.apiUrl+'/account/is_logged_in/')
+        this.http.get(CONST.apiUrl+'/account/is_logged_in/')
             .toPromise()
             .then(response=>{
                 if (response.text() == 'true') {
@@ -52,7 +51,7 @@ export class AccountService {
     }
 
     login(loginData:LoginData):Promise<any>{
-        return this.http.post(CONFIG.apiUrl+'/account/login/', JSON.stringify({
+        return this.http.post(CONST.apiUrl+'/account/login/', JSON.stringify({
             phone:loginData.phone,
             password:loginData.password
         })).toPromise()
@@ -66,7 +65,7 @@ export class AccountService {
     }
 
     logout():void{
-        this.http.get(CONFIG.apiUrl+'/account/logout/').toPromise()
+        this.http.get(CONST.apiUrl+'/account/logout/').toPromise()
             .then(response=>{
                 if (response.text() == 'success') {
                     this.user=null;
@@ -79,7 +78,7 @@ export class AccountService {
     }
 
     getUserInfo():void{
-        this.http.get(CONFIG.apiUrl+'/account/userinfo/').toPromise()
+        this.http.get(CONST.apiUrl+'/account/userinfo/').toPromise()
             .then(response=>{
                 this.user=response.json();
             });
@@ -96,7 +95,7 @@ export class AccountService {
             return;
         }
         this.loading.present();
-        this.http.get(CONFIG.apiUrl+'/sync/check/').toPromise()
+        this.http.get(CONST.apiUrl+'/sync/check/').toPromise()
             .then(response=>{
                 let t=Number(response.text());
                 if(t>this.syncTime){
@@ -108,7 +107,7 @@ export class AccountService {
     }
 
     downloadData(timestamp:number):void{
-        this.http.get(CONFIG.apiUrl+'/sync/download/').toPromise()
+        this.http.get(CONST.apiUrl+'/sync/download/').toPromise()
             .then(response=>{
                 this.syncTime=timestamp;
                 this.storage.set('syncTime',timestamp);
@@ -133,7 +132,7 @@ export class AccountService {
                 if (key == 'syncTime') return;
                 data[key]=value;
                 if (iterationNumber == length) {
-                    this.http.post(CONFIG.apiUrl+'/sync/upload/', JSON.stringify(data)).toPromise()
+                    this.http.post(CONST.apiUrl+'/sync/upload/', JSON.stringify(data)).toPromise()
                         .then(response=>{
                             let timestamp=_.toSafeInteger(response.text());
                             this.storage.set('syncTime',timestamp).then(()=>{

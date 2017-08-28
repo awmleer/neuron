@@ -23,7 +23,6 @@ export class SettingService {
         },
         soundSource:'youdao',
         autoRead:true,
-        theme:'normal',
         showChineseWhenReviewing:true
     };
 

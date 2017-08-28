@@ -22,20 +22,3 @@
 .header.header-md::after{
     display: none;
 }
-
-.theme-night{
-    $color-dark: #2c3340;
-    .scroll-content,.item,.list,.tabbar,.toolbar-background,#baffle{
-        background: $color-dark;
-    }
-    .label,.icon,span,.toolbar-title,a,h1,h2,h3,h4,h5,ion-select{
-        color: #dfdfdf;
-    }
-    button[color=light] span{
-        color: #000;
-    }
-    button[outline][color=dark]{
-        border-color: #dfdfdf;
-    }
-    color:#eeeeee;
-}

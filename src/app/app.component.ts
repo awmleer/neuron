@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import {Config, Platform} from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 
 import { TabsPage } from '../pages/tabs/tabs';
@@ -18,9 +18,10 @@ export class MyApp {
 
     constructor(
         platform: Platform,
-        private wordService:WordService,
-        private accountService:AccountService,
-        private settingService:SettingService
+        wordService:WordService,
+        accountService:AccountService,
+        config: Config,
+        settingService:SettingService
     ) {
         platform.ready().then(() => {
             // Okay, so the platform is ready and our plugins are available.
@@ -28,14 +29,12 @@ export class MyApp {
             StatusBar.styleDefault();
             setTimeout(()=>{
                 Splashscreen.hide()
-            },800);
+            },500);
         });
-    }
-
-    ngOnInit():void{
-        this.wordService.initialize();
-        this.accountService.initialize();
-        this.settingService.initialize();
+        config.set('ios','backButtonText','返回');
+        wordService.initialize();
+        accountService.initialize();
+        settingService.initialize();
     }
 
 }

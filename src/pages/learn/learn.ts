@@ -41,7 +41,6 @@ export class LearnPage {
             for (let i = 0; i < repos.length; i++) {
                 this.wordService.getRepo(repos[i].id).then(repo=>{
                     // repo.doHash();
-                    console.log(repo);
                     this.repos.push(repo);
                 });
             }
@@ -132,7 +131,6 @@ export class LearnPage {
         }
         for (let i = 0; i < amount; i++) {
             let index=Math.floor((Math.random()*unstudied.length));
-            console.log(index);
             this.wordService.wordsLearning.push({
                 word:unstudied[index],
                 count:0,

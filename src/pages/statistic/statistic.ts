@@ -26,7 +26,6 @@ export class StatisticPage {
         let labels=[];
         for (let i = 0; i < 7; i++) {
             let date=d.format('YYYY-M-D');
-            console.log(date);
             labels.unshift(d.format('M-D'));
             let day=this.wordService.history[date];
             if (day) {
@@ -40,9 +39,6 @@ export class StatisticPage {
             }
             d.subtract(1,'days');
         }
-        console.log(dataLearn);
-        console.log(dataReview);
-        console.log(dataTotal);
         Chart.Line(this.chartHistory.nativeElement.getContext("2d"), {
             data: {
                 labels: labels,

@@ -20,7 +20,6 @@ export class LoginPage {
 
     doLogin():void{
         this.accountService.login(this.loginData).then(data=>{
-            console.log(data);
             if (data == 'success') {
                 this.navCtrl.pop();
                 this.toastCtrl.create({

@@ -136,8 +136,6 @@ export class AccountService {
                     this.http.post(CONFIG.apiUrl+'/sync/upload/', JSON.stringify(data)).toPromise()
                         .then(response=>{
                             let timestamp=_.toSafeInteger(response.text());
-                            console.log(timestamp);
-                            console.log(this.syncTime);
                             this.storage.set('syncTime',timestamp).then(()=>{
                                 this.initialize();
                                 this.loading.dismiss();

@@ -212,7 +212,6 @@ export class WordService {
         this.saveWordRecords();
         //generate history
         let today=moment().format('YYYY-M-D');
-        console.log(today);
         if (this.history[today]==null) {
             this.history[today]={
                 learn:0,
@@ -241,7 +240,6 @@ export class WordService {
         this.saveWordRecords();
         //generate history
         let today=moment().format('YYYY-M-D');
-        console.log(today);
         if (this.history[today]==null) {
             this.history[today]={
                 learn:0,

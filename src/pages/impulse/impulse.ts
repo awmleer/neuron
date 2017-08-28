@@ -224,7 +224,6 @@ export class ImpulsePage {
 
     expandCard(i){
         if (this.transiting) return;
-        console.log(i);
         this.cardExpandingFlags[i]=true;
     }
 

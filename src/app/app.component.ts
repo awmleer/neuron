@@ -36,7 +36,6 @@ export class MyApp {
         this.wordService.initialize();
         this.accountService.initialize();
         this.settingService.initialize();
-        console.log('app init');
     }
 
 }

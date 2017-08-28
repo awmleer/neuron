@@ -7,5 +7,8 @@
       "proxyUrl": "http://127.0.0.1:8000/"
     }
   ],
-  "type": "ionic-angular"
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
 }

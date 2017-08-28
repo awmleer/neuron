@@ -24,6 +24,8 @@ import {AboutPage} from "../pages/about/about";
 import {IonicStorageModule} from "@ionic/storage";
 import {BrowserModule} from "@angular/platform-browser";
 import {ImpulseCardComponent} from "../components/impulse-card/impulse-card";
+import {FeedbackPageModule} from "../pages/feedback/feedback.module";
+import {InAppBrowser} from "@ionic-native/in-app-browser";
 
 
 @NgModule({
@@ -52,7 +54,8 @@ import {ImpulseCardComponent} from "../components/impulse-card/impulse-card";
         IonicModule.forRoot(MyApp),
         IonicStorageModule.forRoot(),
         BrowserModule,
-        HttpModule
+        HttpModule,
+        FeedbackPageModule,
     ],
     bootstrap: [IonicApp],
     entryComponents: [
@@ -70,6 +73,7 @@ import {ImpulseCardComponent} from "../components/impulse-card/impulse-card";
     ],
     providers: [
         {provide: ErrorHandler, useClass: IonicErrorHandler},
+        InAppBrowser,
         WordService,
         AccountService,
         SettingService

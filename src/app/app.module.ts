@@ -27,6 +27,8 @@ import {FeedbackPageModule} from "../pages/feedback/feedback.module";
 import {InAppBrowser} from "@ionic-native/in-app-browser";
 import {StatusBar} from "@ionic-native/status-bar";
 import {SplashScreen} from "@ionic-native/splash-screen";
+import {ApiService} from "../services/api.service";
+import {ToastService} from "../services/toast.service";
 
 
 @NgModule({
@@ -72,13 +74,15 @@ import {SplashScreen} from "@ionic-native/splash-screen";
         AboutPage
     ],
     providers: [
-        {provide: ErrorHandler, useClass: IonicErrorHandler},
+        // {provide: ErrorHandler, useClass: IonicErrorHandler},
         SplashScreen,
         StatusBar,
         InAppBrowser,
+        ApiService,
+        ToastService,
         WordService,
         AccountService,
-        SettingService
+        SettingService,
     ]
 })
 export class AppModule {}

@@ -8,6 +8,7 @@ import * as moment from "moment";
 import * as _ from "lodash"
 import {CONST} from "../app/const";
 import {HttpClient} from "@angular/common/http";
+import {ApiService} from "./api.service";
 
 
 @Injectable()
@@ -20,7 +21,7 @@ export class WordService {
     history={};
 
     constructor(
-        private http:HttpClient,
+        private apiSvc:ApiService,
         private storage:Storage
     ){}
 
@@ -192,9 +193,7 @@ export class WordService {
 
 
     getEntry(word:string):Promise<WordEntry>{
-        return this.http.get(CONST.apiUrl+`/entry/${word}/`)
-            .toPromise()
-            .then(response=>response.json() as WordEntry);
+        return this.apiSvc.get(CONST.apiUrl+`/entry/${word}/`);
     }
 
     addRecord(word:string,mark:string):void{
@@ -256,13 +255,10 @@ export class WordService {
     }
 
     getRepos():Promise<RepoBrief[]> {
-        return this.http.get(CONST.apiUrl+'/repo/list/')
-            .toPromise()
-            .then(response=>response.json() as RepoBrief[]);
+        return this.apiSvc.get('/repo/list/');
     }
+
     getRepo(id:number):Promise<RepoDetail> {
-        return this.http.get(CONST.apiUrl+`/repo/${id}/`)
-            .toPromise()
-            .then(response=>new RepoDetail(response.json()) as RepoDetail);
+        return this.apiSvc.get(`/repo/${id}/`)
     }
 }

@@ -1,4 +1,4 @@
-<ion-tabs tabsLayout="icon-left">
+<ion-tabs tabsLayout="icon-start">
   <ion-tab [root]="tab1Root" tabTitle="新学" tabIcon="flash" [tabBadge]="wordService.wordsLearning?.length-(wordService.wordsLearning | wordsDoneCount)" tabBadgeStyle="danger"></ion-tab>
   <ion-tab [root]="tab2Root" tabTitle="复习" tabIcon="paper" [tabBadge]="wordService.wordsReviewing?.length - (wordService.wordsReviewing | wordsDoneCount)" tabBadgeStyle="danger"></ion-tab>
   <ion-tab [root]="tab3Root" tabTitle="设置" tabIcon="settings"></ion-tab>

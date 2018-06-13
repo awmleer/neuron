@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import {Http} from "@angular/http";
-import 'rxjs/add/operator/toPromise'
+import 'rxjs/add/operator/toPromise';
 import { Storage } from '@ionic/storage';
 import {ToastController} from "ionic-angular";
+import {HttpClient} from "@angular/common/http";
 // import * as moment from "moment";
 // import * as _ from "lodash"
 
@@ -11,7 +12,7 @@ import {ToastController} from "ionic-angular";
 export class SettingService {
 
     constructor(
-        private http: Http,
+        private http: HttpClient,
         private storage: Storage,
         private toastCtrl: ToastController
     ) {}

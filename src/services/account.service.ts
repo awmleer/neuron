@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {RepoBrief, RepoDetail} from "../classes/repo";
-import {Http} from "@angular/http";
-import 'rxjs/add/operator/toPromise'
+import 'rxjs/add/operator/toPromise';
 import {WordEntry, WordRecord, WordImpulsing} from "../classes/word";
 import { Storage } from '@ionic/storage';
 import * as moment from "moment";
@@ -11,6 +10,7 @@ import {User, LoginData} from "../classes/user";
 import {WordService} from "./word.service";
 import {SettingService} from "./setting.service";
 import {CONST} from "../app/const";
+import {HttpClient} from "@angular/common/http";
 
 
 @Injectable()
@@ -21,7 +21,7 @@ export class AccountService {
     loading:any;
 
     constructor(
-        private http: Http,
+        private http: HttpClient,
         private storage: Storage,
         private toastCtrl: ToastController,
         public alertCtrl: AlertController,

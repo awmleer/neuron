@@ -7,6 +7,7 @@ import { Storage } from '@ionic/storage';
 import * as moment from "moment";
 import * as _ from "lodash"
 import {CONST} from "../app/const";
+import {HttpClient} from "@angular/common/http";
 
 
 @Injectable()
@@ -19,7 +20,7 @@ export class WordService {
     history={};
 
     constructor(
-        private http:Http,
+        private http:HttpClient,
         private storage:Storage
     ){}
 

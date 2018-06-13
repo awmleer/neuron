@@ -1,9 +1,8 @@
 // Ionic Variables and Theming. For more info, please see:
 // http://ionicframework.com/docs/v2/theming/
-$font-path: "../assets/fonts";
+$font-path: "../assets/fonts"
 
-@import "ionic.globals";
-
+@import "ionic.globals"
 
 // Shared Variables
 // --------------------------------------------------
@@ -11,9 +10,6 @@ $font-path: "../assets/fonts";
 // the Sass variables found in Ionic's source scss files.
 // To view all the possible Ionic variables, see:
 // http://ionicframework.com/docs/v2/theming/overriding-ionic-variables/
-
-
-
 
 // Named Color Variables
 // --------------------------------------------------
@@ -23,52 +19,47 @@ $font-path: "../assets/fonts";
 // colors so you can add, rename and remove colors as needed.
 // The "primary" color is the only required color in the map.
 
-
-
-
 $colors: (
-    primary:    #488aff,
-    secondary:  #32db64,
-    danger:     #f53d3d,
-    light:      #f4f4f4,
-    white: #fff,
-    dark:       #222,
-    gray: #939393,
-);
+  primary: #488aff,
+  secondary: #32db64,
+  danger: #f53d3d,
+  light: #f4f4f4,
+  white: #fff,
+  dark: #222,
+  gray: #939393,
+)
 
+$link-color: #737373
 
-$link-color: #737373;
+$toolbar-background: rgba(0, 0, 0, 0)
+$toolbar-border-color: rgba(0, 0, 0, 0)
+$toolbar-text-color: #000
+$toolbar-md-title-text-color: $toolbar-text-color
+$toolbar-ios-title-text-color: $toolbar-text-color
+$toolbar-ios-border-color: $toolbar-border-color
+$toolbar-ios-title-font-weight: normal
+$toolbar-ios-button-color: #000
 
-$toolbar-background: rgba(0,0,0,0);
-$toolbar-border-color: rgba(0,0,0,0);
-$toolbar-text-color: #000;
-$toolbar-md-title-text-color: $toolbar-text-color;
-$toolbar-ios-title-text-color: $toolbar-text-color;
-$toolbar-ios-border-color: $toolbar-border-color;
-$toolbar-ios-title-font-weight:normal;
-$toolbar-ios-button-color: #000;
+$tabs-tab-color-active: #000
+$tabs-md-tab-color-inactive: #969696
+$tabs-ios-border-color: rgba(0, 0, 0, 0.1)
+//$tabs-ios-tab-min-height: 56px
+//$tabs-md-tab-min-height: 4.8rem
+//$tabs-md-tab-icon-size: 3.2rem
 
-$tabs-tab-color-active: #000;
-$tabs-md-tab-color-inactive: #969696;
-$tabs-ios-border-color: rgba(0,0,0,0.1);
-//$tabs-ios-tab-min-height: 56px;
-//$tabs-md-tab-min-height: 4.8rem;
-//$tabs-md-tab-icon-size: 3.2rem;
+$card-box-shadow: 0 0 10px 5px rgba(158, 158, 158, 0.1)
 
-$card-box-shadow: 0 0 10px 5px rgba(158, 158, 158, 0.1);;
-$card-ios-box-shadow: $card-box-shadow;
-$card-md-box-shadow: $card-box-shadow;
-$card-ios-border-radius: 5px;
-$card-md-border-radius: 5px;
+$card-ios-box-shadow: $card-box-shadow
+$card-md-box-shadow: $card-box-shadow
+$card-ios-border-radius: 5px
+$card-md-border-radius: 5px
 
-$refresher-border-color: rgba(0,0,0,0);
-$refresher-icon-font-size: 20px;
+$refresher-border-color: rgba(0, 0, 0, 0)
+$refresher-icon-font-size: 20px
 
-$button-md-text-transform: none;
+$button-md-text-transform: none
 
-$list-border-color: #dadada;
-
-
+$list-border-color: #dadada
 
 // App Theme
 // --------------------------------------------------
@@ -77,19 +68,17 @@ $list-border-color: #dadada;
 // so that the above variables are used and Ionic's
 // default are overridden.
 
-@import "ionic.theme.default";
-
+@import "ionic.theme.default"
 
 // Ionicons
 // --------------------------------------------------
 // The premium icon font for Ionic. For more info, please see:
 // http://ionicframework.com/docs/v2/ionicons/
 
-@import "ionic.ionicons";
-
+@import "ionic.ionicons"
 
 // Fonts
 // --------------------------------------------------
 
-@import "roboto";
-@import "noto-sans";
+@import "roboto"
+@import "noto-sans"

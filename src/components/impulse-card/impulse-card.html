@@ -1,169 +1,211 @@
 <div class="card" [class.expanding]="cardExpanding">
-    <a class="entry card-part" (click)="expand()" *ngIf="wordImpulsing">
-        <h1>
-            <a (click)="playSound()">{{wordImpulsing?.word}}</a>
-            <progress-icon *ngIf="type=='review'&&wordImpulsing" [percent]="wordService.wordRecords[wordImpulsing?.word]?.proficiency/8" style="margin-left: 5px"></progress-icon>
-            <ion-badge mode="md" *ngIf="wordService.wordTags[wordImpulsing.word]!=null && wordService.wordTags[wordImpulsing.word]?.indexOf('d')>=0">释义</ion-badge>
-            <ion-badge mode="md" *ngIf="wordService.wordTags[wordImpulsing.word]!=null && wordService.wordTags[wordImpulsing.word]?.indexOf('p')>=0">发音</ion-badge>
-            <ion-badge mode="md" *ngIf="wordService.wordTags[wordImpulsing.word]!=null && wordService.wordTags[wordImpulsing.word]?.indexOf('s')>=0">拼写</ion-badge>
-        </h1>
-        <div class="level-star">
-            <ion-icon *ngIf="entry?.level>0" name="star"></ion-icon>
-            <ion-icon *ngIf="entry?.level>1" name="star"></ion-icon>
-            <ion-icon *ngIf="entry?.level>2" name="star"></ion-icon>
-            <ion-icon *ngIf="entry?.level>3" name="star"></ion-icon>
-            <ion-icon *ngIf="entry?.level>4" name="star"></ion-icon>
-        </div>
+  <a class="entry card-part" (click)="expand()" *ngIf="wordImpulsing">
+    <h1>
+      <a (click)="playSound()">{{wordImpulsing?.word}}</a>
+      <progress-icon *ngIf="type=='review'&&wordImpulsing"
+                     [percent]="wordService.wordRecords[wordImpulsing?.word]?.proficiency/8"
+                     style="margin-left: 5px"></progress-icon>
+      <ion-badge mode="md"
+                 *ngIf="wordService.wordTags[wordImpulsing.word]!=null && wordService.wordTags[wordImpulsing.word]?.indexOf('d')>=0">
+        释义
+      </ion-badge>
+      <ion-badge mode="md"
+                 *ngIf="wordService.wordTags[wordImpulsing.word]!=null && wordService.wordTags[wordImpulsing.word]?.indexOf('p')>=0">
+        发音
+      </ion-badge>
+      <ion-badge mode="md"
+                 *ngIf="wordService.wordTags[wordImpulsing.word]!=null && wordService.wordTags[wordImpulsing.word]?.indexOf('s')>=0">
+        拼写
+      </ion-badge>
+    </h1>
+    <div class="level-star">
+      <ion-icon *ngIf="entry?.level>0" name="star"></ion-icon>
+      <ion-icon *ngIf="entry?.level>1" name="star"></ion-icon>
+      <ion-icon *ngIf="entry?.level>2" name="star"></ion-icon>
+      <ion-icon *ngIf="entry?.level>3" name="star"></ion-icon>
+      <ion-icon *ngIf="entry?.level>4" name="star"></ion-icon>
+    </div>
 
-        <div class="phonetic">
-            <span style="vertical-align: middle;"><a (click)="playSound()" style="color: inherit;">{{entry?.phonetic.US.symbol}}</a></span>
-            <button (click)="playSound()" ion-button icon-only clear small style="vertical-align: middle;">
-                <ion-icon name="md-volume-up"></ion-icon>
-            </button>
-            <div *ngIf="settingService.settings.soundSource=='youdao'">
-                <audio [id]="'sound-'+wordImpulsing?.word" [src]="'http://dict.youdao.com/dictvoice?audio='+wordImpulsing?.word+'&type='+(settingService.settings.sound.accent=='US'?'2':'1')" style="display: none;"></audio>
-            </div>
-            <div *ngIf="settingService.settings.soundSource=='haici'">
-                <audio [id]="'sound-'+wordImpulsing?.word" [src]="'http://audio.dict.cn/'+(settingService.settings.sound.accent=='US'?(settingService.settings.sound.gender=='male'?entry?.phonetic.US.sound.male:entry?.phonetic.US.sound.female):(settingService.settings.sound.gender=='male'?entry?.phonetic.UK.sound.male:entry?.phonetic.UK.sound.female))" style="display: none;"></audio>
-            </div>
+    <div class="phonetic">
+      <span style="vertical-align: middle;"><a (click)="playSound()" style="color: inherit;">{{entry?.phonetic.US.symbol}}</a></span>
+      <button (click)="playSound()" ion-button icon-only clear small style="vertical-align: middle;">
+        <ion-icon name="md-volume-up"></ion-icon>
+      </button>
+      <div *ngIf="settingService.settings.soundSource=='youdao'">
+        <audio [id]="'sound-'+wordImpulsing?.word"
+               [src]="'http://dict.youdao.com/dictvoice?audio='+wordImpulsing?.word+'&type='+(settingService.settings.sound.accent=='US'?'2':'1')"
+               style="display: none;"></audio>
+      </div>
+      <div *ngIf="settingService.settings.soundSource=='haici'">
+        <audio [id]="'sound-'+wordImpulsing?.word"
+               [src]="'http://audio.dict.cn/'+(settingService.settings.sound.accent=='US'?(settingService.settings.sound.gender=='male'?entry?.phonetic.US.sound.male:entry?.phonetic.US.sound.female):(settingService.settings.sound.gender=='male'?entry?.phonetic.UK.sound.male:entry?.phonetic.UK.sound.female))"
+               style="display: none;"></audio>
+      </div>
 
-        </div>
-    </a>
+    </div>
+  </a>
 
-    <div *ngIf="wordImpulsing&&entry" class="card-scroll">
-        <div class="card-part">
-            <div class="card-part-head">
-                <ion-icon name="md-text"></ion-icon> 释义
-            </div>
-            <div class="card-part-body">
+  <div *ngIf="wordImpulsing&&entry" class="card-scroll">
+    <div class="card-part">
+      <div class="card-part-head">
+        <ion-icon name="md-text"></ion-icon>
+        释义
+      </div>
+      <div class="card-part-body">
                 <span *ngFor="let definition of entry?.definitions; ">
                     <span style="color: gray;">{{definition.type}}</span> {{definition.text}}<br>
                 </span>
-            </div>
-        </div>
-
-        <div class="card-part">
-            <div class="card-part-head">
-                <ion-icon name="md-chatbubbles"></ion-icon> 例句
-            </div>
-            <div class="card-part-body">
-                <div *ngFor="let sentence of entry.sentences" class="sentence">
-                    <!--(entry?.sentences|sortSentence:wordService.starredSentences[wordImpulsing.word])-->
-
-                    <a (click)="toggleSentenceStar(sentence)" class="star-button" [class.starred]="sentenceStarred(sentence.id)">
-                        <ion-icon name="md-disc"></ion-icon>
-                    </a>
-                    <span [innerHTML]="sentence.english"></span><br>
-                    <span [innerHTML]="sentence.chinese" *ngIf="showChinese"></span>
-                </div>
-                <button ion-button small clear block (click)="doShowChinese()" *ngIf="!showChinese">显示中文</button>
-            </div>
-        </div>
-
-        <div class="card-part">
-            <div class="card-part-head">
-                <ion-icon name="pricetags"></ion-icon> 标记
-            </div>
-            <div class="card-part-body">
-                <ion-row>
-                    <ion-col><button (click)="toggleTag('d')" ion-button [outline]="wordService.wordTags[this.wordImpulsing.word]==null || wordService.wordTags[this.wordImpulsing.word]?.indexOf('d')==-1" block color="dark">释义</button></ion-col>
-                    <ion-col><button (click)="toggleTag('p')" ion-button [outline]="wordService.wordTags[this.wordImpulsing.word]==null || wordService.wordTags[this.wordImpulsing.word]?.indexOf('p')==-1" outline block color="dark">发音</button></ion-col>
-                    <ion-col><button (click)="toggleTag('s')" ion-button [outline]="wordService.wordTags[this.wordImpulsing.word]==null || wordService.wordTags[this.wordImpulsing.word]?.indexOf('s')==-1" outline block color="dark">拼写</button></ion-col>
-                </ion-row>
-            </div>
-        </div>
-
-        <div class="card-part" *ngIf="entry?.definition_rates?.length>0">
-            <div class="card-part-head">
-                <ion-icon name="ios-pulse"></ion-icon> 意频
-            </div>
-            <div class="card-part-body">
-                    <span *ngFor="let rate of entry?.definition_rates | definitionRate" style="display: block;margin-bottom: 5px;">
-                        {{rate.sense}} : {{rate.percent}}%
-                    </span>
-            </div>
-        </div>
-
-        <div class="card-part">
-            <div class="card-part-head">
-                <ion-icon name="md-bookmarks"></ion-icon> 更多词典
-            </div>
-            <div class="card-part-body">
-                <ion-row>
-                    <ion-col><button (click)="openDictionary('youdao')" ion-button outline block color="dark">有道</button></ion-col>
-                    <ion-col><button (click)="openDictionary('ciba')" ion-button outline block color="dark">词霸</button></ion-col>
-                    <ion-col><button (click)="openDictionary('bing')" ion-button outline block color="dark">必应</button></ion-col>
-                </ion-row>
-            </div>
-        </div>
+      </div>
     </div>
 
-    <!--<ion-scroll scrollY="true" class="card-scroll" *ngIf="wordImpulsing && platform.is('ios')">-->
-        <!--<div class="card-part">-->
-            <!--<div class="card-part-head">-->
-                <!--<ion-icon name="md-text"></ion-icon> 释义-->
-            <!--</div>-->
-            <!--<div class="card-part-body">-->
-                <!--<span *ngFor="let definition of entry?.definitions; ">-->
-                    <!--<span style="color: gray;">{{definition.type}}</span> {{definition.text}}<br>-->
-                <!--</span>-->
-            <!--</div>-->
-        <!--</div>-->
+    <div class="card-part">
+      <div class="card-part-head">
+        <ion-icon name="md-chatbubbles"></ion-icon>
+        例句
+      </div>
+      <div class="card-part-body">
+        <div *ngFor="let sentence of entry.sentences" class="sentence">
+          <!--(entry?.sentences|sortSentence:wordService.starredSentences[wordImpulsing.word])-->
 
-        <!--<div class="card-part">-->
-            <!--<div class="card-part-head">-->
-                <!--<ion-icon name="md-chatbubbles"></ion-icon> 例句-->
-            <!--</div>-->
-            <!--<div class="card-part-body">-->
-                <!--<div *ngFor="let sentence of sentences; let i=index;" class="sentence">-->
-                    <!--&lt;!&ndash;(entry?.sentences|sortSentence:wordService.starredSentences[wordImpulsing.word])&ndash;&gt;-->
-                    <!--&lt;!&ndash;TODO change to sentence id&ndash;&gt;-->
-                    <!--<a (click)="toggleSentenceStar(sentence)" class="star-button" [class.starred]="sentence.starred">-->
-                        <!--<ion-icon name="md-disc"></ion-icon>-->
-                    <!--</a>-->
-                    <!--<span [innerHTML]="sentence.text | wordSentence:showChinese"></span>-->
-                <!--</div>-->
-                <!--<button ion-button small clear block (click)="doShowChinese()" *ngIf="!showChinese">显示中文</button>-->
-            <!--</div>-->
-        <!--</div>-->
+          <a (click)="toggleSentenceStar(sentence)" class="star-button" [class.starred]="sentenceStarred(sentence.id)">
+            <ion-icon name="md-disc"></ion-icon>
+          </a>
+          <span [innerHTML]="sentence.english"></span><br>
+          <span [innerHTML]="sentence.chinese" *ngIf="showChinese"></span>
+        </div>
+        <button ion-button small clear block (click)="doShowChinese()" *ngIf="!showChinese">显示中文</button>
+      </div>
+    </div>
 
-        <!--<div class="card-part">-->
-            <!--<div class="card-part-head">-->
-                <!--<ion-icon name="pricetags"></ion-icon> 标记-->
-            <!--</div>-->
-            <!--<div class="card-part-body">-->
-                <!--<ion-row>-->
-                    <!--<ion-col><button (click)="toggleTag('d')" ion-button [outline]="wordService.wordTags[this.wordImpulsing.word]==null || wordService.wordTags[this.wordImpulsing.word]?.indexOf('d')==-1" block color="dark">释义</button></ion-col>-->
-                    <!--<ion-col><button (click)="toggleTag('p')" ion-button [outline]="wordService.wordTags[this.wordImpulsing.word]==null || wordService.wordTags[this.wordImpulsing.word]?.indexOf('p')==-1" outline block color="dark">发音</button></ion-col>-->
-                    <!--<ion-col><button (click)="toggleTag('s')" ion-button [outline]="wordService.wordTags[this.wordImpulsing.word]==null || wordService.wordTags[this.wordImpulsing.word]?.indexOf('s')==-1" outline block color="dark">拼写</button></ion-col>-->
-                <!--</ion-row>-->
-            <!--</div>-->
-        <!--</div>-->
+    <div class="card-part">
+      <div class="card-part-head">
+        <ion-icon name="pricetags"></ion-icon>
+        标记
+      </div>
+      <div class="card-part-body">
+        <ion-row>
+          <ion-col>
+            <button (click)="toggleTag('d')" ion-button
+                    [outline]="wordService.wordTags[this.wordImpulsing.word]==null || wordService.wordTags[this.wordImpulsing.word]?.indexOf('d')==-1"
+                    block color="dark">释义
+            </button>
+          </ion-col>
+          <ion-col>
+            <button (click)="toggleTag('p')" ion-button
+                    [outline]="wordService.wordTags[this.wordImpulsing.word]==null || wordService.wordTags[this.wordImpulsing.word]?.indexOf('p')==-1"
+                    outline block color="dark">发音
+            </button>
+          </ion-col>
+          <ion-col>
+            <button (click)="toggleTag('s')" ion-button
+                    [outline]="wordService.wordTags[this.wordImpulsing.word]==null || wordService.wordTags[this.wordImpulsing.word]?.indexOf('s')==-1"
+                    outline block color="dark">拼写
+            </button>
+          </ion-col>
+        </ion-row>
+      </div>
+    </div>
 
-        <!--<div class="card-part" *ngIf="entry?.definition_rates?.length>0">-->
-            <!--<div class="card-part-head">-->
-                <!--<ion-icon name="ios-pulse"></ion-icon> 意频-->
-            <!--</div>-->
-            <!--<div class="card-part-body">-->
-                    <!--<span *ngFor="let rate of entry?.definition_rates | definitionRate" style="display: block;margin-bottom: 5px;">-->
-                        <!--{{rate.sense}} : {{rate.percent}}%-->
-                    <!--</span>-->
-            <!--</div>-->
-        <!--</div>-->
+    <div class="card-part" *ngIf="entry?.definition_rates?.length>0">
+      <div class="card-part-head">
+        <ion-icon name="ios-pulse"></ion-icon>
+        意频
+      </div>
+      <div class="card-part-body">
+                    <span *ngFor="let rate of entry?.definition_rates | definitionRate"
+                          style="display: block;margin-bottom: 5px;">
+                        {{rate.sense}} : {{rate.percent}}%
+                    </span>
+      </div>
+    </div>
 
-        <!--<div class="card-part">-->
-            <!--<div class="card-part-head">-->
-                <!--<ion-icon name="md-bookmarks"></ion-icon> 更多词典-->
-            <!--</div>-->
-            <!--<div class="card-part-body">-->
-                <!--<ion-row>-->
-                    <!--<ion-col><button (click)="openDictionary('youdao')" ion-button outline block color="dark">有道</button></ion-col>-->
-                    <!--<ion-col><button (click)="openDictionary('ciba')" ion-button outline block color="dark">词霸</button></ion-col>-->
-                    <!--<ion-col><button (click)="openDictionary('bing')" ion-button outline block color="dark">必应</button></ion-col>-->
-                <!--</ion-row>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</ion-scroll>-->
+    <div class="card-part">
+      <div class="card-part-head">
+        <ion-icon name="md-bookmarks"></ion-icon>
+        更多词典
+      </div>
+      <div class="card-part-body">
+        <ion-row>
+          <ion-col>
+            <button (click)="openDictionary('youdao')" ion-button outline block color="dark">有道</button>
+          </ion-col>
+          <ion-col>
+            <button (click)="openDictionary('ciba')" ion-button outline block color="dark">词霸</button>
+          </ion-col>
+          <ion-col>
+            <button (click)="openDictionary('bing')" ion-button outline block color="dark">必应</button>
+          </ion-col>
+        </ion-row>
+      </div>
+    </div>
+  </div>
+
+  <!--<ion-scroll scrollY="true" class="card-scroll" *ngIf="wordImpulsing && platform.is('ios')">-->
+  <!--<div class="card-part">-->
+  <!--<div class="card-part-head">-->
+  <!--<ion-icon name="md-text"></ion-icon> 释义-->
+  <!--</div>-->
+  <!--<div class="card-part-body">-->
+  <!--<span *ngFor="let definition of entry?.definitions; ">-->
+  <!--<span style="color: gray;">{{definition.type}}</span> {{definition.text}}<br>-->
+  <!--</span>-->
+  <!--</div>-->
+  <!--</div>-->
+
+  <!--<div class="card-part">-->
+  <!--<div class="card-part-head">-->
+  <!--<ion-icon name="md-chatbubbles"></ion-icon> 例句-->
+  <!--</div>-->
+  <!--<div class="card-part-body">-->
+  <!--<div *ngFor="let sentence of sentences; let i=index;" class="sentence">-->
+  <!--&lt;!&ndash;(entry?.sentences|sortSentence:wordService.starredSentences[wordImpulsing.word])&ndash;&gt;-->
+  <!--&lt;!&ndash;TODO change to sentence id&ndash;&gt;-->
+  <!--<a (click)="toggleSentenceStar(sentence)" class="star-button" [class.starred]="sentence.starred">-->
+  <!--<ion-icon name="md-disc"></ion-icon>-->
+  <!--</a>-->
+  <!--<span [innerHTML]="sentence.text | wordSentence:showChinese"></span>-->
+  <!--</div>-->
+  <!--<button ion-button small clear block (click)="doShowChinese()" *ngIf="!showChinese">显示中文</button>-->
+  <!--</div>-->
+  <!--</div>-->
+
+  <!--<div class="card-part">-->
+  <!--<div class="card-part-head">-->
+  <!--<ion-icon name="pricetags"></ion-icon> 标记-->
+  <!--</div>-->
+  <!--<div class="card-part-body">-->
+  <!--<ion-row>-->
+  <!--<ion-col><button (click)="toggleTag('d')" ion-button [outline]="wordService.wordTags[this.wordImpulsing.word]==null || wordService.wordTags[this.wordImpulsing.word]?.indexOf('d')==-1" block color="dark">释义</button></ion-col>-->
+  <!--<ion-col><button (click)="toggleTag('p')" ion-button [outline]="wordService.wordTags[this.wordImpulsing.word]==null || wordService.wordTags[this.wordImpulsing.word]?.indexOf('p')==-1" outline block color="dark">发音</button></ion-col>-->
+  <!--<ion-col><button (click)="toggleTag('s')" ion-button [outline]="wordService.wordTags[this.wordImpulsing.word]==null || wordService.wordTags[this.wordImpulsing.word]?.indexOf('s')==-1" outline block color="dark">拼写</button></ion-col>-->
+  <!--</ion-row>-->
+  <!--</div>-->
+  <!--</div>-->
+
+  <!--<div class="card-part" *ngIf="entry?.definition_rates?.length>0">-->
+  <!--<div class="card-part-head">-->
+  <!--<ion-icon name="ios-pulse"></ion-icon> 意频-->
+  <!--</div>-->
+  <!--<div class="card-part-body">-->
+  <!--<span *ngFor="let rate of entry?.definition_rates | definitionRate" style="display: block;margin-bottom: 5px;">-->
+  <!--{{rate.sense}} : {{rate.percent}}%-->
+  <!--</span>-->
+  <!--</div>-->
+  <!--</div>-->
+
+  <!--<div class="card-part">-->
+  <!--<div class="card-part-head">-->
+  <!--<ion-icon name="md-bookmarks"></ion-icon> 更多词典-->
+  <!--</div>-->
+  <!--<div class="card-part-body">-->
+  <!--<ion-row>-->
+  <!--<ion-col><button (click)="openDictionary('youdao')" ion-button outline block color="dark">有道</button></ion-col>-->
+  <!--<ion-col><button (click)="openDictionary('ciba')" ion-button outline block color="dark">词霸</button></ion-col>-->
+  <!--<ion-col><button (click)="openDictionary('bing')" ion-button outline block color="dark">必应</button></ion-col>-->
+  <!--</ion-row>-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--</ion-scroll>-->
 
 
 </div>

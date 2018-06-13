@@ -7,91 +7,97 @@
 </ion-header>
 
 <ion-content>
-    <ion-list>
-        <ion-list-header>用户</ion-list-header>
-        <ion-item *ngIf="accountService.user">
-            <ion-icon name="contact" item-left></ion-icon>
-            <h2>{{accountService.user.name}}</h2>
-            <p>{{accountService.user.phone}}</p>
-        </ion-item>
-        <button *ngIf="accountService.user" ion-item (click)="accountService.logout()">
-            退出登录
-            <ion-icon name="log-out" item-right=""></ion-icon>
-        </button>
-        <ion-item *ngIf="!accountService.user">
-            <ion-icon name="contact" item-left></ion-icon>
-            未登录
-        </ion-item>
-        <button *ngIf="!accountService.user" ion-item (click)="showLoginModal()">
-            登录
-            <ion-icon name="log-in" item-right></ion-icon>
-        </button>
-        <button ion-item (click)="openHelpPage()">
-            查看使用帮助
-            <ion-icon ios="ios-help-circle-outline" md="md-help-circle" item-right></ion-icon>
-        </button>
-        <button ion-item (click)="openFeedbackPage()">
-            反馈&交流
-            <ion-icon ios="ios-chatboxes-outline" md="md-chatboxes" item-right></ion-icon>
-        </button>
-    </ion-list>
-    <ion-list>
-        <ion-list-header>数据</ion-list-header>
-        <button ion-item (click)="accountService.syncData()">
-            <ion-icon name="ios-cloud-outline" item-left></ion-icon>
-            <h2>同步学习数据</h2>
-            <p>上次同步：{{accountService.syncTime?(accountService.syncTime|date:'y/M/d H:mm'):'从未同步'}}</p>
-        </button>
-    </ion-list>
-    <ion-list>
-        <ion-list-header>设置</ion-list-header>
-        <ion-item>
-            <ion-label>复习时显示例句翻译</ion-label>
-            <ion-toggle [(ngModel)]="settingService.settings.showChineseWhenReviewing" (ionChange)="settingService.saveSettings()"></ion-toggle>
-        </ion-item>
-        <ion-item>
-            <ion-label>展开单词时自动发音</ion-label>
-            <ion-toggle [(ngModel)]="settingService.settings.autoRead" (ionChange)="settingService.saveSettings()"></ion-toggle>
-        </ion-item>
-        <ion-item>
-            <ion-label>记忆强度</ion-label>
-            <ion-select [(ngModel)]="settingService.settings.impulseIntensity" (ionChange)="settingService.saveSettings()" cancelText="取消" okText="确定" [selectOptions]="{subTitle:'记忆力好的同学可以适当降低记忆强度'}">
-                <ion-option value="4">很低</ion-option>
-                <ion-option value="5">较低</ion-option>
-                <ion-option value="6">中等</ion-option>
-                <ion-option value="7">较高</ion-option>
-                <ion-option value="8">很高</ion-option>
-            </ion-select>
-        </ion-item>
-        <ion-item>
-            <ion-label>音频来源</ion-label>
-            <ion-select [(ngModel)]="settingService.settings.soundSource" (ionChange)="settingService.saveSettings()" cancelText="取消" okText="确定">
-                <ion-option value="haici">海词</ion-option>
-                <ion-option value="youdao">有道(仅支持女声)</ion-option>
-            </ion-select>
-        </ion-item>
-        <ion-item>
-            <ion-label>口音类别</ion-label>
-            <ion-select [(ngModel)]="settingService.settings.sound.accent" (ionChange)="settingService.saveSettings()" cancelText="取消" okText="确定">
-                <ion-option value="US">美式</ion-option>
-                <ion-option value="UK">英式</ion-option>
-            </ion-select>
-        </ion-item>
-        <ion-item>
-            <ion-label>发音性别</ion-label>
-            <ion-select [(ngModel)]="settingService.settings.sound.gender" (ionChange)="settingService.saveSettings()" cancelText="取消" okText="确定">
-                <ion-option value="male">男声</ion-option>
-                <ion-option value="female">女声</ion-option>
-            </ion-select>
-        </ion-item>
-        <button ion-item (click)="openAboutPage()">
-            关于
-        </button>
-        <!--<ion-item>-->
-            <!--<ion-range [(ngModel)]="settingService.settings.scale" (ionChange)="scaleChange()" min="1" max="5" step="1" snaps="true" color="primary">-->
-                <!--<ion-label range-left>缩放：&nbsp;&nbsp;&nbsp;小</ion-label>-->
-                <!--<ion-label range-right>大</ion-label>-->
-            <!--</ion-range>-->
-        <!--</ion-item>-->
-    </ion-list>
+  <ion-list>
+    <ion-list-header>用户</ion-list-header>
+    <ion-item *ngIf="accountService.user">
+      <ion-icon name="contact" item-left></ion-icon>
+      <h2>{{accountService.user.name}}</h2>
+      <p>{{accountService.user.phone}}</p>
+    </ion-item>
+    <button *ngIf="accountService.user" ion-item (click)="accountService.logout()">
+      退出登录
+      <ion-icon name="log-out" item-right=""></ion-icon>
+    </button>
+    <ion-item *ngIf="!accountService.user">
+      <ion-icon name="contact" item-left></ion-icon>
+      未登录
+    </ion-item>
+    <button *ngIf="!accountService.user" ion-item (click)="showLoginModal()">
+      登录
+      <ion-icon name="log-in" item-right></ion-icon>
+    </button>
+    <button ion-item (click)="openHelpPage()">
+      查看使用帮助
+      <ion-icon ios="ios-help-circle-outline" md="md-help-circle" item-right></ion-icon>
+    </button>
+    <button ion-item (click)="openFeedbackPage()">
+      反馈&交流
+      <ion-icon ios="ios-chatboxes-outline" md="md-chatboxes" item-right></ion-icon>
+    </button>
+  </ion-list>
+  <ion-list>
+    <ion-list-header>数据</ion-list-header>
+    <button ion-item (click)="accountService.syncData()">
+      <ion-icon name="ios-cloud-outline" item-left></ion-icon>
+      <h2>同步学习数据</h2>
+      <p>上次同步：{{accountService.syncTime?(accountService.syncTime|date:'y/M/d H:mm'):'从未同步'}}</p>
+    </button>
+  </ion-list>
+  <ion-list>
+    <ion-list-header>设置</ion-list-header>
+    <ion-item>
+      <ion-label>复习时显示例句翻译</ion-label>
+      <ion-toggle [(ngModel)]="settingService.settings.showChineseWhenReviewing"
+                  (ionChange)="settingService.saveSettings()"></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>展开单词时自动发音</ion-label>
+      <ion-toggle [(ngModel)]="settingService.settings.autoRead"
+                  (ionChange)="settingService.saveSettings()"></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>记忆强度</ion-label>
+      <ion-select [(ngModel)]="settingService.settings.impulseIntensity" (ionChange)="settingService.saveSettings()"
+                  cancelText="取消" okText="确定" [selectOptions]="{subTitle:'记忆力好的同学可以适当降低记忆强度'}">
+        <ion-option value="4">很低</ion-option>
+        <ion-option value="5">较低</ion-option>
+        <ion-option value="6">中等</ion-option>
+        <ion-option value="7">较高</ion-option>
+        <ion-option value="8">很高</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>音频来源</ion-label>
+      <ion-select [(ngModel)]="settingService.settings.soundSource" (ionChange)="settingService.saveSettings()"
+                  cancelText="取消" okText="确定">
+        <ion-option value="haici">海词</ion-option>
+        <ion-option value="youdao">有道(仅支持女声)</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>口音类别</ion-label>
+      <ion-select [(ngModel)]="settingService.settings.sound.accent" (ionChange)="settingService.saveSettings()"
+                  cancelText="取消" okText="确定">
+        <ion-option value="US">美式</ion-option>
+        <ion-option value="UK">英式</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>发音性别</ion-label>
+      <ion-select [(ngModel)]="settingService.settings.sound.gender" (ionChange)="settingService.saveSettings()"
+                  cancelText="取消" okText="确定">
+        <ion-option value="male">男声</ion-option>
+        <ion-option value="female">女声</ion-option>
+      </ion-select>
+    </ion-item>
+    <button ion-item (click)="openAboutPage()">
+      关于
+    </button>
+    <!--<ion-item>-->
+    <!--<ion-range [(ngModel)]="settingService.settings.scale" (ionChange)="scaleChange()" min="1" max="5" step="1" snaps="true" color="primary">-->
+    <!--<ion-label range-left>缩放：&nbsp;&nbsp;&nbsp;小</ion-label>-->
+    <!--<ion-label range-right>大</ion-label>-->
+    <!--</ion-range>-->
+    <!--</ion-item>-->
+  </ion-list>
 </ion-content>

@@ -1,62 +1,62 @@
 <ion-header>
-    <ion-navbar [hideBackButton]="false">
-        <ion-buttons left>
-            <button ion-button icon-only navPop>
-                <ion-icon name="arrow-back"></ion-icon>
-            </button>
-        </ion-buttons>
-        <ion-title>
-            记忆<span *ngIf="type=='learn'"> - {{impulsePercent}}</span>
-        </ion-title>
-        <ion-buttons end>
-            <button ion-button icon-only (click)="rewind()" [hidden]="lastWordImpulsing==null">
-                <ion-icon name="rewind"></ion-icon>
-            </button>
-            <button ion-button icon-only (click)="showActionSheet()">
-                <ion-icon name="more"></ion-icon>
-            </button>
-        </ion-buttons>
-    </ion-navbar>
+  <ion-navbar [hideBackButton]="false">
+    <ion-buttons left>
+      <button ion-button icon-only navPop>
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      记忆<span *ngIf="type=='learn'"> - {{impulsePercent}}</span>
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="rewind()" [hidden]="lastWordImpulsing==null">
+        <ion-icon name="rewind"></ion-icon>
+      </button>
+      <button ion-button icon-only (click)="showActionSheet()">
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
 </ion-header>
 
 <div id="progress-bar" [class.squeezed]="cardExpandingFlags[1]">
-    <div id="current-progress" [style.width]="impulsePercent"></div>
+  <div id="current-progress" [style.width]="impulsePercent"></div>
 </div>
 
 <div class="action-button-group" [class.squeezed]="cardExpandingFlags[1]">
-    <ion-row>
-        <ion-col text-left no-padding>
-            <button (click)="clickForget()" ion-button outline icon-only class="button-forget">
-                <ion-icon name="md-close"></ion-icon>
-            </button>
-            <!--{{(type=='learn'&&wordsRendering[1]?.dirty==0)?'不认识':'忘记'}}-->
-        </ion-col>
-        <ion-col text-center no-padding>
-            <button (click)="clickVague()" ion-button outline icon-only class="button-vague">
-                <ion-icon name="md-help"></ion-icon>
-            </button>
-        </ion-col>
-        <ion-col text-right no-padding>
-            <button (click)="clickKnow()" ion-button outline icon-only class="button-know">
-                <ion-icon name="md-checkmark"></ion-icon>
-            </button>
-        </ion-col>
-    </ion-row>
+  <ion-row>
+    <ion-col text-left no-padding>
+      <button (click)="clickForget()" ion-button outline icon-only class="button-forget">
+        <ion-icon name="md-close"></ion-icon>
+      </button>
+      <!--{{(type=='learn'&&wordsRendering[1]?.dirty==0)?'不认识':'忘记'}}-->
+    </ion-col>
+    <ion-col text-center no-padding>
+      <button (click)="clickVague()" ion-button outline icon-only class="button-vague">
+        <ion-icon name="md-help"></ion-icon>
+      </button>
+    </ion-col>
+    <ion-col text-right no-padding>
+      <button (click)="clickKnow()" ion-button outline icon-only class="button-know">
+        <ion-icon name="md-checkmark"></ion-icon>
+      </button>
+    </ion-col>
+  </ion-row>
 </div>
 
 <impulse-card
-    *ngFor="let word of wordsRendering;let i=index"
-    [cardExpanding]="cardExpandingFlags[i]"
-    (wantExpanding)="expandCard(i)"
-    [wordImpulsing]="word"
-    [type]="type"
-    [class.last]="i==0"
-    [class.current]="i==1"
-    [class.next]="i==2"
+  *ngFor="let word of wordsRendering;let i=index"
+  [cardExpanding]="cardExpandingFlags[i]"
+  (wantExpanding)="expandCard(i)"
+  [wordImpulsing]="word"
+  [type]="type"
+  [class.last]="i==0"
+  [class.current]="i==1"
+  [class.next]="i==2"
 ></impulse-card>
 
 <ion-content>
-    <!--<div style="position: relative">-->
-        <!---->
-    <!--</div>-->
+  <!--<div style="position: relative">-->
+  <!---->
+  <!--</div>-->
 </ion-content>

@@ -1,24 +1,24 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core'
 
-import { LearnPage } from '../learn/learn';
-import { ReviewPage } from '../review/review';
-import {SettingsPage} from "../settings/settings";
-import {AccountService} from "../../services/account.service";
-import {WordService} from "../../services/word.service";
+import {LearnPage} from '../learn/learn'
+import {ReviewPage} from '../review/review'
+import {SettingsPage} from '../settings/settings'
+import {AccountService} from '../../services/account.service'
+import {WordService} from '../../services/word.service'
 
 @Component({
-    templateUrl: 'tabs.html'
+  templateUrl: 'tabs.html',
 })
 export class TabsPage {
-    // this tells the tabs component which Pages
-    // should be each tab's root Page
-    tab1Root: any = LearnPage;
-    tab2Root: any = ReviewPage;
-    tab3Root: any = SettingsPage;
+  // this tells the tabs component which Pages
+  // should be each tab's root Page
+  tab1Root: any = LearnPage
+  tab2Root: any = ReviewPage
+  tab3Root: any = SettingsPage
 
-    constructor(
-        private wordService:WordService,
-        private accountService:AccountService
-    ) {}
+  constructor(
+    private wordService: WordService,
+    private accountService: AccountService,
+  ) {}
 
 }

@@ -1,13 +1,14 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input} from '@angular/core'
 
 
 @Component({
-    selector: 'progress-icon',
-    templateUrl: 'progress-icon.html'
+  selector: 'progress-icon',
+  templateUrl: 'progress-icon.html',
 })
 export class ProgressIconComponent {
-    constructor() {}
-    @Input()
-    percent:number;
+  constructor() {}
+
+  @Input()
+  percent: number
 
 }

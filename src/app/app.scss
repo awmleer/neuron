@@ -1,5 +1,6 @@
 // http://ionicframework.com/docs/v2/theming/
 
+
 // App Global Sass
 // --------------------------------------------------
 // Put style rules here that you want to apply globally. These
@@ -14,10 +15,10 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
-.item-select .label-md {
-  color: #000
+.item-select .label-md{
+  color: #000;
 }
 
-.header.header-md::after {
-  display: none
+.header.header-md::after{
+  display: none;
 }

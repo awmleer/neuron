@@ -1,115 +1,115 @@
-$hot-color: #6e7be7
-$card-border-radius: 8px
+$hot-color: #6e7be7;
+$card-border-radius: 8px;
 
 impulse-card {
-  height: calc(100vh - 180px)
-  width: 100%
+  height: calc(100vh - 180px);
+  width: 100%;
   .card {
-    position: absolute
-    background-color: #f6f6f6
-    border-radius: $card-border-radius
-    box-shadow: 0 0 10px 5px rgba(158, 158, 158, 0.1)
-    height: 80px
-    top: 30%
-    width: 88%
-    left: 6%
-    overflow: hidden
-    z-index: 11
-    transition: height 300ms ease, top 300ms ease
+    position: absolute;
+    background-color: #f6f6f6;
+    border-radius: $card-border-radius;
+    box-shadow: 0 0 10px 5px rgba(158, 158, 158, 0.1);
+    height: 80px;
+    top: 30%;
+    width: 88%;
+    left: 6%;
+    overflow: hidden;
+    z-index: 11;
+    transition: height 300ms ease, top 300ms ease;
     .card-scroll {
-      height: calc(100vh - 260px)
-      border-radius: $card-border-radius
-      background-color: #ffffff
+      height: calc(100vh - 260px);
+      border-radius: $card-border-radius;
+      background-color: #ffffff;
     }
     div.card-scroll {
-      overflow-y: scroll
+      overflow-y: scroll;
     }
     .card-part {
-      border-radius: $card-border-radius
+      border-radius: $card-border-radius;
       .card-part-head:first-of-type {
-        margin-top: 0
+        margin-top: 0;
       }
       .card-part-head {
-        font-size: 1.8rem
-        background-color: $hot-color
-        border-top-left-radius: $card-border-radius
-        border-top-right-radius: $card-border-radius
-        margin-top: -10px
-        padding: 8px 10px 8px 10px
-        color: #ffffff
+        font-size: 1.8rem;
+        background-color: $hot-color;
+        border-top-left-radius: $card-border-radius;
+        border-top-right-radius: $card-border-radius;
+        margin-top: -10px;
+        padding: 8px 10px 8px 10px;
+        color: #ffffff;
       }
       .card-part-body {
-        padding: 8px 10px 10px 10px
-        background-color: #ffffff
+        padding: 8px 10px 10px 10px;
+        background-color: #ffffff;
       }
       .card-part-body:last-of-type {
-        border-bottom-left-radius: $card-border-radius
-        border-bottom-right-radius: $card-border-radius
+        border-bottom-left-radius: $card-border-radius;
+        border-bottom-right-radius: $card-border-radius;
       }
     }
   }
   .card.expanding {
-    height: calc(100vh - 190px)
-    top: 5px
+    height: calc(100vh - 190px);
+    top: 5px;
   }
 
   .entry {
-    display: block
-    color: inherit
-    position: relative
-    height: 80px
-    padding: 12px 10px 0 10px
+    display: block;
+    color: inherit;
+    position: relative;
+    height: 80px;
+    padding: 12px 10px 0 10px;
     .level-star {
-      position: absolute
-      top: 15px
-      right: 10px
+      position: absolute;
+      top: 15px;
+      right: 10px;
       ion-icon {
-        color: #f3c715
+        color: #f3c715;
       }
     }
     h1 {
-      margin-bottom: 0
-      margin-top: 0
+      margin-bottom: 0;
+      margin-top: 0;
       a {
-        color: #000
+        color: #000;
       }
       ion-badge {
-        vertical-align: middle
+        vertical-align: middle;
       }
     }
   }
 
   em.hot {
-    color: $hot-color
-    font-weight: bold
+    color: $hot-color;
+    font-weight: bold;
   }
   .sentence {
-    display: block
-    margin-bottom: 8px
-    line-height: 1.3em
+    display: block;
+    margin-bottom: 8px;
+    line-height: 1.3em;
     .star-button {
-      vertical-align: middle
-      display: inline-block
-      color: #d5d5d5
-      transition: color 0.2s ease
-      font-size: 24px
-      width: 30px
+      vertical-align: middle;
+      display: inline-block;
+      color: #d5d5d5;
+      transition: color 0.2s ease;
+      font-size: 24px;
+      width: 30px;
     }
     .star-button.starred {
-      color: $hot-color
+      color: $hot-color;
     }
     span {
-      display: inline-block
-      vertical-align: middle
-      width: calc(100% - 34px)
+      display: inline-block;
+      vertical-align: middle;
+      width: calc(100% - 34px);
     }
   }
   .phonetic {
-    margin-top: -5px
+    margin-top: -5px;
     //cursor:pointer
   }
 
   .content .scroll-content {
-    overflow-y: hidden
+    overflow-y: hidden;
   }
 }

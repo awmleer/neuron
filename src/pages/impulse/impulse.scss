@@ -1,78 +1,78 @@
 page-impulse {
   #progress-bar {
-    $progress-bar-height: 6px
-    position: fixed
-    bottom: 30vh
-    width: 70vw
-    left: 15vw
-    transition: bottom 300ms ease, width 300ms ease, left 300ms ease
-    height: $progress-bar-height
-    background-color: #e0e0e0
-    z-index: 100
+    $progress-bar-height: 6px;
+    position: fixed;
+    bottom: 30vh;
+    width: 70vw;
+    left: 15vw;
+    transition: bottom 300ms ease, width 300ms ease, left 300ms ease;
+    height: $progress-bar-height;
+    background-color: #e0e0e0;
+    z-index: 100;
     #current-progress {
-      height: $progress-bar-height
-      background-color: $hot-color
-      transition: width 300ms ease
+      height: $progress-bar-height;
+      background-color: $hot-color;
+      transition: width 300ms ease;
     }
   }
   #progress-bar.squeezed {
-    bottom: 0
-    left: 0
-    width: 100%
+    bottom: 0;
+    left: 0;
+    width: 100%;
   }
 
   impulse-card {
-    position: absolute
-    top: 65px
-    transition: left 300ms ease
+    position: absolute;
+    top: 65px;
+    transition: left 300ms ease;
   }
   impulse-card.last {
-    left: -100%
+    left: -100%;
   }
   impulse-card.current {
-    left: 0
+    left: 0;
   }
   impulse-card.next {
-    left: 100%
+    left: 100%;
   }
 
   .action-button-group {
-    z-index: 10
-    position: fixed
-    left: 0
-    bottom: 40vh
-    transition: bottom 300ms ease
-    width: 100%
-    padding: 0 15vw
+    z-index: 10;
+    position: fixed;
+    left: 0;
+    bottom: 40vh;
+    transition: bottom 300ms ease;
+    width: 100%;
+    padding: 0 15vw;
     button {
-      display: inline-block
-      border-radius: 100px
-      height: 5rem
-      width: 5rem
-      margin: 0 !important
-      //box-shadow: 0 0 10px 3px rgba(215, 215, 215, 0.92)
+      display: inline-block;
+      border-radius: 100px;
+      height: 5rem;
+      width: 5rem;
+      margin: 0 !important;
+      //box-shadow: 0 0 10px 3px rgba(215, 215, 215, 0.92);
     }
     button:active {
-      opacity: 0.5
+      opacity: 0.5;
     }
     .button-forget {
-      color: #cf3548
-      border-color: #cf3548
-      background-color: rgba(207, 53, 72, 0.12)
+      color: #cf3548;
+      border-color: #cf3548;
+      background-color: rgba(207, 53, 72, 0.12);
     }
     .button-vague {
-      color: #dfb400
-      border-color: #dfb400
-      background-color: rgba(223, 180, 0, 0.12)
+      color: #dfb400;
+      border-color: #dfb400;
+      background-color: rgba(223, 180, 0, 0.12);
     }
     .button-know {
-      color: #34d51d
-      border-color: #34d51d
-      background-color: rgba(52, 213, 29, 0.12)
+      color: #34d51d;
+      border-color: #34d51d;
+      background-color: rgba(52, 213, 29, 0.12);
     }
   }
   .action-button-group.squeezed {
-    bottom: 38px
+    bottom: 38px;
   }
 
   //#baffle{
@@ -88,19 +88,19 @@ page-impulse {
   //}
 
   .toolbar-background {
-    display: none
+    display: none;
   }
 
   .bar-buttons-ios .bar-button-default-ios {
-    color: #000
+    color: #000;
   }
 
   ion-header::after {
-    display: none
+    display: none;
   }
 
   ion-content {
-    background: rgb(231, 233, 238) !important
+    background: rgb(231, 233, 238) !important;
   }
 
 }

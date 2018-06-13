@@ -6,7 +6,7 @@ import { ContactPage } from '../pages/contact/contact';
 import { LearnPage } from '../pages/learn/learn';
 import { TabsPage } from '../pages/tabs/tabs';
 import {SettingsPage} from "../pages/settings/settings";
-import {HttpModule} from "@angular/http";
+import {HttpClientModule} from "@angular/common/http";
 import {WordService} from "../services/word.service";
 import {ImpulsePage} from "../pages/impulse/impulse";
 import {HowManyInPipe} from "../pipes/how-many-in.pipe";
@@ -25,6 +25,8 @@ import {BrowserModule} from "@angular/platform-browser";
 import {ImpulseCardComponent} from "../components/impulse-card/impulse-card";
 import {FeedbackPageModule} from "../pages/feedback/feedback.module";
 import {InAppBrowser} from "@ionic-native/in-app-browser";
+import {StatusBar} from "@ionic-native/status-bar";
+import {SplashScreen} from "@ionic-native/splash-screen";
 
 
 @NgModule({
@@ -52,7 +54,7 @@ import {InAppBrowser} from "@ionic-native/in-app-browser";
         IonicModule.forRoot(MyApp),
         IonicStorageModule.forRoot(),
         BrowserModule,
-        HttpModule,
+        HttpClientModule,
         FeedbackPageModule,
     ],
     bootstrap: [IonicApp],
@@ -71,6 +73,8 @@ import {InAppBrowser} from "@ionic-native/in-app-browser";
     ],
     providers: [
         {provide: ErrorHandler, useClass: IonicErrorHandler},
+        SplashScreen,
+        StatusBar,
         InAppBrowser,
         WordService,
         AccountService,

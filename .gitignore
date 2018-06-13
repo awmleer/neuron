@@ -9,6 +9,8 @@ log.txt
 .vscode/
 npm-debug.log*
 
+.sourcemaps/
+
 /apk/
 neuron.keystore
 .idea/

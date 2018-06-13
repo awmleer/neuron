@@ -1,12 +1,7 @@
 {
   "name": "Neuron",
   "app_id": "",
-  "proxies": [
-    {
-      "path": "/api",
-      "proxyUrl": "http://127.0.0.1:8000/"
-    }
-  ],
+  "proxies": [],
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}

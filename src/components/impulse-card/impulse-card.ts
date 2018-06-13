@@ -2,8 +2,8 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Sentence, WordEntry, WordImpulsing} from "../../classes/word";
 import {WordService} from "../../services/word.service";
 import {SettingService} from "../../services/setting.service";
-import {InAppBrowser} from 'ionic-native';
 import {Platform} from "ionic-angular";
+import {InAppBrowser, InAppBrowserOptions} from "@ionic-native/in-app-browser";
 
 
 @Component({
@@ -23,7 +23,8 @@ export class ImpulseCardComponent {
     constructor(
         public wordService:WordService,
         public settingService: SettingService,
-        public platform: Platform
+        public platform: Platform,
+        private inAppBrowser: InAppBrowser,
     ) {}
 
     ngOnInit(){
@@ -114,7 +115,10 @@ export class ImpulseCardComponent {
             default:
                 return;
         }
-        new InAppBrowser(href,'_blank','location=no');
+        let options:InAppBrowserOptions = {
+            location: 'no'
+        };
+        this.inAppBrowser.create(href,'_blank',options);
     }
 
 }

@@ -29,7 +29,9 @@ export class ApiService {
   private handleHttp(request: Observable<Object>) {
     return request.toPromise().catch((error: HttpErrorResponse) => {
       let messageText
-      if (error.status === 403) {
+      if (error.status === 444){
+        if(error.error) messageText = error.error.message
+      } else if (error.status === 403) {
         messageText = '您没有权限进行该操作'
       } else {
         console.error(error)
@@ -42,11 +44,7 @@ export class ApiService {
       if (sessionId) {
         await this.storage.set('sessionId', sessionId)
       }
-      if (data['status'] === 'success') {
-        return data['payload']
-      } else {
-        throw new ApiError(data['payload'])
-      }
+      return data
     }).catch((error) => {
       if (error instanceof ApiError) {
         this.toastSvc.toast(error.message)

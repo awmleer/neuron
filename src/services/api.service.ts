@@ -28,16 +28,19 @@ export class ApiService {
 
   private handleHttp(request: Observable<Object>) {
     return request.toPromise().catch((error: HttpErrorResponse) => {
-      let messageText
-      if (error.status === 444){
-        if(error.error) messageText = error.error.message
+      let apiError:ApiError
+      if (error.status === 444 && error.error){
+        apiError = new ApiError(
+          error.error.message,
+          error.error.payload
+        )
       } else if (error.status === 403) {
-        messageText = '您没有权限进行该操作'
+        apiError = new ApiError('您没有权限进行该操作')
       } else {
         console.error(error)
-        messageText = '出错了'
+        apiError = new ApiError('出错了')
       }
-      throw new ApiError(messageText)
+      throw apiError
     }).then(async (res: HttpResponse<object>) => {
       const data = res.body
       const sessionId = res.headers.get('App-Set-Session-Id')

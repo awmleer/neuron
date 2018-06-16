@@ -22,16 +22,8 @@ export class LoginPage {
   loginData = new LoginData()
 
   async doLogin(): Promise<void> {
-    try {
-      await this.accountSvc.login(this.loginData)
-      this.toastSvc.toast('登录成功')
-    } catch(e){
-      if(e instanceof ApiError){
-        this.toastSvc.toast(e.message)
-      }else{
-        this.toastSvc.toast('登录失败')
-      }
-    }
+    await this.accountSvc.login(this.loginData)
+    this.toastSvc.toast('登录成功')
   }
 
 }

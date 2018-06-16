@@ -29,6 +29,7 @@ import {StatusBar} from '@ionic-native/status-bar'
 import {SplashScreen} from '@ionic-native/splash-screen'
 import {ApiService} from '../services/api.service'
 import {ToastService} from '../services/toast.service'
+import {BankService} from '../services/bank.service'
 
 
 @NgModule({
@@ -83,6 +84,7 @@ import {ToastService} from '../services/toast.service'
     WordService,
     AccountService,
     SettingService,
+    BankService,
   ],
 })
 export class AppModule {

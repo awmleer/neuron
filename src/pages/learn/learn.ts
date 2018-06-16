@@ -6,6 +6,7 @@ import {ImpulsePage} from '../impulse/impulse'
 import {WordRecord} from '../../classes/word'
 import * as _ from 'lodash'
 import * as moment from 'moment'
+import {BankService} from '../../services/bank.service'
 
 
 @Component({
@@ -14,8 +15,7 @@ import * as moment from 'moment'
   // providers:[WordService]
 })
 export class LearnPage {
-  repos: RepoDetail[] = []
-  subscriptions: any[] = []
+  repos: RepoBrief[] = []
 
   constructor(
     public nav: NavController,
@@ -23,6 +23,7 @@ export class LearnPage {
     private modalCtrl: ModalController,
     private wordService: WordService,
     public toastCtrl: ToastController,
+    private bankSvc: BankService,
   ) {}
 
   get todayLearned(): number {
@@ -142,20 +143,13 @@ export class LearnPage {
   }
 
 
-  ngOnInit(): void {
-    this.getRepos()
+  async ngOnInit() {
+    this.repos = await this.bankSvc.getRepos();
   }
 
 
   ionViewWillEnter() {
 
-  }
-
-  ngOnDestroy() {
-    // prevent memory leak when component destroyed
-    for (let i = 0; i < this.subscriptions.length; i++) {
-      this.subscriptions[i].unsubscribe()
-    }
   }
 
 }

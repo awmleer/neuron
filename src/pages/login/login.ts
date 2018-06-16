@@ -16,7 +16,6 @@ export class LoginPage {
   constructor(
     public navCtrl: NavController,
     public accountSvc: AccountService,
-    public toastCtrl: ToastController,
     private toastSvc: ToastService,
   ) {}
 

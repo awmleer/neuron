@@ -1,16 +1,6 @@
 import {Injectable} from '@angular/core'
-import {RepoBrief, RepoDetail} from '../classes/repo'
-import 'rxjs/add/operator/toPromise'
-import {WordEntry, WordRecord, WordImpulsing} from '../classes/word'
-import {Storage} from '@ionic/storage'
-import * as moment from 'moment'
-import * as _ from 'lodash'
-import {ToastController, AlertController, LoadingController} from 'ionic-angular'
 import {User, LoginData} from '../classes/user'
-import {WordService} from './word.service'
-import {SettingService} from './setting.service'
 import {CONST} from '../app/const'
-import {HttpClient} from '@angular/common/http'
 import {ApiService} from './api.service'
 
 
@@ -20,19 +10,13 @@ export class AccountService {
 
   constructor(
     private apiSvc: ApiService,
-    private toastCtrl: ToastController,
-    public alertCtrl: AlertController,
-    private loadingCtrl: LoadingController,
   ) {}
 
-  initialize(): void {
-    //first, check whether the user is logged in
-    this.apiSvc.get(CONST.apiUrl + '/account/is_logged_in/')
-      .then(response => {
-        if (response.text() == 'true') {
-          this.getUserInfo()
-        }
-      })
+  async initialize(): Promise<void> {
+    const result = await this.apiSvc.get(CONST.apiUrl + '/account/is_logged_in/')
+    if (result == 'true') {
+      await this.getUserInfo()
+    }
   }
 
   async login(loginData: LoginData): Promise<void> {

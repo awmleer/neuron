@@ -3,7 +3,6 @@ import {NavController, AlertController, ToastController, ModalController} from '
 import {WordService} from '../../services/word.service'
 import {RepoBrief, RepoDetail} from '../../classes/repo'
 import {ImpulsePage} from '../impulse/impulse'
-import {WordRecord} from '../../classes/word'
 import * as _ from 'lodash'
 import * as moment from 'moment'
 import {BankService} from '../../services/bank.service'
@@ -12,7 +11,6 @@ import {BankService} from '../../services/bank.service'
 @Component({
   selector: 'page-learn',
   templateUrl: 'learn.html',
-  // providers:[WordService]
 })
 export class LearnPage {
   repos: RepoBrief[] = []
@@ -34,18 +32,6 @@ export class LearnPage {
       }
     }
     return count
-  }
-
-  getRepos(): void {
-    this.wordService.getRepos().then(repos => {
-      // this.repos=repos
-      for (let i = 0; i < repos.length; i++) {
-        this.wordService.getRepo(repos[i].id).then(repo => {
-          // repo.doHash()
-          this.repos.push(repo)
-        })
-      }
-    })
   }
 
   startLearn(repo: RepoDetail): void {

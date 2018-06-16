@@ -3,6 +3,9 @@ import {Component} from '@angular/core'
 import {NavController, ModalController, ToastController} from 'ionic-angular'
 import {AccountService} from '../../services/account.service'
 import {LoginData} from '../../classes/user'
+import {ToastService} from '../../services/toast.service'
+import {ApiError} from '../../classes/error'
+
 
 @Component({
   selector: 'page-login',
@@ -12,27 +15,24 @@ export class LoginPage {
 
   constructor(
     public navCtrl: NavController,
-    public accountService: AccountService,
+    public accountSvc: AccountService,
     public toastCtrl: ToastController,
+    private toastSvc: ToastService,
   ) {}
 
-  loginData = new LoginData
+  loginData = new LoginData()
 
-  doLogin(): void {
-    this.accountService.login(this.loginData).then(data => {
-      if (data == 'success') {
-        this.navCtrl.pop()
-        this.toastCtrl.create({
-          message: '登录成功',
-          duration: 2000,
-        }).present()
-      } else {
-        this.toastCtrl.create({
-          message: '登录失败 ' + data,
-          duration: 2000,
-        }).present()
+  async doLogin(): Promise<void> {
+    try {
+      await this.accountSvc.login(this.loginData)
+      this.toastSvc.toast('登录成功')
+    } catch(e){
+      if(e instanceof ApiError){
+        this.toastSvc.toast(e.message)
+      }else{
+        this.toastSvc.toast('登录失败')
       }
-    })
+    }
   }
 
 }

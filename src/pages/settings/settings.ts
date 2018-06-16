@@ -7,6 +7,7 @@ import {SettingService} from '../../services/setting.service'
 import {AboutPage} from '../about/about'
 import {FeedbackPage} from '../feedback/feedback'
 import {InAppBrowser} from '@ionic-native/in-app-browser'
+import {ToastService} from '../../services/toast.service'
 
 @Component({
   selector: 'page-settings',
@@ -16,10 +17,11 @@ export class SettingsPage {
 
   constructor(
     public navCtrl: NavController,
-    public accountService: AccountService,
+    public accountSvc: AccountService,
     public settingService: SettingService,
     private inAppBrowser: InAppBrowser,
     public modalCtrl: ModalController,
+    private toastSvc: ToastService,
   ) {}
 
   showLoginModal(): void {
@@ -37,6 +39,11 @@ export class SettingsPage {
 
   openAboutPage(): void {
     this.navCtrl.push(AboutPage)
+  }
+
+  async logout(): Promise<void> {
+    await this.accountSvc.logout()
+    this.toastSvc.toast('已退出登录')
   }
 
 }

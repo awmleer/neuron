@@ -17,23 +17,13 @@ import {ApiService} from './api.service'
 @Injectable()
 export class AccountService {
   user: User
-  syncTime: number = 0
-
-  loading: any
 
   constructor(
     private apiSvc: ApiService,
-    private storage: Storage,
     private toastCtrl: ToastController,
     public alertCtrl: AlertController,
-    private wordService: WordService,
-    private settingService: SettingService,
     private loadingCtrl: LoadingController,
-  ) {
-    this.loading = this.loadingCtrl.create({
-      content: '同步中…',
-    })
-  }
+  ) {}
 
   initialize(): void {
     //first, check whether the user is logged in
@@ -43,100 +33,23 @@ export class AccountService {
           this.getUserInfo()
         }
       })
-    this.storage.get('syncTime').then(time => {
-      if (time) {
-        this.syncTime = time
-      }
-    })
   }
 
-  login(loginData: LoginData): Promise<any> {
-    return this.apiSvc.post(CONST.apiUrl + '/account/login/', {
+  async login(loginData: LoginData): Promise<void> {
+    await this.apiSvc.post(CONST.apiUrl + '/account/login/', {
       phone: loginData.phone,
       password: loginData.password,
-    }).then(response => {
-      let data = response.text()
-      if (data == 'success') {
-        this.getUserInfo()
-      }
-      return data
     })
+    await this.getUserInfo()
   }
 
-  async logout() {
-    let response = await this.apiSvc.get('/account/logout/')
-    if (response == 'success') {
-      this.user = null
-      this.toastCtrl.create({
-        message: '已退出登录',
-        duration: 2000,
-      }).present()
-    }
+  async logout(): Promise<void> {
+    await this.apiSvc.get('/account/logout/')
   }
 
-  async getUserInfo() {
+  async getUserInfo(): Promise<User> {
     this.user = await this.apiSvc.get('/account/userinfo/')
-  }
-
-
-  syncData(): void {
-    // if (this.user == null) {
-    //     this.alertCtrl.create({
-    //         title:'未登录',
-    //         subTitle:'请先登录账号再进行同步数据',
-    //         buttons:[{text:'确定'}]
-    //     }).present()
-    //     return
-    // }
-    // this.loading.present()
-    // this.http.get(CONST.apiUrl+'/sync/check/').toPromise()
-    //     .then(response=>{
-    //         let t=Number(response.text())
-    //         if(t>this.syncTime){
-    //             this.downloadData(t)
-    //         }else {
-    //             this.uploadData()
-    //         }
-    //     })
-  }
-
-  downloadData(timestamp: number): void {
-    // this.http.get(CONST.apiUrl+'/sync/download/').toPromise()
-    //     .then(response=>{
-    //         this.syncTime=timestamp
-    //         this.storage.set('syncTime',timestamp)
-    //         let data=response.json()
-    //         for (let key in data) {
-    //             this.storage.set(key,data[key])
-    //         }
-    //         setTimeout(()=>{
-    //             this.wordService.initialize()
-    //             this.settingService.initialize()
-    //             this.loading.dismiss()
-    //         },1000)
-    //     })
-  }
-
-  uploadData(): void {
-    // let length:number
-    // let data={}
-    // this.storage.length().then(l=>{
-    //     length=l
-    //     this.storage.forEach((value,key,iterationNumber)=>{
-    //         if (key == 'syncTime') return
-    //         data[key]=value
-    //         if (iterationNumber == length) {
-    //             this.http.post(CONST.apiUrl+'/sync/upload/', JSON.stringify(data)).toPromise()
-    //                 .then(response=>{
-    //                     let timestamp=_.toSafeInteger(response.text())
-    //                     this.storage.set('syncTime',timestamp).then(()=>{
-    //                         this.initialize()
-    //                         this.loading.dismiss()
-    //                     })
-    //                 })
-    //         }
-    //     })
-    // })
+    return this.user
   }
 
 }

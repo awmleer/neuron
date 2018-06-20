@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core'
-import 'rxjs/add/operator/toPromise'
 import {HttpClient, HttpErrorResponse, HttpResponse} from '@angular/common/http'
 import {Observable} from 'rxjs/Observable'
 import {ApiError} from '../classes/error'
 import {ToastService} from './toast.service'
 import {Storage} from '@ionic/storage'
 import {CONST} from '../app/const'
+
 
 @Injectable()
 export class ApiService {

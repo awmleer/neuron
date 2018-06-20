@@ -6,6 +6,7 @@ import {ImpulsePage} from '../impulse/impulse'
 import * as _ from 'lodash'
 import * as moment from 'moment'
 import {BankService} from '../../services/bank.service'
+import {ToastService} from '../../services/toast.service'
 
 
 @Component({
@@ -20,7 +21,7 @@ export class LearnPage {
     public alertCtrl: AlertController,
     private modalCtrl: ModalController,
     private wordService: WordService,
-    public toastCtrl: ToastController,
+    private toastSvc: ToastService,
     private bankSvc: BankService,
   ) {}
 
@@ -61,7 +62,7 @@ export class LearnPage {
     }
   }
 
-  newLearn(repo: RepoDetail): void {
+  newLearn(repo: RepoDetail) {
     let alert = this.alertCtrl.create({
       title: '开始',
       message: '请输入计划新学的单词个数（建议15个-50个）',
@@ -81,14 +82,12 @@ export class LearnPage {
             let amount = _.toSafeInteger(data.amount)
             if (amount > 0) {
               alert.dismiss().then(() => {
-                this.generateWordsLearning(repo, amount)
-                this.goImpulsePage()
+                this.wordService.generateLearnList(repo, amount).then(() => {
+                  this.goImpulsePage()
+                })
               })
             } else {
-              this.toastCtrl.create({
-                message: '请输入一个正整数',
-                duration: 2000,
-              }).present()
+              this.toastSvc.toast('请输入一个正整数')
             }
             return false
           },
@@ -107,27 +106,6 @@ export class LearnPage {
       type: 'learn',
     }).present()
   }
-
-  generateWordsLearning(repo: RepoDetail, amount: number): void {
-    this.wordService.wordsLearning = []
-    let unstudied = []
-    for (let i = 0; i < repo.words.length; i++) {
-      if (this.wordService.isStudied(repo.words[i]) == false) {
-        unstudied.push(repo.words[i])
-      }
-    }
-    for (let i = 0; i < amount; i++) {
-      let index = Math.floor((Math.random() * unstudied.length))
-      this.wordService.wordsLearning.push({
-        word: unstudied[index],
-        count: 0,
-        wait: i,
-        dirty: 0,
-      })
-      unstudied.splice(index, 1)
-    }
-  }
-
 
   async ngOnInit() {
     this.repos = await this.bankSvc.getRepos();

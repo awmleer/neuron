@@ -106,6 +106,19 @@ export class WordService {
     })
   }
 
+  async generateLearnList(repo:RepoBrief, amount:number):Promise<void>{
+    const entries = await this.apiSvc.get('/study/learn/generate-list/', {
+      'repoId': repo.id,
+      'amount': amount
+    })
+    let count = 0
+    for(let entry of entries){
+      const word = new WordImpulsing(entry)
+      word.wait = count
+      this.wordsLearning.push(word)
+    }
+  }
+
   generateWordsReviewing(): void {
     this.wordsReviewing = []
     let i = 0

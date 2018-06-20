@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core'
-import {Sentence, WordEntry, WordImpulsing} from '../../classes/word'
+import {Sentence, Entry, WordImpulsing} from '../../classes/word'
 import {WordService} from '../../services/word.service'
 import {SettingService} from '../../services/setting.service'
 import {Platform} from 'ionic-angular'
@@ -15,7 +15,7 @@ export class ImpulseCardComponent {
   @Input() type: 'learn' | 'review'
   @Input() cardExpanding: boolean
   @Output() wantExpanding = new EventEmitter()
-  entry: WordEntry
+  entry: Entry
   showChinese: boolean
   sentences: any[] = []
 

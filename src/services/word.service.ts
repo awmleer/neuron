@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core'
 import {RepoBrief, RepoDetail} from '../classes/repo'
 import {Http} from '@angular/http'
 import 'rxjs/add/operator/toPromise'
-import {WordEntry, WordRecord, WordImpulsing} from '../classes/word'
+import {Entry, WordRecord, WordImpulsing} from '../classes/word'
 import {Storage} from '@ionic/storage'
 import * as moment from 'moment'
 import * as _ from 'lodash'
@@ -13,12 +13,8 @@ import {ApiService} from './api.service'
 
 @Injectable()
 export class WordService {
-  wordRecords = {}
   wordsLearning: WordImpulsing[] = null
   wordsReviewing: WordImpulsing[]
-  starredSentences = {}
-  wordTags = {}
-  history = {}
 
   constructor(
     private apiSvc: ApiService,
@@ -27,60 +23,17 @@ export class WordService {
 
 
   initialize(): void {
-    this.storage.get('wordRecords').then((wordRecords) => {
-      if (wordRecords) {
-        this.wordRecords = wordRecords
-      } else {
-        this.wordRecords = {}
-      }
-      this.freshWordsImpulsing()
-    })
-    this.storage.get('starredSentences').then((starredSentences) => {
-      if (starredSentences) {
-        this.starredSentences = starredSentences
-      } else {
-        this.starredSentences = {}
-      }
-    })
-    this.storage.get('wordTags').then((wordTags) => {
-      if (wordTags) {
-        this.wordTags = wordTags
-      } else {
-        this.wordTags = {}
-      }
-    })
-    this.storage.get('history').then((history) => {
-      if (history) {
-        this.history = history
-      }
-    })
+    this.storage.get('wordsLearning')
+      .then(data => this.wordsLearning = data)
+    this.storage.get('wordsReviewing')
+      .then(data => {
+        this.wordsReviewing = data
+        this.freshWaits()
+      })
   }
-
-
-  isStudied(word: string): boolean {
-    return typeof this.wordRecords[word] != 'undefined'
-  }
-
 
   saveWaitsFreshTime(): void {
     this.storage.set('wordWaitsFreshTime', moment().valueOf())
-  }
-
-  saveWordRecords(): void {
-    this.storage.set('wordRecords', this.wordRecords)
-  }
-
-
-  saveStarredSentences(): void {
-    this.storage.set('starredSentences', this.starredSentences)
-  }
-
-  saveWordTags(): void {
-    this.storage.set('wordTags', this.wordTags)
-  }
-
-  saveHistory(): void {
-    this.storage.set('history', this.history)
   }
 
   freshWaits(): void {
@@ -214,16 +167,6 @@ export class WordService {
     }
   }
 
-  freshWordsImpulsing(): void {
-    this.storage.get('wordsLearning')
-      .then(data => this.wordsLearning = data)
-    this.storage.get('wordsReviewing')
-      .then(data => {
-        this.wordsReviewing = data
-        this.freshWaits()
-      })
-  }
-
   //we only need to remove wordsLearning cause user may generate more than one learning list
   //but on everyday, reviewing list has only one, so we don't need to remove it after finished
   removeWordsLearning(): void {
@@ -247,7 +190,7 @@ export class WordService {
   // }
 
 
-  getEntry(word: string): Promise<WordEntry> {
+  getEntry(word: string): Promise<Entry> {
     return this.apiSvc.get(CONST.apiUrl + `/entry/${word}/`)
   }
 

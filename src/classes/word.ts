@@ -24,17 +24,17 @@ export class WordRecord {
 }
 
 export class WordImpulsing {
-  entry: WordEntry
+  entry: Entry
   count: number = 0//ranges from 0 to 5(6), when reaches 6, it will be removed from the impulse list
   wait: number = 0
   dirty: number = 0
-  constructor(entry:WordEntry){
+  constructor(entry:Entry){
     this.entry=entry
   }
 }
 
 
-export class WordEntry {
+export class Entry {
   word: string
   level: number
   definitions: {

@@ -23,33 +23,14 @@ export class EntryRecord {
 
 export class EntryBrief {
   word: string
-  level: number
+  rank: number
   definitions: {
-    type: string
+    part: string
     text: string
   }[]
-  definition_rates: any
-  phonetic: {
-    UK: {
-      sound: {
-        female: string
-        male: string
-      },
-      symbol: {
-        female: string
-        male: string
-      }
-    },
-    US: {
-      sound: {
-        female: string
-        male: string
-      },
-      symbol: {
-        female: string
-        male: string
-      }
-    }
+  pronounce: {
+    UK: string,
+    US: string
   }
   sentences: Sentence[]
 }
@@ -59,4 +40,5 @@ export class Sentence {
   id: number
   chinese: string
   english: string
+  reference: string
 }

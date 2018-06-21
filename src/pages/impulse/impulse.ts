@@ -18,7 +18,7 @@ export class ImpulsePage {
   impulseRecordsRendering: ImpulseRecord[] = [null, null]
   cardExpandingFlags: boolean[] = [false, false]
   lastImpulseRecord: ImpulseRecord
-  lastWordRecord: EntryRecord
+  // lastWordRecord: EntryRecord
   shouldAnimate: boolean = false
   transiting: boolean = false
 
@@ -108,7 +108,7 @@ export class ImpulsePage {
   rewind(): void {
     if (this.transiting) return
     for (let i in this.impulseRecords) {
-      if (this.impulseRecords[i].record.id == this.lastImpulseRecord.record.id) {
+      if (this.impulseRecords[i].entryRecord.id == this.lastImpulseRecord.entryRecord.id) {
         this.impulseRecords[i] = _.cloneDeep(this.lastImpulseRecord)
         this.impulseRecordsRendering[0] = this.impulseRecords[i]
         setTimeout(() => {
@@ -123,7 +123,7 @@ export class ImpulsePage {
     //   delete this.wordService.wordRecords[this.lastImpulseRecord.word]
     // }
     this.lastImpulseRecord = null
-    this.lastWordRecord = null
+    // this.lastWordRecord = null
     // this.nextWord()
   }
 

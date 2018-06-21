@@ -2,19 +2,20 @@ import {Injectable} from '@angular/core'
 import {RepoBrief, RepoDetail} from '../classes/repo'
 import {Http} from '@angular/http'
 import 'rxjs/add/operator/toPromise'
-import {EntryBrief, EntryRecord, StudyRecord} from '../classes/entry'
+import {EntryBrief, EntryRecord} from '../classes/entry'
 import {Storage} from '@ionic/storage'
 import * as moment from 'moment'
 import * as _ from 'lodash'
 import {CONST} from '../app/const'
 import {HttpClient} from '@angular/common/http'
 import {ApiService} from './api.service'
+import {ImpulseRecord} from '../classes/impulse'
 
 
 @Injectable()
 export class WordService {
-  wordsLearning: StudyRecord[] = null
-  wordsReviewing: StudyRecord[]
+  wordsLearning: ImpulseRecord[] = null
+  wordsReviewing: ImpulseRecord[]
 
   constructor(
     private apiSvc: ApiService,
@@ -36,41 +37,18 @@ export class WordService {
     this.storage.set('wordWaitsFreshTime', moment().valueOf())
   }
 
-  freshWaits(): void {
-    this.storage.get('wordWaitsFreshTime').then(updateTime => {
-      if (updateTime == null) {
-        this.saveWaitsFreshTime()
-        this.generateWordsReviewing()
-        return
-      }
-      let diff = moment().startOf('day').diff(moment(updateTime).startOf('day'), 'days')
-
-      if (diff > 0) {//this makes sure these codes will only run one time every day
-        for (let i = 0; i < diff; i++) {
-          for (let word in this.wordRecords) {
-            // let record=this.wordRecords[word]
-            if (this.wordRecords[word].wait > 0) this.wordRecords[word].wait--
-          }
-        }
-        this.saveWaitsFreshTime()
-        this.saveWordRecords()
-        this.generateWordsReviewing()
-      }
-    })
-  }
-
   todayLearnedCount():Promise<number>{
     return this.apiSvc.get('/study/learn/today-count/')
   }
 
   async generateLearnList(repo:RepoBrief, amount:number):Promise<void>{
-    const entries = await this.apiSvc.get('/study/learn/generate-list/', {
+    const entryRecords:EntryRecord[] = await this.apiSvc.get('/study/learn/generate-list/', {
       'repoId': repo.id,
       'amount': amount
     })
     let count = 0
-    for(let entry of entries){
-      const word = new StudyRecord(entry)
+    for(let entryRecord of entryRecords){
+      const word = new ImpulseRecord(entryRecord)
       word.wait = count
       this.wordsLearning.push(word)
     }
@@ -123,7 +101,7 @@ export class WordService {
         i++
       }
     }
-    this.saveWordsImpulsing('review');//this will override yesterday's record, if yesterday the user didn't finish reviewing
+    this.saveWordsImpulsing('review');//this will override yesterday's entryRecord, if yesterday the user didn't finish reviewing
   }
 
   generateWait(wordRecord: EntryRecord): void {

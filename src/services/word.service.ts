@@ -59,6 +59,10 @@ export class WordService {
     })
   }
 
+  todayLearnedCount():Promise<number>{
+    return this.apiSvc.get('/study/learn/today-count/')
+  }
+
   async generateLearnList(repo:RepoBrief, amount:number):Promise<void>{
     const entries = await this.apiSvc.get('/study/learn/generate-list/', {
       'repoId': repo.id,
@@ -167,8 +171,7 @@ export class WordService {
     }
   }
 
-  //we only need to remove wordsLearning cause user may generate more than one learning list
-  //but on everyday, reviewing list has only one, so we don't need to remove it after finished
+  //we only need to remove wordsLearning cause user may generate more than one learning list but only one reviewing list in one day
   removeWordsLearning(): void {
     this.wordsLearning = null
     this.storage.remove('wordsLearning')

@@ -25,17 +25,9 @@ export class LearnPage {
     private bankSvc: BankService,
   ) {}
 
-  get todayLearned(): number {
-    let count: number = 0
-    for (let word in this.wordService.wordRecords) {
-      if (moment(this.wordService.wordRecords[word].addTime).isSame(moment(), 'day')) {
-        count++
-      }
-    }
-    return count
-  }
+  todayLearnedCount:number = 0;
 
-  startLearn(repo: RepoDetail): void {
+  startLearn(repo: RepoBrief): void {
     if (this.wordService.wordsLearning != null) {
       let alert = this.alertCtrl.create({
         title: '提醒',
@@ -112,8 +104,8 @@ export class LearnPage {
   }
 
 
-  ionViewWillEnter() {
-
+  async ionViewWillEnter() {
+    this.todayLearnedCount = await this.wordService.todayLearnedCount()
   }
 
 }

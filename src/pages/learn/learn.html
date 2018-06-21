@@ -12,7 +12,7 @@
     <ion-item>
       <!--<ion-icon name="flash" item-left></ion-icon>-->
       今日已新学单词
-      <span item-right>{{todayLearned}}</span>
+      <span item-right>{{todayLearnedCount}}</span>
     </ion-item>
   </ion-list>
   <ion-list>
@@ -24,7 +24,7 @@
       <ion-icon showWhen="android" item-right name="ios-arrow-round-forward"></ion-icon>
     </button>
     <button ion-item *ngFor="let repo of repos" (click)="startLearn(repo)">
-      {{repo.name}} <span style="color:gray">1/{{repo.amount}}</span>
+      {{repo.name}} <span style="color:gray">{{repo.amount}}</span>
     </button>
     <!--<button ion-item *ngFor="let repo of repos" (click)="startLearn(repo)">-->
       <!--{{repo.name}} <span style="color:gray">{{repo.words | howManyIn:wordService.wordRecords}}/{{repo.amount}}</span>-->

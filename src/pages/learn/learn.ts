@@ -1,10 +1,9 @@
 import {Component} from '@angular/core'
-import {NavController, AlertController, ToastController, ModalController} from 'ionic-angular'
+import {NavController, AlertController, ModalController} from 'ionic-angular'
 import {WordService} from '../../services/word.service'
 import {RepoBrief, RepoDetail} from '../../classes/repo'
 import {ImpulsePage} from '../impulse/impulse'
 import * as _ from 'lodash'
-import * as moment from 'moment'
 import {BankService} from '../../services/bank.service'
 import {ToastService} from '../../services/toast.service'
 
@@ -54,7 +53,7 @@ export class LearnPage {
     }
   }
 
-  newLearn(repo: RepoDetail) {
+  newLearn(repo: RepoBrief) {
     let alert = this.alertCtrl.create({
       title: '开始',
       message: '请输入计划新学的单词个数（建议15个-50个）',

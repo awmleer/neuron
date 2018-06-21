@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core'
 import {RepoBrief, RepoDetail} from '../classes/repo'
 import {Http} from '@angular/http'
 import 'rxjs/add/operator/toPromise'
-import {Entry, WordRecord, WordImpulsing} from '../classes/word'
+import {EntryBrief, EntryRecord, StudyRecord} from '../classes/entry'
 import {Storage} from '@ionic/storage'
 import * as moment from 'moment'
 import * as _ from 'lodash'
@@ -13,8 +13,8 @@ import {ApiService} from './api.service'
 
 @Injectable()
 export class WordService {
-  wordsLearning: WordImpulsing[] = null
-  wordsReviewing: WordImpulsing[]
+  wordsLearning: StudyRecord[] = null
+  wordsReviewing: StudyRecord[]
 
   constructor(
     private apiSvc: ApiService,
@@ -70,7 +70,7 @@ export class WordService {
     })
     let count = 0
     for(let entry of entries){
-      const word = new WordImpulsing(entry)
+      const word = new StudyRecord(entry)
       word.wait = count
       this.wordsLearning.push(word)
     }
@@ -126,7 +126,7 @@ export class WordService {
     this.saveWordsImpulsing('review');//this will override yesterday's record, if yesterday the user didn't finish reviewing
   }
 
-  generateWait(wordRecord: WordRecord): void {
+  generateWait(wordRecord: EntryRecord): void {
     let wait: number
     switch (wordRecord.proficiency) {
       case 0:
@@ -193,20 +193,21 @@ export class WordService {
   // }
 
 
-  getEntry(word: string): Promise<Entry> {
+  getEntry(word: string): Promise<EntryBrief> {
     return this.apiSvc.get(CONST.apiUrl + `/entry/${word}/`)
   }
 
-  addRecord(word: string, mark: string): void {
+  addRecord(entry: EntryBrief, mark: string): void {
+    //TODO
     let wordRecord
     if (mark == 'know') {
-      wordRecord = new WordRecord(6)
+      wordRecord = new EntryRecord(6)
     } else if (mark == 'vague') {
-      wordRecord = new WordRecord(3)
+      wordRecord = new EntryRecord(3)
     } else if (mark == 'forget') {
-      wordRecord = new WordRecord(0)
+      wordRecord = new EntryRecord(0)
     } else if (mark == 'master') {
-      wordRecord = new WordRecord(8)
+      wordRecord = new EntryRecord(8)
     }
     this.generateWait(wordRecord)
     this.wordRecords[word] = wordRecord
@@ -223,7 +224,8 @@ export class WordService {
     this.saveHistory()
   }
 
-  moltRecord(word: string, mark: string): void {
+  moltRecord(entry: EntryBrief, mark: string): void {
+    //TODO
     let wordRecord = this.wordRecords[word]
     if (mark == 'know') {
       wordRecord.proficiency++

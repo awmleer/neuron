@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core'
-import {Sentence, Entry, WordImpulsing} from '../../classes/word'
+import {Sentence, EntryBrief, StudyRecord} from '../../classes/entry'
 import {WordService} from '../../services/word.service'
 import {SettingService} from '../../services/setting.service'
 import {Platform} from 'ionic-angular'
@@ -11,11 +11,11 @@ import {InAppBrowser, InAppBrowserOptions} from '@ionic-native/in-app-browser'
   templateUrl: 'impulse-card.html',
 })
 export class ImpulseCardComponent {
-  @Input() wordImpulsing: WordImpulsing
+  @Input() wordImpulsing: StudyRecord
   @Input() type: 'learn' | 'review'
   @Input() cardExpanding: boolean
   @Output() wantExpanding = new EventEmitter()
-  entry: Entry
+  entry: EntryBrief
   showChinese: boolean
   sentences: any[] = []
 

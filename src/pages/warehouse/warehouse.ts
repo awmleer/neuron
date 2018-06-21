@@ -2,14 +2,14 @@ import {Component} from '@angular/core'
 
 import {NavController, AlertController} from 'ionic-angular'
 import {WordService} from '../../services/word.service'
-import {WordRecord} from '../../classes/word'
+import {EntryRecord} from '../../classes/entry'
 
 @Component({
   selector: 'page-warehouse',
   templateUrl: 'warehouse.html',
 })
 export class WarehousePage {
-  records: WordRecord[] = []
+  records: EntryRecord[] = []
 
   constructor(
     public navCtrl: NavController,

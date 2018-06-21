@@ -2,7 +2,7 @@ import {Component, ViewChild, ElementRef} from '@angular/core'
 
 import {NavController} from 'ionic-angular'
 import {WordService} from '../../services/word.service'
-import {WordRecord} from '../../classes/word'
+import {EntryRecord} from '../../classes/entry'
 import Chart from 'chart.js'
 import * as moment from 'moment'
 

@@ -1,5 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core'
-import {WordRecord} from '../classes/word'
+import {EntryRecord} from '../classes/entry'
 
 @Pipe({
   name: 'howManyIn',

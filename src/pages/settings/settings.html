@@ -11,8 +11,8 @@
     <ion-list-header>用户</ion-list-header>
     <ion-item *ngIf="accountSvc.user">
       <ion-icon name="contact" item-left></ion-icon>
-      <h2>{{accountSvc.user.name}}</h2>
-      <p>{{accountSvc.user.phone}}</p>
+      <h2>{{accountSvc.user.nickname}}</h2>
+      <p>{{accountSvc.user.username}}</p>
     </ion-item>
     <button *ngIf="accountSvc.user" ion-item (click)="logout()">
       退出登录

@@ -1,11 +1,11 @@
 export class LoginData {
-  phone: string = ''
+  username: string = ''
   password: string = ''
 }
 
 
 export class User {
   id: number = 0
-  phone: string = ''
-  name: string = ''
+  username: string = ''
+  nickname: string = ''
 }

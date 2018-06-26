@@ -6,33 +6,30 @@ import {ApiService} from './api.service'
 
 @Injectable()
 export class AccountService {
-  user: User
+  user: User = null
 
   constructor(
     private apiSvc: ApiService,
   ) {}
 
   async initialize(): Promise<void> {
-    const result = await this.apiSvc.get('/account/is_logged_in/')
-    if (result == 'true') {
-      await this.getUserInfo()
-    }
+    await this.getUserProfile()
   }
 
   async login(loginData: LoginData): Promise<void> {
     await this.apiSvc.post('/account/login/', {
-      phone: loginData.phone,
+      username: loginData.username,
       password: loginData.password,
     })
-    await this.getUserInfo()
+    await this.getUserProfile()
   }
 
   async logout(): Promise<void> {
     await this.apiSvc.get('/account/logout/')
   }
 
-  async getUserInfo(): Promise<User> {
-    this.user = await this.apiSvc.get('/account/userinfo/')
+  async getUserProfile(): Promise<User> {
+    this.user = await this.apiSvc.get('/account/profile/')
     return this.user
   }
 

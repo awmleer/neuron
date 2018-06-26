@@ -17,7 +17,7 @@ export class ReviewPage {
   constructor(
     public nav: NavController,
     private modalCtrl: ModalController,
-    private wordService: StudyService,
+    private studySvc: StudyService,
   ) {}
 
   startReview(): void {

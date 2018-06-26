@@ -10,7 +10,7 @@
       状态
     </ion-list-header>
     <ion-item>
-      <!--<ion-icon name="flash" item-left></ion-icon>-->
+      <!--<ion-icon nickname="flash" item-left></ion-icon>-->
       今日已新学单词
       <span item-right>{{todayLearnedCount}}</span>
     </ion-item>
@@ -27,7 +27,7 @@
       {{repo.name}} <span style="color:gray">{{repo.amount}}</span>
     </button>
     <!--<button ion-item *ngFor="let repo of repos" (click)="startLearn(repo)">-->
-      <!--{{repo.name}} <span style="color:gray">{{repo.words | howManyIn:studySvc.wordRecords}}/{{repo.amount}}</span>-->
+      <!--{{repo.nickname}} <span style="color:gray">{{repo.words | howManyIn:studySvc.wordRecords}}/{{repo.amount}}</span>-->
     <!--</button>-->
   </ion-list>
 </ion-content>

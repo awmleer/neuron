@@ -7,13 +7,13 @@ import * as moment from 'moment'
 import * as _ from 'lodash'
 import {CONST} from '../app/const'
 import {ApiService} from './api.service'
-import {ImpulseRecord} from '../classes/impulse'
+import {Impulsement} from '../classes/impulse'
 
 
 @Injectable()
 export class StudyService {
-  wordsLearning: ImpulseRecord[] = null
-  wordsReviewing: ImpulseRecord[]
+  impulsementsLearning: Impulsement[] = null
+  impulsementsReviewing: Impulsement[]
 
   constructor(
     private apiSvc: ApiService,
@@ -22,11 +22,11 @@ export class StudyService {
 
 
   initialize(): void {
-    this.storage.get('wordsLearning')
-      .then(data => this.wordsLearning = data)
-    this.storage.get('wordsReviewing')
+    this.storage.get('impulsementsLearning')
+      .then(data => this.impulsementsLearning = data)
+    this.storage.get('impulsementsReviewing')
       .then(data => {
-        this.wordsReviewing = data
+        this.impulsementsReviewing = data
         // this.freshWaits()
       })
   }
@@ -46,14 +46,25 @@ export class StudyService {
     })
     let count = 0
     for(let entryRecord of entryRecords){
-      const word = new ImpulseRecord(entryRecord)
+      const word = new Impulsement(entryRecord)
       word.wait = count
-      this.wordsLearning.push(word)
+      this.impulsementsLearning.push(word)
     }
   }
 
+  updateRecords(impulsements:Impulsement[]):Promise<void>{
+    let data = []
+    for(let impulsement of impulsements){
+      data.push({
+        'id': impulsement.record.id,
+        'mark': impulsement.mark
+      })
+    }
+    return this.apiSvc.post(`/study/update-records/`, data)
+  }
+
   // generateWordsReviewing(): void {
-  //   this.wordsReviewing = []
+  //   this.impulsementsReviewing = []
   //   let i = 0
   //   for (let word in this.wordRecords) {
   //     let record = this.wordRecords[word]
@@ -90,31 +101,31 @@ export class StudyService {
   //         default:
   //           count = 0
   //       }
-  //       this.wordsReviewing.push({
+  //       this.impulsementsReviewing.push({
   //         word: word,
   //         count: count,
   //         wait: i,
-  //         dirty: 0,
+  //         mark: 0,
   //       })
   //       i++
   //     }
   //   }
-  //   this.saveWordsImpulsing('review');//this will override yesterday's entryRecord, if yesterday the user didn't finish reviewing
+  //   this.saveWordsImpulsing('review');//this will override yesterday's record, if yesterday the user didn't finish reviewing
   // }
 
 
-  saveWordsImpulsing(type: string): void {
+  saveWordsImpulsing(type: 'learn'|'review'): void {
     if (type == 'learn') {
-      this.storage.set('wordsLearning', this.wordsLearning)
+      this.storage.set('impulsementsLearning', this.impulsementsLearning)
     } else if (type == 'review') {
-      this.storage.set('wordsReviewing', this.wordsReviewing)
+      this.storage.set('impulsementsReviewing', this.impulsementsReviewing)
     }
   }
 
-  //we only need to remove wordsLearning cause user may generate more than one learning list but only one reviewing list in one day
+  //we only need to remove impulsementsLearning cause user may generate more than one learning list but only one reviewing list in one day
   removeWordsLearning(): void {
-    this.wordsLearning = null
-    this.storage.remove('wordsLearning')
+    this.impulsementsLearning = null
+    this.storage.remove('impulsementsLearning')
   }
 
 

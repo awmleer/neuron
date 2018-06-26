@@ -5,7 +5,7 @@ import {StudyService} from '../../services/study.service'
 import {EntryRecord} from '../../classes/entry'
 import {SettingService} from '../../services/setting.service'
 import * as _ from 'lodash'
-import {ImpulseRecord} from '../../classes/impulse'
+import {Impulsement} from '../../classes/impulse'
 
 
 @Component({
@@ -14,11 +14,10 @@ import {ImpulseRecord} from '../../classes/impulse'
 })
 export class ImpulsePage {
   amount: number
-  impulseRecords: ImpulseRecord[]
-  impulseRecordsRendering: ImpulseRecord[] = [null, null]
+  impulsements: Impulsement[]
+  impulsementsRendering: Impulsement[] = [null, null]
   cardExpandingFlags: boolean[] = [false, false]
-  lastImpulseRecord: ImpulseRecord
-  // lastWordRecord: EntryRecord
+  lastImpulsement: Impulsement
   shouldAnimate: boolean = false
   transiting: boolean = false
 
@@ -36,27 +35,26 @@ export class ImpulsePage {
   }
 
   ngOnInit(): void {
-    //TODO impulseRecords的初始化应该是通过API或者上级页面传入
     if (this.type == 'learn') {
-      this.impulseRecords = this.studySvc.wordsLearning
+      this.impulsements = this.studySvc.impulsementsLearning
     } else if (this.type == 'review') {
-      this.impulseRecords = this.studySvc.wordsReviewing
+      this.impulsements = this.studySvc.impulsementsReviewing
     }
-    this.amount = this.impulseRecords.length
-    this.impulseRecordsRendering[1] = this.nextWord()
+    this.amount = this.impulsements.length
+    this.impulsementsRendering[1] = this.nextWord()
     this.shouldAnimate = true
   }
 
 
-  nextWord(): ImpulseRecord {
+  nextWord(): Impulsement {
     let allDone = true
-    for (let i = 0; i < this.impulseRecords.length; i++) {
-      if (this.impulseRecords[i].wait == 0) {
-        // this.impulseRecordsRendering[1]=this.impulseRecords[i]
+    for (let i = 0; i < this.impulsements.length; i++) {
+      if (this.impulsements[i].wait == 0) {
+        // this.impulsementsRendering[1]=this.impulsements[i]
         // this.initWord()
-        return this.impulseRecords[i]
+        return this.impulsements[i]
       } else {
-        if (this.impulseRecords[i].wait != -1) allDone = false
+        if (this.impulsements[i].wait != -1) allDone = false
       }
     }
     if (allDone) {
@@ -65,21 +63,22 @@ export class ImpulsePage {
       return null
     }
     //if all wordImpulsing.wait > 0
-    for (let i = 0; i < this.impulseRecords.length; i++) {
-      if (this.impulseRecords[i].wait > 0) {
-        this.impulseRecords[i].wait--
+    for (let i = 0; i < this.impulsements.length; i++) {
+      if (this.impulsements[i].wait > 0) {
+        this.impulsements[i].wait--
       }
     }
     return this.nextWord()
   }
 
 
-  transitNext(word: ImpulseRecord) {
+  transitNext(word: Impulsement) {
+    this.studySvc.saveWordsImpulsing(this.type)//TODO maybe not suitable here
     this.transiting = true
-    this.impulseRecordsRendering[2] = word
+    this.impulsementsRendering[2] = word
     this.cardExpandingFlags.push(false)
     setTimeout(() => {
-      this.impulseRecordsRendering.shift()
+      this.impulsementsRendering.shift()
       this.cardExpandingFlags.shift()
       setTimeout(() => {
         this.transiting = false
@@ -88,11 +87,12 @@ export class ImpulsePage {
   }
 
   transitPrevious() {
+    this.studySvc.saveWordsImpulsing(this.type)//TODO maybe not suitable here
     this.transiting = true
-    this.impulseRecordsRendering.unshift(null)
+    this.impulsementsRendering.unshift(null)
     this.cardExpandingFlags.unshift(false)
     setTimeout(() => {//after the transition animation ends
-      this.impulseRecordsRendering.pop()
+      this.impulsementsRendering.pop()
       this.cardExpandingFlags.pop()
       this.transiting = false
     }, 320)
@@ -100,17 +100,17 @@ export class ImpulsePage {
 
 
   cacheLastWord(): void {
-    this.lastImpulseRecord = _.cloneDeep(this.impulseRecordsRendering[1])
-    // this.lastWordRecord = _.cloneDeep(this.studySvc.wordRecords[this.impulseRecordsRendering[1].word])
+    this.lastImpulsement = _.cloneDeep(this.impulsementsRendering[1])
+    // this.lastWordRecord = _.cloneDeep(this.studySvc.wordRecords[this.impulsementsRendering[1].word])
   }
 
 
   rewind(): void {
     if (this.transiting) return
-    for (let i in this.impulseRecords) {
-      if (this.impulseRecords[i].entryRecord.id == this.lastImpulseRecord.entryRecord.id) {
-        this.impulseRecords[i] = _.cloneDeep(this.lastImpulseRecord)
-        this.impulseRecordsRendering[0] = this.impulseRecords[i]
+    for (let i in this.impulsements) {
+      if (this.impulsements[i].record.id == this.lastImpulsement.record.id) {
+        this.impulsements[i] = _.cloneDeep(this.lastImpulsement)
+        this.impulsementsRendering[0] = this.impulsements[i]
         setTimeout(() => {
           this.transitPrevious()
         }, 10)
@@ -118,46 +118,38 @@ export class ImpulsePage {
     }
     //TODO this.wordSvc.overwriteRecord()
     // if (this.lastWordRecord) {
-    //   this.studySvc.wordRecords[this.lastImpulseRecord.word] = _.cloneDeep(this.lastWordRecord)
+    //   this.studySvc.wordRecords[this.lastImpulsement.word] = _.cloneDeep(this.lastWordRecord)
     // } else {
-    //   delete this.studySvc.wordRecords[this.lastImpulseRecord.word]
+    //   delete this.studySvc.wordRecords[this.lastImpulsement.word]
     // }
-    this.lastImpulseRecord = null
+    this.lastImpulsement = null
     // this.lastWordRecord = null
     // this.nextWord()
   }
 
 
-  finish(): void {
+  async finish() {
     if (this.type == 'learn') {
       this.studySvc.removeWordsLearning()
+      await this.studySvc.updateRecords(this.impulsements)
     } else if (this.type == 'review') {
-      this.studySvc.saveWordsImpulsing(this.type)
+      await this.studySvc.updateRecords(this.impulsements)
     }
     this.nav.pop()
   }
 
-  clickKnow(): void {
+  async clickKnow() {
     if (this.transiting) return
     this.cacheLastWord()
-    if (this.impulseRecordsRendering[1].dirty == 0) {//First time today
-      this.impulseRecordsRendering[1].dirty = 1
-      this.impulseRecordsRendering[1].wait = -1;//never show this word today
-      if (this.type == 'learn') this.studySvc.addRecord(this.impulseRecordsRendering[1].entry, 'know')
-      if (this.type == 'review') this.studySvc.moltRecord(this.impulseRecordsRendering[1].entry, 'know')
+    if (this.impulsementsRendering[1].mark === null) {//First time today
+      this.impulsementsRendering[1].mark = 'know'
+      this.impulsementsRendering[1].wait = -1;//never show this word today
     } else {
-      this.impulseRecordsRendering[1].count += 1
-      if (this.impulseRecordsRendering[1].count == this.settingService.settings.impulseIntensity) {//if count reaches max
-        this.impulseRecordsRendering[1].wait = -1;//this word is done for today
-        if (this.impulseRecordsRendering[1].dirty == 2) {
-          if (this.type == 'learn') this.studySvc.addRecord(this.impulseRecordsRendering[1].entry, 'vague')
-          if (this.type == 'review') this.studySvc.moltRecord(this.impulseRecordsRendering[1].entry, 'vague')
-        } else if (this.impulseRecordsRendering[1].dirty == 3) {
-          if (this.type == 'learn') this.studySvc.addRecord(this.impulseRecordsRendering[1].entry, 'forget')
-          if (this.type == 'review') this.studySvc.moltRecord(this.impulseRecordsRendering[1].entry, 'forget')
-        }
+      this.impulsementsRendering[1].count += 1
+      if (this.impulsementsRendering[1].count == this.settingService.settings.impulseIntensity) {//if count reaches max
+        this.impulsementsRendering[1].wait = -1;//this word is done for today
       } else {
-        this.impulseRecordsRendering[1].wait = this.impulseRecordsRendering[1].count * 2 + 1
+        this.impulsementsRendering[1].wait = this.impulsementsRendering[1].count * 2 + 1
       }
     }
     this.transitNext(this.nextWord())
@@ -166,13 +158,13 @@ export class ImpulsePage {
   clickVague(): void {
     if (this.transiting) return
     this.cacheLastWord()
-    if (this.impulseRecordsRendering[1].dirty == 0) {//First time today
-      this.impulseRecordsRendering[1].count = Math.floor(this.settingService.settings.impulseIntensity / 2)
-      this.impulseRecordsRendering[1].wait = 2
-      this.impulseRecordsRendering[1].dirty = 2
+    if (this.impulsementsRendering[1].mark === null) {//First time today
+      this.impulsementsRendering[1].count = Math.floor(this.settingService.settings.impulseIntensity / 2)
+      this.impulsementsRendering[1].wait = 2
+      this.impulsementsRendering[1].mark = 'vague'
     } else {
       //currentWord.count do not change
-      this.impulseRecordsRendering[1].wait = this.impulseRecordsRendering[1].count * 2 + 1
+      this.impulsementsRendering[1].wait = this.impulsementsRendering[1].count * 2 + 1
     }
     this.transitNext(this.nextWord())
   }
@@ -180,24 +172,21 @@ export class ImpulsePage {
   clickForget(): void {
     if (this.transiting) return
     this.cacheLastWord()
-    if (this.impulseRecordsRendering[1].dirty == 0) {//First time today
-      this.impulseRecordsRendering[1].count = 1
-      this.impulseRecordsRendering[1].wait = 2
-      this.impulseRecordsRendering[1].dirty = 3
+    if (this.impulsementsRendering[1].mark === null) {//First time today
+      this.impulsementsRendering[1].count = 1
+      this.impulsementsRendering[1].wait = 2
+      this.impulsementsRendering[1].mark = 'forget'
     } else {
-      if (this.impulseRecordsRendering[1].count > 0) this.impulseRecordsRendering[1].count--
-      this.impulseRecordsRendering[1].wait = this.impulseRecordsRendering[1].count * 2 + 1
+      if (this.impulsementsRendering[1].count > 0) this.impulsementsRendering[1].count--
+      this.impulsementsRendering[1].wait = this.impulsementsRendering[1].count * 2 + 1
     }
     this.transitNext(this.nextWord())
   }
 
-  markAsMaster(): void {
+  async markAsMaster() {
     if (this.transiting) return
-    
-    if (this.type == 'learn') this.studySvc.addRecord(this.impulseRecordsRendering[1].word, 'master')
-    if (this.type == 'review') this.studySvc.moltRecord(this.impulseRecordsRendering[1].word, 'master')
-    this.impulseRecordsRendering[1].wait = -1;//never show it today
-    this.impulseRecordsRendering[1].dirty = 4
+    this.impulsementsRendering[1].wait = -1;//never show it today
+    this.impulsementsRendering[1].mark = 'master'
     this.transitNext(this.nextWord())
   }
 
@@ -232,13 +221,13 @@ export class ImpulsePage {
 
 
   get impulsePercent() {
-    let total = this.impulseRecords.length * 6
+    let total = this.impulsements.length * 6
     let finished = 0
-    for (let word in this.impulseRecords) {
-      if (this.impulseRecords[word].wait == -1) {
+    for (let word in this.impulsements) {
+      if (this.impulsements[word].wait == -1) {
         finished += 6
       } else {
-        finished += this.impulseRecords[word].count
+        finished += this.impulsements[word].count
       }
     }
     return (Math.round(finished / total * 100) + '%')

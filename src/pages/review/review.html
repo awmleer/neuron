@@ -7,25 +7,25 @@
 </ion-header>
 
 <ion-content>
-  <ion-list *ngIf="studySvc.wordsReviewing?.length>0">
+  <ion-list *ngIf="studySvc.impulsementsReviewing?.length>0">
     <ion-list-header>复习进度</ion-list-header>
     <ion-item>
-      今日已复习<span item-right>{{studySvc.wordsReviewing | wordsDoneCount}}</span>
+      今日已复习<span item-right>{{studySvc.impulsementsReviewing | wordsDoneCount}}</span>
     </ion-item>
     <ion-item>
-      今日需复习<span item-right>{{studySvc.wordsReviewing?.length}}</span>
+      今日需复习<span item-right>{{studySvc.impulsementsReviewing?.length}}</span>
     </ion-item>
-    <ion-item *ngIf="studySvc.wordsReviewing | wordsAllDone">
+    <ion-item *ngIf="studySvc.impulsementsReviewing | wordsAllDone">
       <b>已全部完成</b>
       <ion-icon item-right name="checkmark-circle"></ion-icon>
     </ion-item>
-    <ion-item *ngIf="(studySvc.wordsReviewing | wordsAllDone) == false" (click)="startReview()">
+    <ion-item *ngIf="(studySvc.impulsementsReviewing | wordsAllDone) == false" (click)="startReview()">
       <b>开始复习</b>
       <ion-icon showWhen="android" item-right name="ios-arrow-round-forward"></ion-icon>
     </ion-item>
   </ion-list>
 
-  <ion-list *ngIf="studySvc.wordsReviewing?.length==0">
+  <ion-list *ngIf="studySvc.impulsementsReviewing?.length==0">
     <ion-list-header>复习进度</ion-list-header>
     <ion-item>
       今日无需复习

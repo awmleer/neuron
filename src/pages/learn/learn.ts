@@ -27,7 +27,7 @@ export class LearnPage {
   todayLearnedCount:number = 0;
 
   startLearn(repo: RepoBrief): void {
-    if (this.wordService.wordsLearning != null) {
+    if (this.wordService.impulsementsLearning != null) {
       let alert = this.alertCtrl.create({
         title: '提醒',
         subTitle: '您有正在进行的学习队列，是否放弃该队列并新建一个学习队列？',

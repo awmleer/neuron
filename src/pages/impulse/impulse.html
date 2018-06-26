@@ -9,7 +9,7 @@
       记忆<span *ngIf="type=='learn'"> - {{impulsePercent}}</span>
     </ion-title>
     <ion-buttons end>
-      <button ion-button icon-only (click)="rewind()" [hidden]="lastImpulseRecord==null">
+      <button ion-button icon-only (click)="rewind()" [hidden]="lastImpulsement==null">
         <ion-icon name="rewind"></ion-icon>
       </button>
       <button ion-button icon-only (click)="showActionSheet()">
@@ -29,7 +29,7 @@
       <button (click)="clickForget()" ion-button outline icon-only class="button-forget">
         <ion-icon name="md-close"></ion-icon>
       </button>
-      <!--{{(type=='learn'&&impulseRecordsRendering[1]?.dirty==0)?'不认识':'忘记'}}-->
+      <!--{{(type=='learn'&&impulsementsRendering[1]?.mark==0)?'不认识':'忘记'}}-->
     </ion-col>
     <ion-col text-center no-padding>
       <button (click)="clickVague()" ion-button outline icon-only class="button-vague">
@@ -45,7 +45,7 @@
 </div>
 
 <impulse-card
-  *ngFor="let word of impulseRecordsRendering;let i=index"
+  *ngFor="let word of impulsementsRendering;let i=index"
   [cardExpanding]="cardExpandingFlags[i]"
   (wantExpanding)="expandCard(i)"
   [wordImpulsing]="word"

@@ -1,9 +1,10 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core'
-import {Sentence, EntryBrief, StudyRecord} from '../../classes/entry'
+import {Sentence, EntryBrief} from '../../classes/entry'
 import {StudyService} from '../../services/study.service'
 import {SettingService} from '../../services/setting.service'
 import {Platform} from 'ionic-angular'
 import {InAppBrowser, InAppBrowserOptions} from '@ionic-native/in-app-browser'
+import {Impulsement} from '../../classes/impulse'
 
 
 @Component({
@@ -11,14 +12,20 @@ import {InAppBrowser, InAppBrowserOptions} from '@ionic-native/in-app-browser'
   templateUrl: 'impulse-card.html',
 })
 export class ImpulseCardComponent {
-  @Input() wordImpulsing: StudyRecord
+  @Input() wordImpulsing: Impulsement
   @Input() type: 'learn' | 'review'
   @Input() cardExpanding: boolean
   @Output() wantExpanding = new EventEmitter()
-  entry: EntryBrief
   showChinese: boolean
   sentences: any[] = []
 
+  get entry():EntryBrief{
+    if(this.wordImpulsing){
+      return this.wordImpulsing.record.entry
+    }else{
+      return null
+    }
+  }
 
   constructor(
     public wordService: StudyService,
@@ -29,12 +36,11 @@ export class ImpulseCardComponent {
 
   ngOnInit() {
     if (!this.wordImpulsing) return
-    this.showChinese = (this.type == 'learn' && this.wordImpulsing.dirty == 0) ? true : this.settingService.settings.showChineseWhenReviewing
-    this.entry = null
-    this.wordService.getEntry(this.wordImpulsing.word)
-      .then(entry => {
-        this.entry = entry
-      })
+    this.showChinese = (this.type == 'learn' && this.wordImpulsing.mark === null) ? true : this.settingService.settings.showChineseWhenReviewing
+    // this.wordService.getEntry(this.wordImpulsing.word)
+    //   .then(entry => {
+    //     this.entry = entry
+    //   })
     //saveWordsImpulsing every time we get a new currentWord
     this.wordService.saveWordsImpulsing(this.type)
   }

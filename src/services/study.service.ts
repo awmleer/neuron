@@ -123,9 +123,9 @@ export class StudyService {
   }
 
   //we only need to remove impulsementsLearning cause user may generate more than one learning list but only one reviewing list in one day
-  removeWordsLearning(): void {
+  async removeWordsLearning() {
     this.impulsementsLearning = null
-    this.storage.remove('impulsementsLearning')
+    await this.storage.remove('impulsementsLearning')
   }
 
 

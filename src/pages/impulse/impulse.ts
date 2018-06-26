@@ -130,8 +130,8 @@ export class ImpulsePage {
 
   async finish() {
     if (this.type == 'learn') {
-      this.studySvc.removeWordsLearning()
       await this.studySvc.updateRecords(this.impulsements)
+      await this.studySvc.removeWordsLearning()
     } else if (this.type == 'review') {
       await this.studySvc.updateRecords(this.impulsements)
     }

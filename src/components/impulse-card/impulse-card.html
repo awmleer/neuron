@@ -1,20 +1,17 @@
 <div class="card" [class.expanding]="cardExpanding">
-  <a class="entry card-part" (click)="expand()" *ngIf="wordImpulsing">
+  <a class="entry card-part" (click)="expand()" *ngIf="impulsement">
     <h1>
-      <a (click)="playSound()">{{wordImpulsing?.word}}</a>
-      <progress-icon *ngIf="type=='review'&&wordImpulsing"
-                     [percent]="studySvc.wordRecords[wordImpulsing?.word]?.proficiency/8"
+      <a (click)="playSound()">{{word}}</a>
+      <progress-icon *ngIf="type=='review'&&impulsement"
+                     [percent]="record.proficiency/8"
                      style="margin-left: 5px"></progress-icon>
-      <ion-badge mode="md"
-                 *ngIf="studySvc.wordTags[wordImpulsing.word]!=null && studySvc.wordTags[wordImpulsing.word]?.indexOf('d')>=0">
+      <ion-badge mode="md" *ngIf="record.tags.indexOf('d')>=0">
         释义
       </ion-badge>
-      <ion-badge mode="md"
-                 *ngIf="studySvc.wordTags[wordImpulsing.word]!=null && studySvc.wordTags[wordImpulsing.word]?.indexOf('p')>=0">
+      <ion-badge mode="md" *ngIf="record.tags.indexOf('p')>=0">
         发音
       </ion-badge>
-      <ion-badge mode="md"
-                 *ngIf="studySvc.wordTags[wordImpulsing.word]!=null && studySvc.wordTags[wordImpulsing.word]?.indexOf('s')>=0">
+      <ion-badge mode="md" *ngIf="record.tags.indexOf('s')>=0">
         拼写
       </ion-badge>
     </h1>
@@ -32,20 +29,12 @@
         <ion-icon name="md-volume-up"></ion-icon>
       </button>
       <div *ngIf="settingService.settings.soundSource=='youdao'">
-        <audio [id]="'sound-'+wordImpulsing?.word"
-               [src]="'http://dict.youdao.com/dictvoice?audio='+wordImpulsing?.word+'&type='+(settingService.settings.sound.accent=='US'?'2':'1')"
-               style="display: none;"></audio>
+        <audio [id]="'sound-'+word" [src]="'http://dict.youdao.com/dictvoice?audio='+word+'&type='+(settingService.settings.sound.accent=='US'?'2':'1')" style="display: none;"></audio>
       </div>
-      <div *ngIf="settingService.settings.soundSource=='haici'">
-        <audio [id]="'sound-'+wordImpulsing?.word"
-               [src]="'http://audio.dict.cn/'+(settingService.settings.sound.accent=='US'?(settingService.settings.sound.gender=='male'?entry?.phonetic.US.sound.male:entry?.phonetic.US.sound.female):(settingService.settings.sound.gender=='male'?entry?.phonetic.UK.sound.male:entry?.phonetic.UK.sound.female))"
-               style="display: none;"></audio>
-      </div>
-
     </div>
   </a>
 
-  <div *ngIf="wordImpulsing&&entry" class="card-scroll">
+  <div *ngIf="impulsement&&entry" class="card-scroll">
     <div class="card-part">
       <div class="card-part-head">
         <ion-icon name="md-text"></ion-icon>
@@ -65,9 +54,9 @@
       </div>
       <div class="card-part-body">
         <div *ngFor="let sentence of entry.sentences" class="sentence">
-          <!--(entry?.sentences|sortSentence:studySvc.starredSentences[wordImpulsing.word])-->
+          <!--(entry?.sentences|sortSentence:studySvc.starredSentences[impulsement.word])-->
 
-          <a (click)="toggleSentenceStar(sentence)" class="star-button" [class.starred]="sentenceStarred(sentence.id)">
+          <a (click)="toggleSentenceStar(sentence)" class="star-button" [class.starred]="sentenceStarred(sentence)">
             <ion-icon name="md-disc"></ion-icon>
           </a>
           <span [innerHTML]="sentence.english"></span><br>
@@ -85,39 +74,35 @@
       <div class="card-part-body">
         <ion-row>
           <ion-col>
-            <button (click)="toggleTag('d')" ion-button
-                    [outline]="studySvc.wordTags[this.wordImpulsing.word]==null || studySvc.wordTags[this.wordImpulsing.word]?.indexOf('d')==-1"
-                    block color="dark">释义
+            <button (click)="toggleTag('d')" ion-button [outline]="record.tags.indexOf('d')==-1" block color="dark">
+              释义
             </button>
           </ion-col>
           <ion-col>
-            <button (click)="toggleTag('p')" ion-button
-                    [outline]="studySvc.wordTags[this.wordImpulsing.word]==null || studySvc.wordTags[this.wordImpulsing.word]?.indexOf('p')==-1"
-                    outline block color="dark">发音
+            <button (click)="toggleTag('p')" ion-button [outline]="record.tags.indexOf('p')==-1" outline block color="dark">
+              发音
             </button>
           </ion-col>
           <ion-col>
-            <button (click)="toggleTag('s')" ion-button
-                    [outline]="studySvc.wordTags[this.wordImpulsing.word]==null || studySvc.wordTags[this.wordImpulsing.word]?.indexOf('s')==-1"
-                    outline block color="dark">拼写
+            <button (click)="toggleTag('s')" ion-button [outline]="record.tags.indexOf('s')==-1" outline block color="dark">
+              拼写
             </button>
           </ion-col>
         </ion-row>
       </div>
     </div>
 
-    <div class="card-part" *ngIf="entry?.definition_rates?.length>0">
-      <div class="card-part-head">
-        <ion-icon name="ios-pulse"></ion-icon>
-        意频
-      </div>
-      <div class="card-part-body">
-                    <span *ngFor="let rate of entry?.definition_rates | definitionRate"
-                          style="display: block;margin-bottom: 5px;">
-                        {{rate.sense}} : {{rate.percent}}%
-                    </span>
-      </div>
-    </div>
+    <!--<div class="card-part" *ngIf="entry?.definition_rates?.length>0">-->
+      <!--<div class="card-part-head">-->
+        <!--<ion-icon name="ios-pulse"></ion-icon>-->
+        <!--意频-->
+      <!--</div>-->
+      <!--<div class="card-part-body">-->
+        <!--<span *ngFor="let rate of entry?.definition_rates | definitionRate" style="display: block;margin-bottom: 5px;">-->
+          <!--{{rate.sense}} : {{rate.percent}}%-->
+        <!--</span>-->
+      <!--</div>-->
+    <!--</div>-->
 
     <div class="card-part">
       <div class="card-part-head">
@@ -140,7 +125,7 @@
     </div>
   </div>
 
-  <!--<ion-scroll scrollY="true" class="card-scroll" *ngIf="wordImpulsing && platform.is('ios')">-->
+  <!--<ion-scroll scrollY="true" class="card-scroll" *ngIf="impulsement && platform.is('ios')">-->
   <!--<div class="card-part">-->
   <!--<div class="card-part-head">-->
   <!--<ion-icon name="md-text"></ion-icon> 释义-->
@@ -158,7 +143,7 @@
   <!--</div>-->
   <!--<div class="card-part-body">-->
   <!--<div *ngFor="let sentence of sentences; let i=index;" class="sentence">-->
-  <!--&lt;!&ndash;(entry?.sentences|sortSentence:studySvc.starredSentences[wordImpulsing.word])&ndash;&gt;-->
+  <!--&lt;!&ndash;(entry?.sentences|sortSentence:studySvc.starredSentences[impulsement.word])&ndash;&gt;-->
   <!--&lt;!&ndash;TODO change to sentence id&ndash;&gt;-->
   <!--<a (click)="toggleSentenceStar(sentence)" class="star-button" [class.starred]="sentence.starred">-->
   <!--<ion-icon name="md-disc"></ion-icon>-->
@@ -175,9 +160,9 @@
   <!--</div>-->
   <!--<div class="card-part-body">-->
   <!--<ion-row>-->
-  <!--<ion-col><button (click)="toggleTag('d')" ion-button [outline]="studySvc.wordTags[this.wordImpulsing.word]==null || studySvc.wordTags[this.wordImpulsing.word]?.indexOf('d')==-1" block color="dark">释义</button></ion-col>-->
-  <!--<ion-col><button (click)="toggleTag('p')" ion-button [outline]="studySvc.wordTags[this.wordImpulsing.word]==null || studySvc.wordTags[this.wordImpulsing.word]?.indexOf('p')==-1" outline block color="dark">发音</button></ion-col>-->
-  <!--<ion-col><button (click)="toggleTag('s')" ion-button [outline]="studySvc.wordTags[this.wordImpulsing.word]==null || studySvc.wordTags[this.wordImpulsing.word]?.indexOf('s')==-1" outline block color="dark">拼写</button></ion-col>-->
+  <!--<ion-col><button (click)="toggleTag('d')" ion-button [outline]="studySvc.wordTags[this.impulsement.word]==null || studySvc.wordTags[this.impulsement.word]?.indexOf('d')==-1" block color="dark">释义</button></ion-col>-->
+  <!--<ion-col><button (click)="toggleTag('p')" ion-button [outline]="studySvc.wordTags[this.impulsement.word]==null || studySvc.wordTags[this.impulsement.word]?.indexOf('p')==-1" outline block color="dark">发音</button></ion-col>-->
+  <!--<ion-col><button (click)="toggleTag('s')" ion-button [outline]="studySvc.wordTags[this.impulsement.word]==null || studySvc.wordTags[this.impulsement.word]?.indexOf('s')==-1" outline block color="dark">拼写</button></ion-col>-->
   <!--</ion-row>-->
   <!--</div>-->
   <!--</div>-->

@@ -62,7 +62,7 @@ export class ImpulsePage {
       this.finish()
       return null
     }
-    //if all wordImpulsing.wait > 0
+    //if all impulsement.wait > 0
     for (let i = 0; i < this.impulsements.length; i++) {
       if (this.impulsements[i].wait > 0) {
         this.impulsements[i].wait--

@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core'
-import {Sentence, EntryBrief} from '../../classes/entry'
+import {Sentence, EntryBrief, EntryRecord} from '../../classes/entry'
 import {StudyService} from '../../services/study.service'
 import {SettingService} from '../../services/setting.service'
 import {Platform} from 'ionic-angular'
@@ -12,23 +12,26 @@ import {Impulsement} from '../../classes/impulse'
   templateUrl: 'impulse-card.html',
 })
 export class ImpulseCardComponent {
-  @Input() wordImpulsing: Impulsement
+  @Input() impulsement: Impulsement
   @Input() type: 'learn' | 'review'
   @Input() cardExpanding: boolean
   @Output() wantExpanding = new EventEmitter()
   showChinese: boolean
-  sentences: any[] = []
 
   get entry():EntryBrief{
-    if(this.wordImpulsing){
-      return this.wordImpulsing.record.entry
-    }else{
-      return null
-    }
+    return this.impulsement.record.entry
+  }
+
+  get record():EntryRecord{
+    return this.impulsement.record
   }
 
   get starredSentenceIds():number[]{
-    return this.wordImpulsing.record.starredSentenceIds
+    return this.impulsement.record.starredSentenceIds
+  }
+
+  get word():string{
+    return this.impulsement.record.entry.word
   }
 
   constructor(
@@ -39,9 +42,9 @@ export class ImpulseCardComponent {
   ) {}
 
   ngOnInit() {
-    if (!this.wordImpulsing) return
-    this.showChinese = (this.type == 'learn' && this.wordImpulsing.mark === null) ? true : this.settingService.settings.showChineseWhenReviewing
-    // this.studySvc.getEntry(this.wordImpulsing.word)
+    if (!this.impulsement) return
+    this.showChinese = (this.type == 'learn' && this.impulsement.mark === null) ? true : this.settingService.settings.showChineseWhenReviewing
+    // this.studySvc.getEntry(this.impulsement.word)
     //   .then(entry => {
     //     this.entry = entry
     //   })
@@ -67,20 +70,20 @@ export class ImpulseCardComponent {
   }
 
   playSound(): void {
-    (<HTMLAudioElement>document.getElementById('sound-' + this.wordImpulsing.record.entry.word)).play()
+    (<HTMLAudioElement>document.getElementById('sound-' + this.word)).play()
   }
 
 
   async toggleSentenceStar(sentence: Sentence) {
     if(this.sentenceStarred(sentence)){
-      this.wordImpulsing.record.starredSentenceIds = await this.studySvc.unstarSentence(sentence)
+      this.impulsement.record.starredSentenceIds = await this.studySvc.unstarSentence(sentence)
     }else{
-      this.wordImpulsing.record.starredSentenceIds = await this.studySvc.starSentence(sentence)
+      this.impulsement.record.starredSentenceIds = await this.studySvc.starSentence(sentence)
     }
   }
 
   async toggleTag(tag: string) {
-    this.wordImpulsing.record.tags = await this.studySvc.toggleTag(this.wordImpulsing.record, tag)
+    this.impulsement.record.tags = await this.studySvc.toggleTag(this.impulsement.record, tag)
   }
 
   doShowChinese(): void {
@@ -92,13 +95,13 @@ export class ImpulseCardComponent {
     let href: string
     switch (dictName) {
       case 'youdao':
-        href = `https://m.youdao.com/dict?le=eng&q=${this.wordImpulsing.word}`
+        href = `https://m.youdao.com/dict?le=eng&q=${this.word}`
         break
       case 'bing':
-        href = `http://cn.bing.com/dict/search?q=${this.wordImpulsing.word}`
+        href = `http://cn.bing.com/dict/search?q=${this.word}`
         break
       case 'ciba':
-        href = `http://m.iciba.com/${this.wordImpulsing.word}`
+        href = `http://m.iciba.com/${this.word}`
         break
       default:
         return

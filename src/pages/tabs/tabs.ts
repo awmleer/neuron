@@ -4,7 +4,7 @@ import {LearnPage} from '../learn/learn'
 import {ReviewPage} from '../review/review'
 import {SettingsPage} from '../settings/settings'
 import {AccountService} from '../../services/account.service'
-import {WordService} from '../../services/word.service'
+import {StudyService} from '../../services/study.service'
 
 @Component({
   templateUrl: 'tabs.html',
@@ -17,7 +17,7 @@ export class TabsPage {
   tab3Root: any = SettingsPage
 
   constructor(
-    private wordService: WordService,
+    private wordService: StudyService,
     private accountService: AccountService,
   ) {}
 

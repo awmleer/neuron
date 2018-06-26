@@ -1,6 +1,6 @@
 import {Component} from '@angular/core'
 import {NavController, AlertController, ModalController} from 'ionic-angular'
-import {WordService} from '../../services/word.service'
+import {StudyService} from '../../services/study.service'
 import {RepoBrief, RepoDetail} from '../../classes/repo'
 import {ImpulsePage} from '../impulse/impulse'
 import * as _ from 'lodash'
@@ -19,7 +19,7 @@ export class LearnPage {
     public nav: NavController,
     public alertCtrl: AlertController,
     private modalCtrl: ModalController,
-    private wordService: WordService,
+    private wordService: StudyService,
     private toastSvc: ToastService,
     private bankSvc: BankService,
   ) {}

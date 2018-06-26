@@ -1,7 +1,7 @@
 import {Component, ViewChild, ElementRef} from '@angular/core'
 import {ModalController, NavController} from 'ionic-angular'
 import {ImpulsePage} from '../impulse/impulse'
-import {WordService} from '../../services/word.service'
+import {StudyService} from '../../services/study.service'
 
 import Chart from 'chart.js'
 import * as moment from 'moment'
@@ -17,7 +17,7 @@ export class ReviewPage {
   constructor(
     public nav: NavController,
     private modalCtrl: ModalController,
-    private wordService: WordService,
+    private wordService: StudyService,
   ) {}
 
   startReview(): void {

@@ -7,7 +7,7 @@ import {LearnPage} from '../pages/learn/learn'
 import {TabsPage} from '../pages/tabs/tabs'
 import {SettingsPage} from '../pages/settings/settings'
 import {HttpClientModule} from '@angular/common/http'
-import {WordService} from '../services/word.service'
+import {StudyService} from '../services/study.service'
 import {ImpulsePage} from '../pages/impulse/impulse'
 import {HowManyInPipe} from '../pipes/how-many-in.pipe'
 import {WordsDoneCountPipe, WordsAllDonePipe} from '../pipes/words-done.pipe'
@@ -81,7 +81,7 @@ import {BankService} from '../services/bank.service'
     InAppBrowser,
     ApiService,
     ToastService,
-    WordService,
+    StudyService,
     AccountService,
     SettingService,
     BankService,

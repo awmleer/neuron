@@ -2,7 +2,7 @@ import {Component} from '@angular/core'
 import {Config, Platform} from 'ionic-angular'
 
 import {TabsPage} from '../pages/tabs/tabs'
-import {WordService} from '../services/word.service'
+import {StudyService} from '../services/study.service'
 import {AccountService} from '../services/account.service'
 import {SettingService} from '../services/setting.service'
 import {StatusBar} from '@ionic-native/status-bar'
@@ -19,7 +19,7 @@ export class MyApp {
 
   constructor(
     platform: Platform,
-    wordService: WordService,
+    wordService: StudyService,
     accountService: AccountService,
     config: Config,
     settingService: SettingService,

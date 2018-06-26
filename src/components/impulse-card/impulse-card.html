@@ -3,18 +3,18 @@
     <h1>
       <a (click)="playSound()">{{wordImpulsing?.word}}</a>
       <progress-icon *ngIf="type=='review'&&wordImpulsing"
-                     [percent]="wordService.wordRecords[wordImpulsing?.word]?.proficiency/8"
+                     [percent]="studySvc.wordRecords[wordImpulsing?.word]?.proficiency/8"
                      style="margin-left: 5px"></progress-icon>
       <ion-badge mode="md"
-                 *ngIf="wordService.wordTags[wordImpulsing.word]!=null && wordService.wordTags[wordImpulsing.word]?.indexOf('d')>=0">
+                 *ngIf="studySvc.wordTags[wordImpulsing.word]!=null && studySvc.wordTags[wordImpulsing.word]?.indexOf('d')>=0">
         释义
       </ion-badge>
       <ion-badge mode="md"
-                 *ngIf="wordService.wordTags[wordImpulsing.word]!=null && wordService.wordTags[wordImpulsing.word]?.indexOf('p')>=0">
+                 *ngIf="studySvc.wordTags[wordImpulsing.word]!=null && studySvc.wordTags[wordImpulsing.word]?.indexOf('p')>=0">
         发音
       </ion-badge>
       <ion-badge mode="md"
-                 *ngIf="wordService.wordTags[wordImpulsing.word]!=null && wordService.wordTags[wordImpulsing.word]?.indexOf('s')>=0">
+                 *ngIf="studySvc.wordTags[wordImpulsing.word]!=null && studySvc.wordTags[wordImpulsing.word]?.indexOf('s')>=0">
         拼写
       </ion-badge>
     </h1>
@@ -65,7 +65,7 @@
       </div>
       <div class="card-part-body">
         <div *ngFor="let sentence of entry.sentences" class="sentence">
-          <!--(entry?.sentences|sortSentence:wordService.starredSentences[wordImpulsing.word])-->
+          <!--(entry?.sentences|sortSentence:studySvc.starredSentences[wordImpulsing.word])-->
 
           <a (click)="toggleSentenceStar(sentence)" class="star-button" [class.starred]="sentenceStarred(sentence.id)">
             <ion-icon name="md-disc"></ion-icon>
@@ -86,19 +86,19 @@
         <ion-row>
           <ion-col>
             <button (click)="toggleTag('d')" ion-button
-                    [outline]="wordService.wordTags[this.wordImpulsing.word]==null || wordService.wordTags[this.wordImpulsing.word]?.indexOf('d')==-1"
+                    [outline]="studySvc.wordTags[this.wordImpulsing.word]==null || studySvc.wordTags[this.wordImpulsing.word]?.indexOf('d')==-1"
                     block color="dark">释义
             </button>
           </ion-col>
           <ion-col>
             <button (click)="toggleTag('p')" ion-button
-                    [outline]="wordService.wordTags[this.wordImpulsing.word]==null || wordService.wordTags[this.wordImpulsing.word]?.indexOf('p')==-1"
+                    [outline]="studySvc.wordTags[this.wordImpulsing.word]==null || studySvc.wordTags[this.wordImpulsing.word]?.indexOf('p')==-1"
                     outline block color="dark">发音
             </button>
           </ion-col>
           <ion-col>
             <button (click)="toggleTag('s')" ion-button
-                    [outline]="wordService.wordTags[this.wordImpulsing.word]==null || wordService.wordTags[this.wordImpulsing.word]?.indexOf('s')==-1"
+                    [outline]="studySvc.wordTags[this.wordImpulsing.word]==null || studySvc.wordTags[this.wordImpulsing.word]?.indexOf('s')==-1"
                     outline block color="dark">拼写
             </button>
           </ion-col>
@@ -158,7 +158,7 @@
   <!--</div>-->
   <!--<div class="card-part-body">-->
   <!--<div *ngFor="let sentence of sentences; let i=index;" class="sentence">-->
-  <!--&lt;!&ndash;(entry?.sentences|sortSentence:wordService.starredSentences[wordImpulsing.word])&ndash;&gt;-->
+  <!--&lt;!&ndash;(entry?.sentences|sortSentence:studySvc.starredSentences[wordImpulsing.word])&ndash;&gt;-->
   <!--&lt;!&ndash;TODO change to sentence id&ndash;&gt;-->
   <!--<a (click)="toggleSentenceStar(sentence)" class="star-button" [class.starred]="sentence.starred">-->
   <!--<ion-icon name="md-disc"></ion-icon>-->
@@ -175,9 +175,9 @@
   <!--</div>-->
   <!--<div class="card-part-body">-->
   <!--<ion-row>-->
-  <!--<ion-col><button (click)="toggleTag('d')" ion-button [outline]="wordService.wordTags[this.wordImpulsing.word]==null || wordService.wordTags[this.wordImpulsing.word]?.indexOf('d')==-1" block color="dark">释义</button></ion-col>-->
-  <!--<ion-col><button (click)="toggleTag('p')" ion-button [outline]="wordService.wordTags[this.wordImpulsing.word]==null || wordService.wordTags[this.wordImpulsing.word]?.indexOf('p')==-1" outline block color="dark">发音</button></ion-col>-->
-  <!--<ion-col><button (click)="toggleTag('s')" ion-button [outline]="wordService.wordTags[this.wordImpulsing.word]==null || wordService.wordTags[this.wordImpulsing.word]?.indexOf('s')==-1" outline block color="dark">拼写</button></ion-col>-->
+  <!--<ion-col><button (click)="toggleTag('d')" ion-button [outline]="studySvc.wordTags[this.wordImpulsing.word]==null || studySvc.wordTags[this.wordImpulsing.word]?.indexOf('d')==-1" block color="dark">释义</button></ion-col>-->
+  <!--<ion-col><button (click)="toggleTag('p')" ion-button [outline]="studySvc.wordTags[this.wordImpulsing.word]==null || studySvc.wordTags[this.wordImpulsing.word]?.indexOf('p')==-1" outline block color="dark">发音</button></ion-col>-->
+  <!--<ion-col><button (click)="toggleTag('s')" ion-button [outline]="studySvc.wordTags[this.wordImpulsing.word]==null || studySvc.wordTags[this.wordImpulsing.word]?.indexOf('s')==-1" outline block color="dark">拼写</button></ion-col>-->
   <!--</ion-row>-->
   <!--</div>-->
   <!--</div>-->

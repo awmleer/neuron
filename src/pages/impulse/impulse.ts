@@ -1,7 +1,7 @@
 import {Component} from '@angular/core'
 import {NavParams, ActionSheetController} from 'ionic-angular'
 import {NavController} from 'ionic-angular'
-import {WordService} from '../../services/word.service'
+import {StudyService} from '../../services/study.service'
 import {EntryRecord} from '../../classes/entry'
 import {SettingService} from '../../services/setting.service'
 import * as _ from 'lodash'
@@ -26,7 +26,7 @@ export class ImpulsePage {
   constructor(
     public nav: NavController,
     private navParams: NavParams,
-    public wordService: WordService,
+    public studySvc: StudyService,
     public settingService: SettingService,
     public actionSheetCtrl: ActionSheetController,
   ) {}
@@ -38,9 +38,9 @@ export class ImpulsePage {
   ngOnInit(): void {
     //TODO impulseRecords的初始化应该是通过API或者上级页面传入
     if (this.type == 'learn') {
-      this.impulseRecords = this.wordService.wordsLearning
+      this.impulseRecords = this.studySvc.wordsLearning
     } else if (this.type == 'review') {
-      this.impulseRecords = this.wordService.wordsReviewing
+      this.impulseRecords = this.studySvc.wordsReviewing
     }
     this.amount = this.impulseRecords.length
     this.impulseRecordsRendering[1] = this.nextWord()
@@ -101,7 +101,7 @@ export class ImpulsePage {
 
   cacheLastWord(): void {
     this.lastImpulseRecord = _.cloneDeep(this.impulseRecordsRendering[1])
-    // this.lastWordRecord = _.cloneDeep(this.wordService.wordRecords[this.impulseRecordsRendering[1].word])
+    // this.lastWordRecord = _.cloneDeep(this.studySvc.wordRecords[this.impulseRecordsRendering[1].word])
   }
 
 
@@ -118,9 +118,9 @@ export class ImpulsePage {
     }
     //TODO this.wordSvc.overwriteRecord()
     // if (this.lastWordRecord) {
-    //   this.wordService.wordRecords[this.lastImpulseRecord.word] = _.cloneDeep(this.lastWordRecord)
+    //   this.studySvc.wordRecords[this.lastImpulseRecord.word] = _.cloneDeep(this.lastWordRecord)
     // } else {
-    //   delete this.wordService.wordRecords[this.lastImpulseRecord.word]
+    //   delete this.studySvc.wordRecords[this.lastImpulseRecord.word]
     // }
     this.lastImpulseRecord = null
     // this.lastWordRecord = null
@@ -130,9 +130,9 @@ export class ImpulsePage {
 
   finish(): void {
     if (this.type == 'learn') {
-      this.wordService.removeWordsLearning()
+      this.studySvc.removeWordsLearning()
     } else if (this.type == 'review') {
-      this.wordService.saveWordsImpulsing(this.type)
+      this.studySvc.saveWordsImpulsing(this.type)
     }
     this.nav.pop()
   }
@@ -143,18 +143,18 @@ export class ImpulsePage {
     if (this.impulseRecordsRendering[1].dirty == 0) {//First time today
       this.impulseRecordsRendering[1].dirty = 1
       this.impulseRecordsRendering[1].wait = -1;//never show this word today
-      if (this.type == 'learn') this.wordService.addRecord(this.impulseRecordsRendering[1].entry, 'know')
-      if (this.type == 'review') this.wordService.moltRecord(this.impulseRecordsRendering[1].entry, 'know')
+      if (this.type == 'learn') this.studySvc.addRecord(this.impulseRecordsRendering[1].entry, 'know')
+      if (this.type == 'review') this.studySvc.moltRecord(this.impulseRecordsRendering[1].entry, 'know')
     } else {
       this.impulseRecordsRendering[1].count += 1
       if (this.impulseRecordsRendering[1].count == this.settingService.settings.impulseIntensity) {//if count reaches max
         this.impulseRecordsRendering[1].wait = -1;//this word is done for today
         if (this.impulseRecordsRendering[1].dirty == 2) {
-          if (this.type == 'learn') this.wordService.addRecord(this.impulseRecordsRendering[1].entry, 'vague')
-          if (this.type == 'review') this.wordService.moltRecord(this.impulseRecordsRendering[1].entry, 'vague')
+          if (this.type == 'learn') this.studySvc.addRecord(this.impulseRecordsRendering[1].entry, 'vague')
+          if (this.type == 'review') this.studySvc.moltRecord(this.impulseRecordsRendering[1].entry, 'vague')
         } else if (this.impulseRecordsRendering[1].dirty == 3) {
-          if (this.type == 'learn') this.wordService.addRecord(this.impulseRecordsRendering[1].entry, 'forget')
-          if (this.type == 'review') this.wordService.moltRecord(this.impulseRecordsRendering[1].entry, 'forget')
+          if (this.type == 'learn') this.studySvc.addRecord(this.impulseRecordsRendering[1].entry, 'forget')
+          if (this.type == 'review') this.studySvc.moltRecord(this.impulseRecordsRendering[1].entry, 'forget')
         }
       } else {
         this.impulseRecordsRendering[1].wait = this.impulseRecordsRendering[1].count * 2 + 1
@@ -193,8 +193,9 @@ export class ImpulsePage {
 
   markAsMaster(): void {
     if (this.transiting) return
-    if (this.type == 'learn') this.wordService.addRecord(this.impulseRecordsRendering[1].word, 'master')
-    if (this.type == 'review') this.wordService.moltRecord(this.impulseRecordsRendering[1].word, 'master')
+    
+    if (this.type == 'learn') this.studySvc.addRecord(this.impulseRecordsRendering[1].word, 'master')
+    if (this.type == 'review') this.studySvc.moltRecord(this.impulseRecordsRendering[1].word, 'master')
     this.impulseRecordsRendering[1].wait = -1;//never show it today
     this.impulseRecordsRendering[1].dirty = 4
     this.transitNext(this.nextWord())

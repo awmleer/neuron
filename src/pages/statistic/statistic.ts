@@ -1,7 +1,7 @@
 import {Component, ViewChild, ElementRef} from '@angular/core'
 
 import {NavController} from 'ionic-angular'
-import {WordService} from '../../services/word.service'
+import {StudyService} from '../../services/study.service'
 import {EntryRecord} from '../../classes/entry'
 import Chart from 'chart.js'
 import * as moment from 'moment'
@@ -15,7 +15,7 @@ export class StatisticPage {
 
   constructor(
     public nav: NavController,
-    private wordService: WordService,
+    private wordService: StudyService,
   ) {}
 
   ionViewDidEnter(): void {

@@ -12,7 +12,7 @@ import * as moment from 'moment'
 //     }
 // }
 
-export class EntryRecord {
+export interface EntryRecord {
   id: number
   proficiency: number//range from 0 to 8
   createdAt: number
@@ -21,7 +21,7 @@ export class EntryRecord {
 }
 
 
-export class EntryBrief {
+export interface EntryBrief {
   word: string
   rank: number
   definitions: {
@@ -36,7 +36,7 @@ export class EntryBrief {
 }
 
 
-export class Sentence {
+export interface Sentence {
   id: number
   chinese: string
   english: string

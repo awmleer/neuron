@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core'
 import {Sentence, EntryBrief, StudyRecord} from '../../classes/entry'
-import {WordService} from '../../services/word.service'
+import {StudyService} from '../../services/study.service'
 import {SettingService} from '../../services/setting.service'
 import {Platform} from 'ionic-angular'
 import {InAppBrowser, InAppBrowserOptions} from '@ionic-native/in-app-browser'
@@ -21,7 +21,7 @@ export class ImpulseCardComponent {
 
 
   constructor(
-    public wordService: WordService,
+    public wordService: StudyService,
     public settingService: SettingService,
     public platform: Platform,
     private inAppBrowser: InAppBrowser,

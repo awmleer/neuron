@@ -1,7 +1,7 @@
 import {Component} from '@angular/core'
 
 import {NavController, AlertController} from 'ionic-angular'
-import {WordService} from '../../services/word.service'
+import {StudyService} from '../../services/study.service'
 import {EntryRecord} from '../../classes/entry'
 
 @Component({
@@ -13,7 +13,7 @@ export class WarehousePage {
 
   constructor(
     public navCtrl: NavController,
-    private wordService: WordService,
+    private wordService: StudyService,
     private alertCtrl: AlertController,
   ) {}
 

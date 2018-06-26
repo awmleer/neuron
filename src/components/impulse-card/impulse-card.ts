@@ -27,8 +27,12 @@ export class ImpulseCardComponent {
     }
   }
 
+  get starredSentenceIds():number[]{
+    return this.wordImpulsing.record.starredSentenceIds
+  }
+
   constructor(
-    public wordService: StudyService,
+    public studySvc: StudyService,
     public settingService: SettingService,
     public platform: Platform,
     private inAppBrowser: InAppBrowser,
@@ -37,22 +41,17 @@ export class ImpulseCardComponent {
   ngOnInit() {
     if (!this.wordImpulsing) return
     this.showChinese = (this.type == 'learn' && this.wordImpulsing.mark === null) ? true : this.settingService.settings.showChineseWhenReviewing
-    // this.wordService.getEntry(this.wordImpulsing.word)
+    // this.studySvc.getEntry(this.wordImpulsing.word)
     //   .then(entry => {
     //     this.entry = entry
     //   })
     //saveWordsImpulsing every time we get a new currentWord
-    this.wordService.saveWordsImpulsing(this.type)
+    this.studySvc.saveWordsImpulsing(this.type)
   }
 
-  starredIdsOfWord(word: string): number[] {
-    return this.wordService.starredSentences[this.wordImpulsing.word]
-  }
-
-  sentenceStarred(sentenceId: number): boolean {
-    let starredIds = this.wordService.starredSentences[this.wordImpulsing.word]
-    if (starredIds) {
-      return starredIds.indexOf(sentenceId) > -1
+  sentenceStarred(sentence: Sentence): boolean {
+    if (this.starredSentenceIds) {
+      return this.starredSentenceIds.indexOf(sentence.id) > -1
     } else {
       return false
     }
@@ -72,33 +71,25 @@ export class ImpulseCardComponent {
   }
 
 
-  toggleSentenceStar(sentence: Sentence): void {
-    if (this.wordService.starredSentences[this.wordImpulsing.word] == null) {
-      this.wordService.starredSentences[this.wordImpulsing.word] = []
+  async toggleSentenceStar(sentence: Sentence) {
+    if(this.sentenceStarred(sentence)){
+      this.wordImpulsing.record.starredSentenceIds = await this.studySvc.unstarSentence(sentence)
+    }else{
+      this.wordImpulsing.record.starredSentenceIds = await this.studySvc.starSentence(sentence)
     }
-    let starred = this.wordService.starredSentences[this.wordImpulsing.word]
-    let index = starred.indexOf(sentence.id)
-    if (starred.indexOf(sentence.id) == -1) {
-      starred.push(sentence.id)
-      // sentence.starred=true
-    } else {
-      starred.splice(index, 1)
-      // sentence.starred=false
-    }
-    this.wordService.saveStarredSentences()
   }
 
   toggleTag(tag: string): void {
-    if (this.wordService.wordTags[this.wordImpulsing.word] == null) {
-      this.wordService.wordTags[this.wordImpulsing.word] = tag
+    if (this.studySvc.wordTags[this.wordImpulsing.word] == null) {
+      this.studySvc.wordTags[this.wordImpulsing.word] = tag
     } else {
-      if (this.wordService.wordTags[this.wordImpulsing.word].indexOf(tag) == -1) {
-        this.wordService.wordTags[this.wordImpulsing.word] += tag
+      if (this.studySvc.wordTags[this.wordImpulsing.word].indexOf(tag) == -1) {
+        this.studySvc.wordTags[this.wordImpulsing.word] += tag
       } else {
-        this.wordService.wordTags[this.wordImpulsing.word] = this.wordService.wordTags[this.wordImpulsing.word].replace(tag, '')
+        this.studySvc.wordTags[this.wordImpulsing.word] = this.studySvc.wordTags[this.wordImpulsing.word].replace(tag, '')
       }
     }
-    this.wordService.saveWordTags()
+    this.studySvc.saveWordTags()
   }
 
   doShowChinese(): void {

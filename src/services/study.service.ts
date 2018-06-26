@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core'
 import {RepoBrief, RepoDetail} from '../classes/repo'
 import 'rxjs/add/operator/toPromise'
-import {EntryBrief, EntryRecord} from '../classes/entry'
+import {EntryBrief, EntryRecord, Sentence} from '../classes/entry'
 import {Storage} from '@ionic/storage'
 import * as moment from 'moment'
 import * as _ from 'lodash'
@@ -129,8 +129,16 @@ export class StudyService {
   }
 
 
-  getEntry(word: string): Promise<EntryBrief> {
-    return this.apiSvc.get(CONST.apiUrl + `/entry/${word}/`)
+  // getEntry(word: string): Promise<EntryBrief> {
+  //   return this.apiSvc.get(`/entry/${word}/`)
+  // }
+
+  starSentence(sentence:Sentence):Promise<number[]>{
+    return this.apiSvc.get(`/study/sentence/${sentence.id}/star/`)
+  }
+
+  unstarSentence(sentence:Sentence):Promise<number[]>{
+    return this.apiSvc.get(`/study/sentence/${sentence.id}/unstar/`)
   }
 
 }

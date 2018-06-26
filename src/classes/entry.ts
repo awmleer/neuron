@@ -16,8 +16,10 @@ export interface EntryRecord {
   id: number
   proficiency: number//range from 0 to 8
   createdAt: number
+  updatedAt: number
   nextReviewDate: number
   entry: EntryBrief
+  starredSentenceIds: number[]
 }
 
 

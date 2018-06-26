@@ -1,13 +1,11 @@
 import {Injectable} from '@angular/core'
 import {RepoBrief, RepoDetail} from '../classes/repo'
-import {Http} from '@angular/http'
 import 'rxjs/add/operator/toPromise'
 import {EntryBrief, EntryRecord} from '../classes/entry'
 import {Storage} from '@ionic/storage'
 import * as moment from 'moment'
 import * as _ from 'lodash'
 import {CONST} from '../app/const'
-import {HttpClient} from '@angular/common/http'
 import {ApiService} from './api.service'
 import {ImpulseRecord} from '../classes/impulse'
 
@@ -29,7 +27,7 @@ export class WordService {
     this.storage.get('wordsReviewing')
       .then(data => {
         this.wordsReviewing = data
-        this.freshWaits()
+        // this.freshWaits()
       })
   }
 
@@ -104,41 +102,41 @@ export class WordService {
     this.saveWordsImpulsing('review');//this will override yesterday's entryRecord, if yesterday the user didn't finish reviewing
   }
 
-  generateWait(wordRecord: EntryRecord): void {
-    let wait: number
-    switch (wordRecord.proficiency) {
-      case 0:
-        wait = 1
-        break
-      case 1:
-        wait = 2
-        break
-      case 2:
-        wait = 3
-        break
-      case 3:
-        wait = 7
-        break
-      case 4:
-        wait = 15
-        break
-      case 5:
-        wait = 30
-        break
-      case 6:
-        wait = 60
-        break
-      case 7:
-        wait = 120
-        break
-      case 8:
-        wait = -1
-        break
-      default:
-        wait = 1
-    }
-    wordRecord.wait = wait
-  }
+  // generateWait(wordRecord: EntryRecord): void {
+  //   let wait: number
+  //   switch (wordRecord.proficiency) {
+  //     case 0:
+  //       wait = 1
+  //       break
+  //     case 1:
+  //       wait = 2
+  //       break
+  //     case 2:
+  //       wait = 3
+  //       break
+  //     case 3:
+  //       wait = 7
+  //       break
+  //     case 4:
+  //       wait = 15
+  //       break
+  //     case 5:
+  //       wait = 30
+  //       break
+  //     case 6:
+  //       wait = 60
+  //       break
+  //     case 7:
+  //       wait = 120
+  //       break
+  //     case 8:
+  //       wait = -1
+  //       break
+  //     default:
+  //       wait = 1
+  //   }
+  //   wordRecord.wait = wait
+  // }
 
 
   saveWordsImpulsing(type: string): void {
@@ -175,73 +173,66 @@ export class WordService {
     return this.apiSvc.get(CONST.apiUrl + `/entry/${word}/`)
   }
 
-  addRecord(entry: EntryBrief, mark: string): void {
-    //TODO
-    let wordRecord
-    if (mark == 'know') {
-      wordRecord = new EntryRecord(6)
-    } else if (mark == 'vague') {
-      wordRecord = new EntryRecord(3)
-    } else if (mark == 'forget') {
-      wordRecord = new EntryRecord(0)
-    } else if (mark == 'master') {
-      wordRecord = new EntryRecord(8)
-    }
-    this.generateWait(wordRecord)
-    this.wordRecords[word] = wordRecord
-    this.saveWordRecords()
-    //generate history
-    let today = moment().format('YYYY-M-D')
-    if (this.history[today] == null) {
-      this.history[today] = {
-        learn: 0,
-        review: 0,
-      }
-    }
-    this.history[today].learn++
-    this.saveHistory()
-  }
+  // addRecord(entry: EntryBrief, mark: string): void {
+  //   //TODO
+  //   let wordRecord
+  //   if (mark == 'know') {
+  //     wordRecord = new EntryRecord(6)
+  //   } else if (mark == 'vague') {
+  //     wordRecord = new EntryRecord(3)
+  //   } else if (mark == 'forget') {
+  //     wordRecord = new EntryRecord(0)
+  //   } else if (mark == 'master') {
+  //     wordRecord = new EntryRecord(8)
+  //   }
+  //   this.generateWait(wordRecord)
+  //   this.wordRecords[word] = wordRecord
+  //   this.saveWordRecords()
+  //   //generate history
+  //   let today = moment().format('YYYY-M-D')
+  //   if (this.history[today] == null) {
+  //     this.history[today] = {
+  //       learn: 0,
+  //       review: 0,
+  //     }
+  //   }
+  //   this.history[today].learn++
+  //   this.saveHistory()
+  // }
 
-  moltRecord(entry: EntryBrief, mark: string): void {
-    //TODO
-    let wordRecord = this.wordRecords[word]
-    if (mark == 'know') {
-      wordRecord.proficiency++
-    } else if (mark == 'vague') {
-      if (wordRecord.proficiency > 0) wordRecord.proficiency--
-    } else if (mark == 'forget') {
-      if (wordRecord.proficiency > 2) {
-        wordRecord.proficiency -= 2
-      } else {
-        wordRecord.proficiency = 0
-      }
-    } else if (mark == 'master') {
-      wordRecord.proficiency = 8
-    }
-    this.generateWait(wordRecord)
-    this.saveWordRecords()
-    //generate history
-    let today = moment().format('YYYY-M-D')
-    if (this.history[today] == null) {
-      this.history[today] = {
-        learn: 0,
-        review: 0,
-      }
-    }
-    this.history[today].review++
-    this.saveHistory()
-  }
+  // moltRecord(entry: EntryBrief, mark: string): void {
+  //   //TODO
+  //   let wordRecord = this.wordRecords[word]
+  //   if (mark == 'know') {
+  //     wordRecord.proficiency++
+  //   } else if (mark == 'vague') {
+  //     if (wordRecord.proficiency > 0) wordRecord.proficiency--
+  //   } else if (mark == 'forget') {
+  //     if (wordRecord.proficiency > 2) {
+  //       wordRecord.proficiency -= 2
+  //     } else {
+  //       wordRecord.proficiency = 0
+  //     }
+  //   } else if (mark == 'master') {
+  //     wordRecord.proficiency = 8
+  //   }
+  //   this.generateWait(wordRecord)
+  //   this.saveWordRecords()
+  //   //generate history
+  //   let today = moment().format('YYYY-M-D')
+  //   if (this.history[today] == null) {
+  //     this.history[today] = {
+  //       learn: 0,
+  //       review: 0,
+  //     }
+  //   }
+  //   this.history[today].review++
+  //   this.saveHistory()
+  // }
 
-  deleteRecord(word: string): void {
-    delete this.wordRecords[word]
-    this.saveWordRecords()
-  }
+  // deleteRecord(word: string): void {
+  //   delete this.wordRecords[word]
+  //   this.saveWordRecords()
+  // }
 
-  getRepos(): Promise<RepoBrief[]> {
-    return this.apiSvc.get('/repo/list/')
-  }
-
-  getRepo(id: number): Promise<RepoDetail> {
-    return this.apiSvc.get(`/repo/${id}/`)
-  }
 }

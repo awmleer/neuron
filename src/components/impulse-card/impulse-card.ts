@@ -67,7 +67,7 @@ export class ImpulseCardComponent {
   }
 
   playSound(): void {
-    (<HTMLAudioElement>document.getElementById('sound-' + this.wordImpulsing.word)).play()
+    (<HTMLAudioElement>document.getElementById('sound-' + this.wordImpulsing.record.entry.word)).play()
   }
 
 
@@ -79,17 +79,8 @@ export class ImpulseCardComponent {
     }
   }
 
-  toggleTag(tag: string): void {
-    if (this.studySvc.wordTags[this.wordImpulsing.word] == null) {
-      this.studySvc.wordTags[this.wordImpulsing.word] = tag
-    } else {
-      if (this.studySvc.wordTags[this.wordImpulsing.word].indexOf(tag) == -1) {
-        this.studySvc.wordTags[this.wordImpulsing.word] += tag
-      } else {
-        this.studySvc.wordTags[this.wordImpulsing.word] = this.studySvc.wordTags[this.wordImpulsing.word].replace(tag, '')
-      }
-    }
-    this.studySvc.saveWordTags()
+  async toggleTag(tag: string) {
+    this.wordImpulsing.record.tags = await this.studySvc.toggleTag(this.wordImpulsing.record, tag)
   }
 
   doShowChinese(): void {

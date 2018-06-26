@@ -141,4 +141,8 @@ export class StudyService {
     return this.apiSvc.get(`/study/sentence/${sentence.id}/unstar/`)
   }
 
+  toggleTag(record:EntryRecord, tag:string):Promise<string[]>{
+    return this.apiSvc.get(`/study/record/${record.id}/toggle-tag/${tag}/`)
+  }
+
 }

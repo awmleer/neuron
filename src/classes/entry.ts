@@ -20,6 +20,7 @@ export interface EntryRecord {
   nextReviewDate: number
   entry: EntryBrief
   starredSentenceIds: number[]
+  tags: string[]
 }
 
 

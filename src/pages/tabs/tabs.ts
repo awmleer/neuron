@@ -17,8 +17,8 @@ export class TabsPage {
   tab3Root: any = SettingsPage
 
   constructor(
-    private wordService: StudyService,
-    private accountService: AccountService,
+    public studySvc: StudyService,
+    private accountSvc: AccountService,
   ) {}
 
 }

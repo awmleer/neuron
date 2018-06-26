@@ -18,11 +18,11 @@ export class WarehousePage {
   ) {}
 
   ionViewDidEnter(): void {
-    for (let word in this.wordService.wordRecords) {
-      let record = this.wordService.wordRecords[word]
-      record.word = word
-      this.records.push(record)
-    }
+    // for (let word in this.wordService.wordRecords) {
+    //   let record = this.wordService.wordRecords[word]
+    //   record.word = word
+    //   this.records.push(record)
+    // }
   }
 
   deleteRecord(word: string, i: number): void {
@@ -37,7 +37,7 @@ export class WarehousePage {
           text: '确定',
           handler: data => {
             this.records.splice(i, 1)
-            this.wordService.deleteRecord(word)
+            // this.wordService.deleteRecord(word)
           },
         },
       ],

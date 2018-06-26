@@ -19,7 +19,7 @@ export class LearnPage {
     public nav: NavController,
     public alertCtrl: AlertController,
     private modalCtrl: ModalController,
-    private wordService: StudyService,
+    private studySvc: StudyService,
     private toastSvc: ToastService,
     private bankSvc: BankService,
   ) {}
@@ -27,7 +27,7 @@ export class LearnPage {
   todayLearnedCount:number = 0;
 
   startLearn(repo: RepoBrief): void {
-    if (this.wordService.impulsementsLearning != null) {
+    if (this.studySvc.impulsementsLearning != null) {
       let alert = this.alertCtrl.create({
         title: '提醒',
         subTitle: '您有正在进行的学习队列，是否放弃该队列并新建一个学习队列？',
@@ -73,7 +73,7 @@ export class LearnPage {
             let amount = _.toSafeInteger(data.amount)
             if (amount > 0) {
               alert.dismiss().then(() => {
-                this.wordService.generateLearnList(repo, amount).then(() => {
+                this.studySvc.generateLearnList(repo, amount).then(() => {
                   this.goImpulsePage()
                 })
               })
@@ -104,7 +104,7 @@ export class LearnPage {
 
 
   async ionViewWillEnter() {
-    this.todayLearnedCount = await this.wordService.todayLearnedCount()
+    this.todayLearnedCount = await this.studySvc.todayLearnedCount()
   }
 
 }

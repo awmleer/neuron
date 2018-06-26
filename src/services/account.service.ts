@@ -13,14 +13,14 @@ export class AccountService {
   ) {}
 
   async initialize(): Promise<void> {
-    const result = await this.apiSvc.get(CONST.apiUrl + '/account/is_logged_in/')
+    const result = await this.apiSvc.get('/account/is_logged_in/')
     if (result == 'true') {
       await this.getUserInfo()
     }
   }
 
   async login(loginData: LoginData): Promise<void> {
-    await this.apiSvc.post(CONST.apiUrl + '/account/login/', {
+    await this.apiSvc.post('/account/login/', {
       phone: loginData.phone,
       password: loginData.password,
     })

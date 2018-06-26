@@ -62,6 +62,7 @@ export class ApiService {
       [param: string]: any
     } = null,
   ): Promise<any> {
+    console.log(url);
     let request = this.http.get(CONST.apiUrl + url, {
       params: params,
       observe: 'response',
@@ -74,6 +75,7 @@ export class ApiService {
   }
 
   async post(url: string, body: object = null): Promise<any> {
+    console.log(url);
     let request = this.http.post(CONST.apiUrl + url, body, {
       observe: 'response',
       headers: {

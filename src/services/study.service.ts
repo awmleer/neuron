@@ -22,13 +22,15 @@ export class StudyService {
 
 
   initialize(): void {
-    this.storage.get('impulsementsLearning')
-      .then(data => this.impulsementsLearning = data)
-    this.storage.get('impulsementsReviewing')
-      .then(data => {
-        this.impulsementsReviewing = data
-        // this.freshWaits()
-      })
+    // this.storage.get('impulsementsLearning')
+    //   .then(data => this.impulsementsLearning = data)
+    // this.storage.get('impulsementsReviewing')
+    //   .then(data => {
+    //     this.impulsementsReviewing = data
+    //     // this.freshWaits()
+    //   })
+    this.getLearnList()
+    //TODO get review list
   }
 
   saveWaitsFreshTime(): void {
@@ -41,7 +43,7 @@ export class StudyService {
 
   async getLearnList():Promise<Impulsement[]>{
     const records:EntryRecord[] = await this.apiSvc.get('/study/learn/list/')
-    this.updateImulsementsLearning(records)
+    this.updateImpulsementsLearning(records)
     return this.impulsementsLearning
   }
 
@@ -50,11 +52,14 @@ export class StudyService {
       'repoId': repo.id,
       'amount': amount
     })
-    this.updateImulsementsLearning(records)
+    this.updateImpulsementsLearning(records)
     return this.impulsementsLearning
   }
 
-  private updateImulsementsLearning(records:EntryRecord[]){
+  private updateImpulsementsLearning(records:EntryRecord[]){
+    if (this.impulsementsLearning === null) {
+      this.impulsementsLearning = []
+    }
     let count = 0
     for(let record of records){
       const word = new Impulsement(record)

@@ -39,17 +39,29 @@ export class StudyService {
     return this.apiSvc.get('/study/learn/today-count/')
   }
 
-  async generateLearnList(repo:RepoBrief, amount:number):Promise<void>{
-    const entryRecords:EntryRecord[] = await this.apiSvc.get('/study/learn/generate-list/', {
+  async getLearnList():Promise<Impulsement[]>{
+    const records:EntryRecord[] = await this.apiSvc.get('/study/learn/list/')
+    this.updateImulsementsLearning(records)
+    return this.impulsementsLearning
+  }
+
+  async generateLearnList(repo:RepoBrief, amount:number):Promise<Impulsement[]>{
+    const records:EntryRecord[] = await this.apiSvc.get('/study/learn/list/generate/', {
       'repoId': repo.id,
       'amount': amount
     })
+    this.updateImulsementsLearning(records)
+    return this.impulsementsLearning
+  }
+
+  private updateImulsementsLearning(records:EntryRecord[]){
     let count = 0
-    for(let entryRecord of entryRecords){
-      const word = new Impulsement(entryRecord)
+    for(let record of records){
+      const word = new Impulsement(record)
       word.wait = count
       this.impulsementsLearning.push(word)
     }
+    return this.impulsementsLearning
   }
 
   updateRecords(impulsements:Impulsement[]):Promise<void>{

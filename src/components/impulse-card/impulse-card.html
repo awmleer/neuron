@@ -23,8 +23,8 @@
       <ion-icon *ngIf="entry?.rank>4" name="star"></ion-icon>
     </div>
 
-    <div class="phonetic">
-      <span style="vertical-align: middle;"><a (click)="playSound()" style="color: inherit;">{{entry?.phonetic.US.symbol}}</a></span>
+    <div class="pronounce">
+      <span style="vertical-align: middle;"><a (click)="playSound()" style="color: inherit;">[{{entry?.pronounce.US}}]</a></span>
       <button (click)="playSound()" ion-button icon-only clear small style="vertical-align: middle;">
         <ion-icon name="md-volume-up"></ion-icon>
       </button>

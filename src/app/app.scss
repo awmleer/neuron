@@ -22,3 +22,14 @@
 .header.header-md::after{
   display: none;
 }
+
+
+@media only screen and (min-height: 768px) and (min-width: 768px){
+  .modal-wrapper {
+    left: 0;
+    top: 0;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+  }
+}

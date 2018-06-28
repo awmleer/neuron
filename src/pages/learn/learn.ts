@@ -93,9 +93,13 @@ export class LearnPage {
   }
 
   goImpulsePage() {
-    this.modalCtrl.create(ImpulsePage, {
+    let modal = this.modalCtrl.create(ImpulsePage, {
       type: 'learn',
-    }).present()
+    })
+    modal.present()
+    modal.onWillDismiss(() => {
+      this.ionViewWillEnter()
+    })
   }
 
   async ngOnInit() {

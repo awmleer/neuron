@@ -21,13 +21,6 @@ export class StudyService {
   ) {}
 
 
-  async initialize() {
-    let reviewingStored = await this.storage.get('impulsementsReviewing')
-    await this.getLearnList()
-
-    //TODO get review list
-  }
-
   saveWaitsFreshTime(): void {
     this.storage.set('wordWaitsFreshTime', moment().valueOf())
   }
@@ -46,7 +39,7 @@ export class StudyService {
   }
 
   async getReviewList():Promise<void>{
-    let records:EntryRecord[] = await this.apiSvc.get('/study/learn/list/')
+    let records:EntryRecord[] = await this.apiSvc.get('/study/review/list/')
     this.impulsementsReviewing = this.mergeImpulsements(records, await this.storage.get('impulsementsLearning'))
   }
 

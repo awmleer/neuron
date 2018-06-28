@@ -35,7 +35,6 @@ export class MyApp {
       }, 500)
     })
     config.set('ios', 'backButtonText', '返回')
-    wordService.initialize()
     accountService.initialize()
     settingService.initialize()
   }

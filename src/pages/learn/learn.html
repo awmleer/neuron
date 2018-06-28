@@ -19,7 +19,7 @@
     <ion-list-header>
       词库
     </ion-list-header>
-    <button ion-item (click)="continueLearn()" [hidden]="studySvc.impulsementsLearning==null">
+    <button ion-item (click)="continueLearn()" *ngIf="studySvc.impulsementsLearning?.length">
       <b>进入未完成的学习</b> <span style="color:gray">{{studySvc.impulsementsLearning | wordsDoneCount}}/{{studySvc.impulsementsLearning?.length}}</span>
       <ion-icon showWhen="android" item-right name="ios-arrow-round-forward"></ion-icon>
     </button>

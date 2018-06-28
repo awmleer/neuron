@@ -49,8 +49,9 @@ export class ImpulseCardComponent {
     //   .then(entry => {
     //     this.entry = entry
     //   })
+    this.sortSentences()
     //saveWordsImpulsing every time we get a new currentWord
-    this.studySvc.saveWordsImpulsing(this.type)
+    // this.studySvc.saveWordsImpulsing(this.type)
   }
 
   private sortSentences(){

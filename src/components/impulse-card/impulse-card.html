@@ -58,10 +58,10 @@
           <a (click)="toggleSentenceStar(sentence)" class="star-button" [class.starred]="sentenceStarred(sentence)">
             <ion-icon name="md-disc"></ion-icon>
           </a>
-          <span>
+          <p>
             <span [innerHTML]="sentence.english"></span><br>
             <span [innerHTML]="sentence.chinese" *ngIf="showChinese"></span>
-          </span>
+          </p>
         </div>
         <button ion-button small clear block (click)="doShowChinese()" *ngIf="!showChinese">显示中文</button>
       </div>

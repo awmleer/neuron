@@ -19,10 +19,10 @@ export class SettingService {
 
   settings = {
     sound: {
-      gender: 'male',
+      // gender: 'male',
       accent: 'US',
     },
-    soundSource: 'youdao',
+    // soundSource: 'youdao',
     impulseIntensity: 6,
     autoRead: true,
     showChineseWhenReviewing: true,

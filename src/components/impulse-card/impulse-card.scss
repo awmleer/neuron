@@ -61,7 +61,7 @@ impulse-card {
     padding: 12px 10px 0 10px;
     .level-star {
       position: absolute;
-      top: 20px;
+      top: 18px;
       right: 10px;
       ion-icon {
         color: #f3c715;
@@ -79,10 +79,7 @@ impulse-card {
     }
   }
 
-  em.hot {
-    color: $hot-color;
-    font-weight: bold;
-  }
+
   .sentence {
     display: block;
     margin-bottom: 8px;
@@ -104,10 +101,17 @@ impulse-card {
       padding: 0;
       vertical-align: middle;
       width: calc(100% - 34px);
+      /deep/ b {
+        color: $hot-color;
+        font-weight: bold;
+      }
     }
   }
+
   .pronounce {
     margin-top: -5px;
+    overflow-x: scroll;
+    white-space: nowrap;
     //cursor:pointer
   }
 

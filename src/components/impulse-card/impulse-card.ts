@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core'
+import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core'
 import {Sentence, EntryBrief, EntryRecord} from '../../classes/entry'
 import {StudyService} from '../../services/study.service'
 import {SettingService} from '../../services/setting.service'
@@ -16,8 +16,11 @@ export class ImpulseCardComponent {
   @Input() type: 'learn' | 'review'
   @Input() cardExpanding: boolean
   @Output() wantExpanding = new EventEmitter()
+  @ViewChild('audioUK') audioUKElement:ElementRef;
+  @ViewChild('audioUS') audioUSElement:ElementRef;
   showChinese: boolean
   sortedSentences: Sentence[]
+  accents = ['UK','US']
 
   get entry():EntryBrief{
     return this.impulsement.record.entry
@@ -37,14 +40,18 @@ export class ImpulseCardComponent {
 
   constructor(
     public studySvc: StudyService,
-    public settingService: SettingService,
+    public settingSvc: SettingService,
     public platform: Platform,
     private inAppBrowser: InAppBrowser,
-  ) {}
+  ) {
+    let accent = this.settingSvc.settings.sound.accent
+    this.accents.splice(this.accents.indexOf(accent), 1)
+    this.accents.unshift(accent)
+  }
 
   ngOnInit() {
     if (!this.impulsement) return
-    this.showChinese = (this.type == 'learn' && this.impulsement.mark === null) ? true : this.settingService.settings.showChineseWhenReviewing
+    this.showChinese = (this.type == 'learn' && this.impulsement.mark === null) ? true : this.settingSvc.settings.showChineseWhenReviewing
     // this.studySvc.getEntry(this.impulsement.word)
     //   .then(entry => {
     //     this.entry = entry
@@ -79,13 +86,21 @@ export class ImpulseCardComponent {
   expand() {
     this.wantExpanding.emit()
     // this.cardExpanding=true
-    if (this.settingService.settings.autoRead) {
+    if(this.cardExpanding || this.settingSvc.settings.autoRead){
       this.playSound()
     }
   }
 
-  playSound(): void {
-    (<HTMLAudioElement>document.getElementById('sound-' + this.word)).play()
+  playSound(event:Event=null, accent:string=this.settingSvc.settings.sound.accent): void {
+    if(event) event.stopPropagation()
+    console.log(accent);
+    let element:ElementRef
+    if(accent=='UK'){
+      element = this.audioUKElement
+    }else{
+      element = this.audioUSElement
+    }
+    (<HTMLAudioElement>element.nativeElement).play()
   }
 
 

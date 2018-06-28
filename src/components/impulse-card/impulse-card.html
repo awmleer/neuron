@@ -1,7 +1,7 @@
 <div class="card" [class.expanding]="cardExpanding">
   <a class="entry card-part" (click)="expand()" *ngIf="impulsement">
     <h1>
-      <a (click)="playSound()">{{word}}</a>
+      <a (click)="expand()">{{word}}</a>
       <progress-icon *ngIf="type=='review'&&impulsement"
                      [percent]="record.proficiency/8"
                      style="margin-left: 5px"></progress-icon>
@@ -24,12 +24,20 @@
     </div>
 
     <div class="pronounce">
-      <span style="vertical-align: middle;"><a (click)="playSound()" style="color: inherit;">[{{entry?.pronounce.US}}]</a></span>
-      <button (click)="playSound()" ion-button icon-only clear small style="vertical-align: middle;">
-        <ion-icon name="md-volume-up"></ion-icon>
-      </button>
-      <div *ngIf="settingService.settings.soundSource=='youdao'">
-        <audio [id]="'sound-'+word" [src]="'http://dict.youdao.com/dictvoice?audio='+word+'&type='+(settingService.settings.sound.accent=='US'?'2':'1')" style="display: none;"></audio>
+      <ng-container *ngFor="let accent of accents">
+        <div style="display: inline-block" *ngIf="entry?.pronounce[accent]">
+          <span style="vertical-align: middle;">
+            <b>{{accent}}</b>
+            <a (click)="playSound($event, accent)" style="color: inherit;">[{{entry.pronounce[accent]}}]</a>
+          </span>
+          <button (click)="playSound($event, accent)" ion-button icon-only clear small style="vertical-align: middle;">
+            <ion-icon name="md-volume-up"></ion-icon>
+          </button>
+        </div>
+      </ng-container>
+      <div style="display: none">
+        <audio #audioUK [src]="'http://dict.youdao.com/dictvoice?audio='+word+'&type=1'"></audio>
+        <audio #audioUS [src]="'http://dict.youdao.com/dictvoice?audio='+word+'&type=2'"></audio>
       </div>
     </div>
   </a>
@@ -41,9 +49,9 @@
         释义
       </div>
       <div class="card-part-body">
-                <span *ngFor="let definition of entry?.definitions; ">
-                    <span style="color: gray;">{{definition.type}}</span> {{definition.text}}<br>
-                </span>
+        <span *ngFor="let definition of entry?.definitions; ">
+          <span style="color: gray;">{{definition.part}}.</span> {{definition.text}}<br>
+        </span>
       </div>
     </div>
 

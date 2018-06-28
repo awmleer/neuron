@@ -22,4 +22,8 @@
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
+
+  <ion-infinite-scroll *ngIf="next" (ionInfinite)="$event.waitFor(fetchPage())">
+    <ion-infinite-scroll-content loadingSpinner="dots"></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

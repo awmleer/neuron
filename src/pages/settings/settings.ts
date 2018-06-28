@@ -18,7 +18,7 @@ export class SettingsPage {
   constructor(
     public navCtrl: NavController,
     public accountSvc: AccountService,
-    public settingService: SettingService,
+    public settingSvc: SettingService,
     private inAppBrowser: InAppBrowser,
     public modalCtrl: ModalController,
     private toastSvc: ToastService,

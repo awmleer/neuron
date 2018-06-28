@@ -17,6 +17,7 @@ export class ImpulseCardComponent {
   @Input() cardExpanding: boolean
   @Output() wantExpanding = new EventEmitter()
   showChinese: boolean
+  sortedSentences: Sentence[]
 
   get entry():EntryBrief{
     return this.impulsement.record.entry
@@ -50,6 +51,19 @@ export class ImpulseCardComponent {
     //   })
     //saveWordsImpulsing every time we get a new currentWord
     this.studySvc.saveWordsImpulsing(this.type)
+  }
+
+  private sortSentences(){
+    let starred = []
+    let unstarred = []
+    for(let s of this.entry.sentences){
+      if (this.sentenceStarred(s)){
+        starred.push(s)
+      }else{
+        unstarred.push(s)
+      }
+    }
+    this.sortedSentences = starred.concat(unstarred)
   }
 
   sentenceStarred(sentence: Sentence): boolean {

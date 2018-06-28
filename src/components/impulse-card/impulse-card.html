@@ -53,14 +53,15 @@
         例句
       </div>
       <div class="card-part-body">
-        <div *ngFor="let sentence of entry.sentences" class="sentence">
+        <div *ngFor="let sentence of sortedSentences" class="sentence">
           <!--(entry?.sentences|sortSentence:studySvc.starredSentences[impulsement.word])-->
-
           <a (click)="toggleSentenceStar(sentence)" class="star-button" [class.starred]="sentenceStarred(sentence)">
             <ion-icon name="md-disc"></ion-icon>
           </a>
-          <span [innerHTML]="sentence.english"></span><br>
-          <span [innerHTML]="sentence.chinese" *ngIf="showChinese"></span>
+          <span>
+            <span [innerHTML]="sentence.english"></span><br>
+            <span [innerHTML]="sentence.chinese" *ngIf="showChinese"></span>
+          </span>
         </div>
         <button ion-button small clear block (click)="doShowChinese()" *ngIf="!showChinese">显示中文</button>
       </div>

@@ -21,15 +21,10 @@ export class StudyService {
   ) {}
 
 
-  initialize(): void {
-    // this.storage.get('impulsementsLearning')
-    //   .then(data => this.impulsementsLearning = data)
-    // this.storage.get('impulsementsReviewing')
-    //   .then(data => {
-    //     this.impulsementsReviewing = data
-    //     // this.freshWaits()
-    //   })
-    this.getLearnList()
+  async initialize() {
+    let reviewingStored = await this.storage.get('impulsementsReviewing')
+    await this.getLearnList()
+
     //TODO get review list
   }
 
@@ -41,10 +36,13 @@ export class StudyService {
     return this.apiSvc.get('/study/learn/today-count/')
   }
 
-  async getLearnList():Promise<Impulsement[]>{
+  async getLearnList():Promise<void>{
     const records:EntryRecord[] = await this.apiSvc.get('/study/learn/list/')
     this.updateImpulsementsLearning(records)
-    return this.impulsementsLearning
+  }
+
+  async getReviewList():Promise<void>{
+    //TODO
   }
 
   async generateLearnList(repo:RepoBrief, amount:number):Promise<Impulsement[]>{
@@ -52,32 +50,51 @@ export class StudyService {
       'repoId': repo.id,
       'amount': amount
     })
-    this.updateImpulsementsLearning(records)
+    await this.updateImpulsementsLearning(records)
     return this.impulsementsLearning
   }
 
-  private updateImpulsementsLearning(records:EntryRecord[]){
+  private mergeImpulsements(records:EntryRecord[], stored:Impulsement[]):Impulsement[]{
+    let res:Impulsement[] = []
+    let count = 0
+    for(let record of records){
+      count++
+      let impulsement = null
+      for(let i of stored){
+        if(i.record.id === record.id){
+          i.record.entry = record.entry
+          impulsement = i
+        }
+      }
+      if(impulsement===null){
+        impulsement = new Impulsement(record)
+        impulsement.wait = count
+      }
+      res.push(impulsement)
+    }
+    return res
+  }
+
+  private async updateImpulsementsLearning(records:EntryRecord[]){
     if (this.impulsementsLearning === null) {
       this.impulsementsLearning = []
     }
-    let count = 0
-    for(let record of records){
-      const word = new Impulsement(record)
-      word.wait = count
-      this.impulsementsLearning.push(word)
-    }
-    return this.impulsementsLearning
+    this.impulsementsLearning = this.mergeImpulsements(records, await this.storage.get('impulsementsLearning'))
   }
 
-  updateRecords(impulsements:Impulsement[]):Promise<void>{
+  async updateRecords(impulsements:Impulsement[]):Promise<void>{
     let data = []
     for(let impulsement of impulsements){
-      data.push({
-        'id': impulsement.record.id,
-        'mark': impulsement.mark
-      })
+      if(impulsement.wait === -1){
+        data.push({
+          'id': impulsement.record.id,
+          'mark': impulsement.mark
+        })
+      }
     }
-    return this.apiSvc.post(`/study/update-records/`, data)
+    if(data.length>0){
+      await this.apiSvc.post(`/study/update-records/`, data)
+    }
   }
 
   // generateWordsReviewing(): void {

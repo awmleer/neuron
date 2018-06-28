@@ -61,7 +61,7 @@ impulse-card {
     padding: 12px 10px 0 10px;
     .level-star {
       position: absolute;
-      top: 15px;
+      top: 20px;
       right: 10px;
       ion-icon {
         color: #f3c715;
@@ -88,7 +88,7 @@ impulse-card {
     margin-bottom: 8px;
     line-height: 1.3em;
     .star-button {
-      vertical-align: middle;
+      vertical-align: top;
       display: inline-block;
       color: #d5d5d5;
       transition: color 0.2s ease;

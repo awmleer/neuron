@@ -132,10 +132,8 @@ export class ImpulsePage {
     await this.studySvc.saveWordsImpulsing(this.type)
     if (this.type == 'learn') {
       await this.studySvc.updateRecords(this.impulsements)
-      await this.studySvc.getLearnList()
     } else if (this.type == 'review') {
       await this.studySvc.updateRecords(this.impulsements)
-      await this.studySvc.getReviewList()
     }
     this.nav.pop()
   }

@@ -10,10 +10,10 @@
   <ion-list *ngIf="studySvc.impulsementsReviewing?.length>0">
     <ion-list-header>复习进度</ion-list-header>
     <ion-item>
-      今日已复习<span item-right>{{studySvc.impulsementsReviewing | wordsDoneCount}}</span>
+      今日已复习<span item-right>{{todayReviewedCount}}</span>
     </ion-item>
     <ion-item>
-      今日需复习<span item-right>{{studySvc.impulsementsReviewing?.length}}</span>
+      今日还需复习<span item-right>{{studySvc.impulsementsReviewing?.length}}</span>
     </ion-item>
     <ion-item *ngIf="studySvc.impulsementsReviewing | wordsAllDone">
       <b>已全部完成</b>

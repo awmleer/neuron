@@ -14,6 +14,7 @@ import {ToastService} from '../../services/toast.service'
 })
 export class LearnPage {
   repos: RepoBrief[] = []
+  todayLearnedCount:number = null;
 
   constructor(
     public nav: NavController,
@@ -23,8 +24,6 @@ export class LearnPage {
     private toastSvc: ToastService,
     private bankSvc: BankService,
   ) {}
-
-  todayLearnedCount:number = 0;
 
   startLearn(repo: RepoBrief): void {
     if (this.studySvc.impulsementsLearning != null && this.studySvc.impulsementsLearning.length>0) {
@@ -107,8 +106,11 @@ export class LearnPage {
   }
 
 
-  async ionViewWillEnter() {
-    this.todayLearnedCount = await this.studySvc.todayLearnedCount()
+  ionViewWillEnter() {
+    this.studySvc.todayLearnedCount().then((count) => {
+      this.todayLearnedCount = count
+    })
+    this.studySvc.getLearnList()
   }
 
 }

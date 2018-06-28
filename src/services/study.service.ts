@@ -36,13 +36,18 @@ export class StudyService {
     return this.apiSvc.get('/study/learn/today-count/')
   }
 
+  todayReviewedCount():Promise<number>{
+    return this.apiSvc.get('/study/review/today-count/')
+  }
+
   async getLearnList():Promise<void>{
-    const records:EntryRecord[] = await this.apiSvc.get('/study/learn/list/')
+    let records:EntryRecord[] = await this.apiSvc.get('/study/learn/list/')
     this.updateImpulsementsLearning(records)
   }
 
   async getReviewList():Promise<void>{
-    //TODO
+    let records:EntryRecord[] = await this.apiSvc.get('/study/learn/list/')
+    this.impulsementsReviewing = this.mergeImpulsements(records, await this.storage.get('impulsementsLearning'))
   }
 
   async generateLearnList(repo:RepoBrief, amount:number):Promise<Impulsement[]>{

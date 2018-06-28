@@ -14,6 +14,8 @@ import {StatisticPage} from '../statistic/statistic'
 })
 export class ReviewPage {
 
+  todayReviewedCount:number = null
+
   constructor(
     public nav: NavController,
     private modalCtrl: ModalController,
@@ -33,4 +35,12 @@ export class ReviewPage {
   goStatistic(): void {
     this.nav.push(StatisticPage)
   }
+
+  ionViewWillEnter() {
+    this.studySvc.getReviewList()
+    this.studySvc.todayReviewedCount().then((count) => {
+      this.todayReviewedCount = count
+    })
+  }
+
 }

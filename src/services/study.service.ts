@@ -8,6 +8,7 @@ import * as _ from 'lodash'
 import {CONST} from '../app/const'
 import {ApiService} from './api.service'
 import {Impulsement} from '../classes/impulse'
+import {Paginated} from '../classes/paginated'
 
 
 @Injectable()
@@ -175,6 +176,10 @@ export class StudyService {
 
   toggleTag(record:EntryRecord, tag:string):Promise<string[]>{
     return this.apiSvc.get(`/study/record/${record.id}/toggle-tag/${tag}/`)
+  }
+
+  recordList(pageNumber:number=1):Promise<Paginated<EntryRecord>>{
+    return this.apiSvc.get(`/study/record/list/${pageNumber}/`)
   }
 
 }

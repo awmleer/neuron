@@ -1,4 +1,4 @@
 export interface Paginated<T> {
-  hasNext: boolean
+  next: boolean
   items: T[]
 }

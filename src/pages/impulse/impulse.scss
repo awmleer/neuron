@@ -4,7 +4,9 @@ page-impulse {
     position: fixed;
     bottom: 30vh;
     width: 70vw;
-    left: 15vw;
+    max-width: 500px;
+    left: 50%;
+    transform: translateX(-50%);
     transition: bottom 300ms ease, width 300ms ease, left 300ms ease;
     height: $progress-bar-height;
     background-color: #e0e0e0;
@@ -17,8 +19,8 @@ page-impulse {
   }
   #progress-bar.squeezed {
     bottom: 0;
-    left: 0;
-    width: 100%;
+    max-width: 100vw;
+    width: 100vw;
   }
 
   impulse-card {
@@ -39,11 +41,12 @@ page-impulse {
   .action-button-group {
     z-index: 10;
     position: fixed;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     bottom: 40vh;
     transition: bottom 300ms ease;
-    width: 100%;
-    padding: 0 15vw;
+    width: 70%;
+    max-width: 400px;
     button {
       display: inline-block;
       border-radius: 100px;

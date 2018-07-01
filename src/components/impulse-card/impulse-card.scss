@@ -12,7 +12,9 @@ impulse-card {
     height: 80px;
     top: 30%;
     width: 88%;
-    left: 6%;
+    max-width: 500px;
+    left: 50%;
+    transform: translateX(-50%);
     overflow: hidden;
     z-index: 11;
     transition: height 300ms ease, top 300ms ease;

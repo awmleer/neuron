@@ -34,6 +34,8 @@ export class ApiService {
           error.error.message,
           error.error.payload
         )
+      } else if (error.status === 401) {
+        apiError = new ApiError('请先登录')
       } else if (error.status === 403) {
         apiError = new ApiError('您没有权限进行该操作')
       } else {

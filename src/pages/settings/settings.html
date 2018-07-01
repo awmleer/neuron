@@ -26,6 +26,10 @@
       登录
       <ion-icon name="log-in" item-right></ion-icon>
     </button>
+    <button *ngIf="!accountSvc.user" ion-item (click)="showSignupModal()">
+      注册
+      <ion-icon name="person-add" item-right></ion-icon>
+    </button>
     <button ion-item (click)="openHelpPage()">
       查看使用帮助
       <ion-icon ios="ios-help-circle-outline" md="md-help-circle" item-right></ion-icon>

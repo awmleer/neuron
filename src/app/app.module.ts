@@ -30,6 +30,7 @@ import {SplashScreen} from '@ionic-native/splash-screen'
 import {ApiService} from '../services/api.service'
 import {ToastService} from '../services/toast.service'
 import {BankService} from '../services/bank.service'
+import {SignupPage} from '../pages/signup/signup'
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import {BankService} from '../services/bank.service'
     SettingsPage,
     ImpulsePage,
     LoginPage,
+    SignupPage,
     WarehousePage,
     StatisticPage,
     AboutPage,
@@ -70,6 +72,7 @@ import {BankService} from '../services/bank.service'
     SettingsPage,
     ImpulsePage,
     LoginPage,
+    SignupPage,
     WarehousePage,
     StatisticPage,
     AboutPage,

@@ -24,8 +24,14 @@ export class AccountService {
     await this.getUserProfile()
   }
 
+  async signup(data):Promise<void>{
+    await this.apiSvc.post('/account/signup/', data)
+    await this.getUserProfile()
+  }
+
   async logout(): Promise<void> {
     await this.apiSvc.get('/account/logout/')
+    this.user = null
   }
 
   async getUserProfile(): Promise<User> {

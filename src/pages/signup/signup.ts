@@ -8,10 +8,10 @@ import {ApiError} from '../../classes/error'
 
 
 @Component({
-  selector: 'page-login',
-  templateUrl: 'login.html',
+  selector: 'page-signup',
+  templateUrl: 'signup.html',
 })
-export class LoginPage {
+export class SignupPage {
 
   constructor(
     public navCtrl: NavController,
@@ -19,11 +19,15 @@ export class LoginPage {
     private toastSvc: ToastService,
   ) {}
 
-  loginData = new LoginData()
+  data = {
+    username: '',
+    password: '',
+    nickname: ''
+  }
 
-  async doLogin(): Promise<void> {
-    await this.accountSvc.login(this.loginData)
-    this.toastSvc.toast('登录成功')
+  async submit(): Promise<void> {
+    await this.accountSvc.signup(this.data)
+    this.toastSvc.toast('注册成功')
     this.navCtrl.pop()
   }
 

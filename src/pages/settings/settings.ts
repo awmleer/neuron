@@ -8,6 +8,7 @@ import {AboutPage} from '../about/about'
 import {FeedbackPage} from '../feedback/feedback'
 import {InAppBrowser} from '@ionic-native/in-app-browser'
 import {ToastService} from '../../services/toast.service'
+import {SignupPage} from '../signup/signup'
 
 @Component({
   selector: 'page-settings',
@@ -26,6 +27,10 @@ export class SettingsPage {
 
   showLoginModal(): void {
     this.modalCtrl.create(LoginPage).present()
+  }
+
+  showSignupModal(): void {
+    this.modalCtrl.create(SignupPage).present()
   }
 
   openHelpPage(): void {

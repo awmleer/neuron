@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      注册
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button clear (click)="navCtrl.pop()">
+        关闭
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-item>
+      <ion-label floating>用户名</ion-label>
+      <ion-input type="text" [(ngModel)]="data.username"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>密码</ion-label>
+      <ion-input type="password" [(ngModel)]="data.password"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>昵称</ion-label>
+      <ion-input type="text" [(ngModel)]="data.nickname"></ion-input>
+    </ion-item>
+  </ion-list>
+  <button ion-button block (click)="submit()">
+    注册
+  </button>
+</ion-content>

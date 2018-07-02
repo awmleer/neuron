@@ -131,11 +131,7 @@ export class ImpulsePage {
 
   async finish() {
     await this.studySvc.saveWordsImpulsing(this.type)
-    if (this.type == 'learn') {
-      await this.studySvc.updateRecords(this.impulsements)
-    } else if (this.type == 'review') {
-      await this.studySvc.updateRecords(this.impulsements)
-    }
+    await this.studySvc.updateRecords(this.impulsements)
     this.nav.pop()
   }
 
@@ -161,7 +157,7 @@ export class ImpulsePage {
     this.cacheLastWord()
     if (this.impulsementsRendering[1].mark === null) {//First time today
       this.impulsementsRendering[1].count = Math.floor(this.settingService.settings.impulseIntensity / 2)
-      this.impulsementsRendering[1].wait = 2
+      this.impulsementsRendering[1].wait = 4
       this.impulsementsRendering[1].mark = 'vague'
     } else {
       //currentWord.count do not change

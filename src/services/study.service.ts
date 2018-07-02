@@ -41,7 +41,45 @@ export class StudyService {
 
   async getReviewList():Promise<void>{
     let records:EntryRecord[] = await this.apiSvc.get('/study/review/list/')
-    this.impulsementsReviewing = this.mergeImpulsements(records, await this.storage.get('impulsementsLearning'))
+    this.impulsementsReviewing = this.mergeImpulsements(records, await this.storage.get('impulsementsReviewing'), (record:EntryRecord, index:number) => {
+      let count
+      switch (record.proficiency) {
+        case 0:
+          count = 1
+          break
+        case 1:
+          count = 1
+          break
+        case 2:
+          count = 2
+          break
+        case 3:
+          count = 2
+          break
+        case 4:
+          count = 2
+          break
+        case 5:
+          count = 3
+          break
+        case 6:
+          count = 3
+          break
+        case 7:
+          count = 3
+          break
+        case 8:
+          count = 3
+          break
+        default:
+          count = 0
+      }
+      let impulsement = new Impulsement(record)
+      impulsement.count = count
+      impulsement.wait = index
+      return impulsement
+    })
+    console.log(this.impulsementsReviewing)
   }
 
   async generateLearnList(repo:RepoBrief, amount:number):Promise<Impulsement[]>{
@@ -53,11 +91,11 @@ export class StudyService {
     return this.impulsementsLearning
   }
 
-  private mergeImpulsements(records:EntryRecord[], stored:Impulsement[]):Impulsement[]{
+  private mergeImpulsements(records:EntryRecord[], stored:Impulsement[], generate:(record:EntryRecord,index:number)=>Impulsement):Impulsement[]{
     let res:Impulsement[] = []
-    let count = 0
+    if(!stored) stored=[]
+    let index = 0
     for(let record of records){
-      count++
       let impulsement = null
       for(let i of stored){
         if(i.record.id === record.id){
@@ -66,10 +104,10 @@ export class StudyService {
         }
       }
       if(impulsement===null){
-        impulsement = new Impulsement(record)
-        impulsement.wait = count
+        impulsement = generate(record, index)
       }
       res.push(impulsement)
+      index++
     }
     return res
   }
@@ -78,7 +116,11 @@ export class StudyService {
     if (this.impulsementsLearning === null) {
       this.impulsementsLearning = []
     }
-    this.impulsementsLearning = this.mergeImpulsements(records, await this.storage.get('impulsementsLearning'))
+    this.impulsementsLearning = this.mergeImpulsements(records, await this.storage.get('impulsementsLearning'), (record:EntryRecord, index:number) => {
+      let impulsement = new Impulsement(record)
+      impulsement.wait = index
+      return impulsement
+    })
   }
 
   async updateRecords(impulsements:Impulsement[]):Promise<void>{
@@ -95,57 +137,6 @@ export class StudyService {
       await this.apiSvc.post(`/study/update-records/`, data)
     }
   }
-
-  // generateWordsReviewing(): void {
-  //   this.impulsementsReviewing = []
-  //   let i = 0
-  //   for (let word in this.wordRecords) {
-  //     let record = this.wordRecords[word]
-  //     if (record.wait == 0) {
-  //       let count
-  //       switch (record.proficiency) {
-  //         case 0:
-  //           count = 1
-  //           break
-  //         case 1:
-  //           count = 1
-  //           break
-  //         case 2:
-  //           count = 2
-  //           break
-  //         case 3:
-  //           count = 2
-  //           break
-  //         case 4:
-  //           count = 2
-  //           break
-  //         case 5:
-  //           count = 3
-  //           break
-  //         case 6:
-  //           count = 3
-  //           break
-  //         case 7:
-  //           count = 3
-  //           break
-  //         case 8:
-  //           count = 3
-  //           break
-  //         default:
-  //           count = 0
-  //       }
-  //       this.impulsementsReviewing.push({
-  //         word: word,
-  //         count: count,
-  //         wait: i,
-  //         mark: 0,
-  //       })
-  //       i++
-  //     }
-  //   }
-  //   this.saveWordsImpulsing('review');//this will override yesterday's record, if yesterday the user didn't finish reviewing
-  // }
-
 
   saveWordsImpulsing(type: 'learn'|'review'): void {
     if (type == 'learn') {

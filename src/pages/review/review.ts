@@ -23,9 +23,13 @@ export class ReviewPage {
   ) {}
 
   startReview(): void {
-    this.modalCtrl.create(ImpulsePage, {
+    let modal = this.modalCtrl.create(ImpulsePage, {
       type: 'review',
-    }).present()
+    })
+    modal.present()
+    modal.onWillDismiss(() => {
+      this.ionViewWillEnter()
+    })
   }
 
   goWarehouse(): void {

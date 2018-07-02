@@ -40,6 +40,7 @@ export class ImpulsePage {
     } else if (this.type == 'review') {
       this.impulsements = this.studySvc.impulsementsReviewing
     }
+    console.log(this.impulsements);
     this.amount = this.impulsements.length
     this.impulsementsRendering[1] = this.nextWord()
     this.shouldAnimate = true

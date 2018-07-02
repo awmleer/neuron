@@ -2,7 +2,6 @@ import {NgModule, ErrorHandler} from '@angular/core'
 import {IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular'
 import {MyApp} from './app.component'
 import {ReviewPage} from '../pages/review/review'
-import {ContactPage} from '../pages/contact/contact'
 import {LearnPage} from '../pages/learn/learn'
 import {TabsPage} from '../pages/tabs/tabs'
 import {SettingsPage} from '../pages/settings/settings'
@@ -10,7 +9,6 @@ import {HttpClientModule} from '@angular/common/http'
 import {StudyService} from '../services/study.service'
 import {ImpulsePage} from '../pages/impulse/impulse'
 import {HowManyInPipe} from '../pipes/how-many-in.pipe'
-import {WordsDoneCountPipe, WordsAllDonePipe} from '../pipes/words-done.pipe'
 import {TomorrowReviewPipe} from '../pipes/tomorrow-review.pipe'
 import {AccountService} from '../services/account.service'
 import {LoginPage} from '../pages/login/login'
@@ -37,7 +35,6 @@ import {SignupPage} from '../pages/signup/signup'
   declarations: [
     MyApp,
     ReviewPage,
-    ContactPage,
     LearnPage,
     TabsPage,
     SettingsPage,
@@ -48,8 +45,6 @@ import {SignupPage} from '../pages/signup/signup'
     StatisticPage,
     AboutPage,
     HowManyInPipe,
-    WordsDoneCountPipe,
-    WordsAllDonePipe,
     TomorrowReviewPipe,
     DefinitionRatePipe,
     ProgressIconComponent,
@@ -66,7 +61,6 @@ import {SignupPage} from '../pages/signup/signup'
   entryComponents: [
     MyApp,
     ReviewPage,
-    ContactPage,
     LearnPage,
     TabsPage,
     SettingsPage,

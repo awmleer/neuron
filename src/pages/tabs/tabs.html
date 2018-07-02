@@ -1,9 +1,9 @@
 <ion-tabs tabsLayout="icon-start">
   <ion-tab [root]="tab1Root" tabTitle="新学" tabIcon="flash"
-           [tabBadge]="studySvc.impulsementsLearning?.length-(studySvc.impulsementsLearning | wordsDoneCount)"
+           [tabBadge]="studySvc.impulsementsLearning?.length"
            tabBadgeStyle="danger"></ion-tab>
   <ion-tab [root]="tab2Root" tabTitle="复习" tabIcon="paper"
-           [tabBadge]="studySvc.impulsementsReviewing?.length - (studySvc.impulsementsReviewing | wordsDoneCount)"
+           [tabBadge]="studySvc.impulsementsReviewing?.length"
            tabBadgeStyle="danger"></ion-tab>
   <ion-tab [root]="tab3Root" tabTitle="设置" tabIcon="settings"></ion-tab>
 </ion-tabs>
